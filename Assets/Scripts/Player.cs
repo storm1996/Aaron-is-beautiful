@@ -17,6 +17,13 @@ public class Player : MonoBehaviour {
 	void Start () {
 
         Rigidbody2D playerRBody = gameObject.AddComponent<Rigidbody2D>();
+        playerRBody.gravityScale = 2f;
+        playerRBody.angularDrag = 1f;
+        playerRBody.mass = 1.1f;
+
+
+
+
         rb2d = gameObject.GetComponent<Rigidbody2D>();
 
 
