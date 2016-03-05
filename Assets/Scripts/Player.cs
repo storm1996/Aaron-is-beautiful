@@ -17,10 +17,13 @@ public class Player : MonoBehaviour {
 	void Start () {
         rb2d = gameObject.GetComponent<Rigidbody2D>();
         GetComponent<Renderer>().material.color = new Color(255, 255, 0, 0);
+        BoxCollider2D playerCollider = gameObject.AddComponent<BoxCollider2D>();
     }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+        
+
         float h = Input.GetAxis("Horizontal");
 
         rb2d.AddForce(Vector2.right * speed * h);
