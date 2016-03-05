@@ -16,10 +16,12 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+        //player collisions
         Rigidbody2D playerRBody = gameObject.AddComponent<Rigidbody2D>();
-        playerRBody.gravityScale = 2f;
-        playerRBody.angularDrag = 1f;
-        playerRBody.mass = 1.1f;
+         playerRBody.gravityScale = 2f;// strength of gravity
+         playerRBody.angularDrag = 0; // rotation of player
+         playerRBody.drag = 1f;// friction between air, water, ground, etc
+         playerRBody.mass = 1.1f; // player mass
 
 
 
@@ -28,7 +30,10 @@ public class Player : MonoBehaviour {
 
 
         GetComponent<Renderer>().material.color = new Color(255, 255, 0, 0);
+
+
         BoxCollider2D playerCollider = gameObject.AddComponent<BoxCollider2D>();
+        playerCollider.size = new Vector2(1, 1);
     }
 	
 	// Update is called once per frame
