@@ -15,7 +15,11 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+        Rigidbody2D playerRBody = gameObject.AddComponent<Rigidbody2D>();
         rb2d = gameObject.GetComponent<Rigidbody2D>();
+
+
         GetComponent<Renderer>().material.color = new Color(255, 255, 0, 0);
         BoxCollider2D playerCollider = gameObject.AddComponent<BoxCollider2D>();
     }
