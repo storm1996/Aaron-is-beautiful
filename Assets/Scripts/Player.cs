@@ -15,19 +15,25 @@ public class Player : MonoBehaviour {
     public bool canDoubleJump;
 
     private Rigidbody2D rb2d;
+    private Rigidbody2D playerRBody;
     private Animator anim;
+    private BoxCollider2D playerCollider;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 
         anim = gameObject.GetComponent<Animator>();
 
-        //player collisions
-        Rigidbody2D playerRBody = gameObject.AddComponent<Rigidbody2D>();
+        //player properties
+        playerRBody = gameObject.AddComponent<Rigidbody2D>();
          playerRBody.gravityScale = 2f;// strength of gravity
-         playerRBody.angularDrag = 12f; // rotation of player
+         playerRBody.freezeRotation = true; // rotation of player, turned off
          playerRBody.drag = 1f;// friction between air, water, ground, etc
          playerRBody.mass = 1.1f; // player mass
+
+        //player collisions
+        playerCollider = gameObject.AddComponent<BoxCollider2D>();
+         playerCollider.size = new Vector2(1, 1);
 
 
         rb2d = gameObject.GetComponent<Rigidbody2D>();
@@ -35,11 +41,6 @@ public class Player : MonoBehaviour {
 
         GetComponent<Renderer>().material.color = new Color(255, 255, 0, 0);
 
-
-        BoxCollider2D playerCollider = gameObject.AddComponent<BoxCollider2D>();
-          playerCollider.size = new Vector2(1, 1);
-
-        
     }
 
     void Update()
