@@ -9,13 +9,18 @@ public class Player : MonoBehaviour {
     public float speed = 50f;
     public float maxSpeed = 300f;
     public float jumpForce = 300f;
-    public bool grounded = false;
-    
+
+
+    public bool grounded;
+    public bool canDoubleJump;
 
     private Rigidbody2D rb2d;
+    private Animator anim;
 
 	// Use this for initialization
-	void Start () { 
+	void Start () {
+
+        anim = gameObject.GetComponent<Animator>();
 
         //player collisions
         Rigidbody2D playerRBody = gameObject.AddComponent<Rigidbody2D>();
@@ -35,11 +40,28 @@ public class Player : MonoBehaviour {
           playerCollider.size = new Vector2(1, 1);
 
         
-}
+    }
 
+    void Update()
+    {
+        anim.SetBool("Grounded", grounded);
+        anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
+    }
+
+    
     // Update is called once per frame
     void FixedUpdate () {
-        
+        //adding friction to player so it it doesn't slide
+       /* Vector3 easeVelocity = rb2d.velocity;
+        easeVelocity.y = rb2d.velocity.y;
+        easeVelocity.x *= 0.10f;
+
+        if (grounded)
+        {
+            rb2d.velocity = easeVelocity;
+        }
+        */
+
 
         float h = Input.GetAxis("Horizontal");
 
@@ -58,8 +80,25 @@ public class Player : MonoBehaviour {
         //jumping
         if (Input.GetButtonDown("Jump") )
         {
-            rb2d.AddForce(Vector2.up * jumpForce);
-            //grounded = false;
+            
+           if (grounded)
+            {
+                rb2d.AddForce(Vector2.up * jumpForce);
+                canDoubleJump = true;
+            }
+            else
+            {
+                if (canDoubleJump)
+                {
+                    rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
+
+                    //can set double jump force to be lower than first by dividing
+                    rb2d.AddForce(Vector2.up * jumpForce);
+                    canDoubleJump = false;
+                }
+            }
+        
+            
         }
 
         //checks if player is air-born
