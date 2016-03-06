@@ -51,17 +51,19 @@ public class Player : MonoBehaviour {
     
     // Update is called once per frame
     void FixedUpdate () {
+/*
+needs fixing
         //adding friction to player so it it doesn't slide
-       /* Vector3 easeVelocity = rb2d.velocity;
+        Vector3 easeVelocity = rb2d.velocity;
         easeVelocity.y = rb2d.velocity.y;
-        easeVelocity.x *= 0.10f;
+        easeVelocity.x *= 0.75f;
 
         if (grounded)
         {
             rb2d.velocity = easeVelocity;
         }
-        */
-
+        
+*/
 
         float h = Input.GetAxis("Horizontal");
 
