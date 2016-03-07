@@ -14,12 +14,14 @@ public class Player : MonoBehaviour {
     public bool grounded;
     public bool canDoubleJump;
 
+    //accessible from other scripts
     private Rigidbody2D rb2d;
     private Rigidbody2D playerRBody;
     private Animator anim;
     private BoxCollider2D playerCollider;
 
     // Use this for initialization
+
     void Start () {
 
         anim = gameObject.GetComponent<Animator>();
@@ -52,39 +54,40 @@ public class Player : MonoBehaviour {
     
     // Update is called once per frame
     void FixedUpdate () {
-/*
-needs fixing
-        //adding friction to player so it it doesn't slide
-        Vector3 easeVelocity = rb2d.velocity;
-        easeVelocity.y = rb2d.velocity.y;
-        easeVelocity.x *= 0.75f;
+        /*
+        needs fixing
+                //adding friction to player so it it doesn't slide
+                Vector3 easeVelocity = rb2d.velocity;
+                easeVelocity.y = rb2d.velocity.y;
+                easeVelocity.x *= 0.75f;
 
-        if (grounded)
-        {
-            rb2d.velocity = easeVelocity;
-        }
+                if (grounded)
+                {
+                    rb2d.velocity = easeVelocity;
+                }
+
+        */
+
+        moveControl();
+        jumpControl();
         
-*/
+        
 
-        float h = Input.GetAxis("Horizontal");
-
-        rb2d.AddForce(Vector2.right * speed * h);
-
-        //limits speed of player according to maxSpeed
-        if(rb2d.velocity.x > maxSpeed)
+        //checks if player is air-born
+        /*if(playerCollider.IsTouching)
         {
-            rb2d.velocity = new Vector2(maxSpeed, rb2d.velocity.y);
-        }
-        if (rb2d.velocity.x < -maxSpeed)
-        {
-            rb2d.velocity = new Vector2(-maxSpeed, rb2d.velocity.y);
-        }
+            grounded = true;
+        }*/
 
-        //jumping
-        if (Input.GetButtonDown("Jump") )
+
+    }
+
+    private void jumpControl()
+    {
+        if (Input.GetButtonDown("Jump"))
         {
-            
-           if (grounded)
+
+            if (grounded)
             {
                 rb2d.AddForce(Vector2.up * jumpForce);
                 canDoubleJump = true;
@@ -100,16 +103,31 @@ needs fixing
                     canDoubleJump = false;
                 }
             }
-        
-            
+
+
         }
-
-        //checks if player is air-born
-        /*if(playerCollider.IsTouching)
-        {
-            grounded = true;
-        }*/
-
-
     }
+
+    private void moveControl()
+    {
+        float h = Input.GetAxis("Horizontal");
+
+        rb2d.AddForce(Vector2.right * speed * h);
+
+        //limits speed of player according to maxSpeed
+        if (rb2d.velocity.x > maxSpeed)
+        {
+            rb2d.velocity = new Vector2(maxSpeed, rb2d.velocity.y);
+        }
+        if (rb2d.velocity.x < -maxSpeed)
+        {
+            rb2d.velocity = new Vector2(-maxSpeed, rb2d.velocity.y);
+        }
+    }
+
+    public void bounce(float value)
+    {
+        rb2d.AddForce(Vector2.up * value);
+    }
+   
 }
