@@ -82,26 +82,25 @@ public class Player : MonoBehaviour {
 
     }
 
+    
     private void jumpControl()
     {
         if (Input.GetButtonDown("Jump"))
         {
-
+            //will allow to jump if grounded and able to double jump
             if (grounded)
             {
                 rb2d.AddForce(Vector2.up * jumpForce);
                 canDoubleJump = true;
             }
-            else
+            else if(canDoubleJump)
             {
-                if (canDoubleJump)
-                {
-                    rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
+                rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
 
-                    //can set double jump force to be lower than first by dividing
-                    rb2d.AddForce(Vector2.up * jumpForce);
-                    canDoubleJump = false;
-                }
+                //can set double jump force to be lower than first by dividing
+                rb2d.AddForce(Vector2.up * jumpForce);
+                canDoubleJump = false;
+                
             }
 
 
@@ -110,11 +109,12 @@ public class Player : MonoBehaviour {
 
     private void moveControl()
     {
+        //x axis. 
         float h = Input.GetAxis("Horizontal");
 
         rb2d.AddForce(Vector2.right * speed * h);
 
-        //limits speed of player according to maxSpeed
+        //limits speed of player according to maxSpeed in both directions
         if (rb2d.velocity.x > maxSpeed)
         {
             rb2d.velocity = new Vector2(maxSpeed, rb2d.velocity.y);
@@ -125,6 +125,7 @@ public class Player : MonoBehaviour {
         }
     }
 
+    //could put in interface e.g. Mario fireball
     public void bounce(float value)
     {
         rb2d.AddForce(Vector2.up * value);
