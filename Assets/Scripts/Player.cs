@@ -5,6 +5,17 @@ public class Player : MonoBehaviour {
     /*
     Shit to do:
         create collider and new script to check if grounded to change animator
+    
+    Shit to fix:
+        Sign off with name at the end
+            e.g "fix powerups not hitting - E Money"
+
+        Ideas:
+        throw whatever shit you want here
+
+        Alannah: menu system. Later then a pause system?
+        Oleg: boundaries and teleportation
+        Eamon: Player health
     */
     public float speed = 50f;
     public float maxSpeed = 300f;
