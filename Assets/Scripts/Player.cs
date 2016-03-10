@@ -10,6 +10,8 @@ public class Player : MonoBehaviour {
         Sign off with name at the end
             e.g "fix powerups not hitting - E Money"
 
+        irregular bouncing when on bouncy platform - E Dog
+
         Ideas:
         throw whatever shit you want here
 
@@ -140,6 +142,20 @@ public class Player : MonoBehaviour {
     public void bounce(float value)
     {
         rb2d.AddForce(Vector2.up * value);
+    }
+
+    public IEnumerator Knockback(float knockDur, float knockBackPwr, Vector3 knockBackDir)
+    {
+        float timer = 0;
+
+        while(knockDur > timer)
+        {
+            timer += Time.deltaTime;
+
+            rb2d.AddForce(new Vector3(knockBackDir.x * -100, knockBackDir.y * knockBackPwr, transform.position.z));
+        }
+
+        yield return 0;
     }
    
 }

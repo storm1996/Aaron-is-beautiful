@@ -7,12 +7,12 @@ public class BouncePlatform : MonoBehaviour {
     */
 
 
-    private GameObject player;
+    private Player player;
    
 	// Use this for initialization
 	void Start () {
         
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         
     }
 
@@ -26,9 +26,10 @@ public class BouncePlatform : MonoBehaviour {
         //player.GetComponent<Player>().rb2d.AddForce(Vector2.up * 500f);
 
         //calling method inside class. Probably better from OOP principles
-        player.GetComponent<Player>().bounce(b);
+        player.bounce(b);
 
     }
+
 
     
 }
