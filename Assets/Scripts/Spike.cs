@@ -4,14 +4,11 @@ using System.Collections;
 public class Spike : MonoBehaviour {
 
     private Player player;
-    //private BoxCollider2D collider;
 
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        //collider = gameObject.GetComponent<BoxCollider2D>();
-
-        //collider.isTrigger = true;
+       
 	}
 	
 	// Update is called once per frame
@@ -19,13 +16,17 @@ public class Spike : MonoBehaviour {
 	    
     
 	}
-
-    void OnTriggerEnter2D(Collider2D col)
+   
+    void OnTriggerStay2D(Collider2D col)
     {
         if (col.CompareTag("Player"))
         {
+            //reduce health of player
+            player.Damage(1);
+            //StartCoroutine does something
             StartCoroutine(player.Knockback(0.02f, 500f, player.transform.position));
+            
         }
-        
+
     }
 }

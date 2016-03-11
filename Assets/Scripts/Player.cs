@@ -22,6 +22,7 @@ public class Player : MonoBehaviour {
     public float speed = 50f;
     public float maxSpeed = 300f;
     public float jumpForce = 300f;
+    public int health = 100;
 
 
     public bool grounded;
@@ -95,6 +96,12 @@ public class Player : MonoBehaviour {
 
     }
 
+    //takes away health from player
+    public void Damage(int damage)
+    {
+        health -= damage;
+    }
+
     
     private void jumpControl()
     {
@@ -124,6 +131,7 @@ public class Player : MonoBehaviour {
     {
         //x axis. 
         float h = Input.GetAxis("Horizontal");
+        print(h);
 
         rb2d.AddForce(Vector2.right * speed * h);
 
@@ -144,6 +152,8 @@ public class Player : MonoBehaviour {
         rb2d.AddForce(Vector2.up * value);
     }
 
+    //I don't know what IEnumerator does. 
+    //Has a knock back effect when it hits the spike
     public IEnumerator Knockback(float knockDur, float knockBackPwr, Vector3 knockBackDir)
     {
         float timer = 0;
@@ -152,7 +162,17 @@ public class Player : MonoBehaviour {
         {
             timer += Time.deltaTime;
 
-            rb2d.AddForce(new Vector3(knockBackDir.x * -100, knockBackDir.y * knockBackPwr, transform.position.z));
+            //if player moving right
+            if(Input.GetAxis("Horizontal") > 0.01f)
+            {
+                rb2d.AddForce(new Vector3(knockBackDir.x * -100, knockBackDir.y * knockBackPwr, transform.position.z));
+            }
+            //player moving left
+            else if(Input.GetAxis("Horizontal") < 0.01f)
+            {
+                rb2d.AddForce(new Vector3(knockBackDir.x * 100, knockBackDir.y * knockBackPwr, transform.position.z));
+            }
+            
         }
 
         yield return 0;
