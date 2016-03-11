@@ -10,12 +10,6 @@ public class Spike : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
        
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	    
-    
-	}
    
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -36,6 +30,7 @@ public class Spike : MonoBehaviour {
         }
     }
 
+    //used for testing
     private void check(Collider2D col)
     {
         if (col.CompareTag("Player"))

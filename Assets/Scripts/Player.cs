@@ -42,18 +42,16 @@ public class Player : MonoBehaviour {
 
         //player properties
         playerRBody = gameObject.AddComponent<Rigidbody2D>();
-         playerRBody.gravityScale = 2f;// strength of gravity
-         playerRBody.freezeRotation = true; // rotation of player, turned off
-         playerRBody.drag = 1f;// friction between air, water, ground, etc
-         playerRBody.mass = 1.1f; // player mass
+        playerRBody.gravityScale = 2f;// strength of gravity
+        playerRBody.freezeRotation = true; // rotation of player, turned off
+        playerRBody.drag = 1f;// friction between air, water, ground, etc
+        playerRBody.mass = 1.1f; // player mass
 
         //player collisions
         playerCollider = gameObject.AddComponent<BoxCollider2D>();
-         playerCollider.size = new Vector2(1, 1);
-
+        playerCollider.size = new Vector2(1, 1);
 
         rb2d = gameObject.GetComponent<Rigidbody2D>();
-
 
         GetComponent<Renderer>().material.color = new Color(255, 255, 0, 0);
 
@@ -84,14 +82,6 @@ public class Player : MonoBehaviour {
 
         moveControl();
         jumpControl();
-        
-        
-
-        //checks if player is air-born
-        /*if(playerCollider.IsTouching)
-        {
-            grounded = true;
-        }*/
 
 
     }
@@ -122,8 +112,6 @@ public class Player : MonoBehaviour {
                 canDoubleJump = false;
                 
             }
-
-
         }
     }
 

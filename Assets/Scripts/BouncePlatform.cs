@@ -20,11 +20,6 @@ public class BouncePlatform : MonoBehaviour {
     {
         float b = 500f;
 
-        //how to access gameobjects script component and call methods
-
-        //if rigidbody was public
-        //player.GetComponent<Player>().rb2d.AddForce(Vector2.up * 500f);
-
         //calling method inside class. Probably better from OOP principles
         player.bounce(b);
 
