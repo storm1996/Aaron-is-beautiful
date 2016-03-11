@@ -165,12 +165,12 @@ public class Player : MonoBehaviour {
             //if player moving right
             if(Input.GetAxis("Horizontal") > 0.01f)
             {
-                rb2d.AddForce(new Vector3(knockBackDir.x * -100, knockBackDir.y * knockBackPwr, transform.position.z));
+                rb2d.AddForce(new Vector3(knockBackDir.x * -250f, knockBackDir.y, transform.position.z));
             }
             //player moving left
             else if(Input.GetAxis("Horizontal") < 0.01f)
             {
-                rb2d.AddForce(new Vector3(knockBackDir.x * 100, knockBackDir.y * knockBackPwr, transform.position.z));
+                rb2d.AddForce(new Vector3(knockBackDir.x * 250f, knockBackDir.y, transform.position.z));
             }
             
         }

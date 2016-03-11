@@ -17,7 +17,26 @@ public class Spike : MonoBehaviour {
     
 	}
    
+    void OnTriggerEnter2D(Collider2D col)
+    {
+
+        
+    }
+
     void OnTriggerStay2D(Collider2D col)
+    {
+        //check(col);
+        if (col.CompareTag("Player"))
+        {
+            //reduce health of player
+            player.Damage(1);
+            //StartCoroutine does something
+            StartCoroutine(player.Knockback(0.02f, 500f, player.transform.position));
+
+        }
+    }
+
+    private void check(Collider2D col)
     {
         if (col.CompareTag("Player"))
         {
@@ -25,8 +44,7 @@ public class Spike : MonoBehaviour {
             player.Damage(1);
             //StartCoroutine does something
             StartCoroutine(player.Knockback(0.02f, 500f, player.transform.position));
-            
-        }
 
+        }
     }
 }
