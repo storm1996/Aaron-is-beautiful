@@ -152,6 +152,12 @@ public class Player : MonoBehaviour {
         rb2d.AddForce(Vector2.up * value);
     }
 
+    //health powerup
+    public void healthPowerUp(int value)
+    {
+        health += value;
+    }
+
     //I don't know what IEnumerator does. 
     //Has a knock back effect when it hits the spike
     public IEnumerator Knockback(float knockDur, float knockBackPwr, Vector3 knockBackDir)
