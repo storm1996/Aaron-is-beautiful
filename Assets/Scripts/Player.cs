@@ -15,6 +15,11 @@ public class Player : MonoBehaviour {
         Ideas:
         throw whatever shit you want here
 
+        Powerups regenerate after time period or destroys itself after a while.
+
+
+
+
         Alannah: menu system. Later then a pause system?
         Oleg: boundaries and teleportation
         Eamon: Player health
@@ -34,13 +39,7 @@ public class Player : MonoBehaviour {
     private Animator anim;
     private BoxCollider2D playerCollider;
 
-    //variables for spawning powerups
-    public Transform[] powerUpSpawns;
-    public GameObject powerUp;
-
-
     void Start () {
-
         anim = gameObject.GetComponent<Animator>();
 
         //player properties
@@ -121,7 +120,7 @@ public class Player : MonoBehaviour {
     {
         //x axis. 
         float h = Input.GetAxis("Horizontal");
-        print(h);
+       
 
         rb2d.AddForce(Vector2.right * speed * h);
 
@@ -181,11 +180,5 @@ public class Player : MonoBehaviour {
         yield return 0;
     }
 
-    public void Spawn()
-    {
-        for(int i = 0; i < powerUpSpawns.Length; i++)
-        {
-            Instantiate(powerUp, powerUpSpawns[i].position, Quaternion.identity);
-        }
-    }
+    
 }
