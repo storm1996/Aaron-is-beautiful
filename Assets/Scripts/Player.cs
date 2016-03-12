@@ -34,7 +34,10 @@ public class Player : MonoBehaviour {
     private Animator anim;
     private BoxCollider2D playerCollider;
 
-    // Use this for initialization
+    //variables for spawning powerups
+    public Transform[] powerUpSpawns;
+    public GameObject powerUp;
+
 
     void Start () {
 
@@ -82,7 +85,6 @@ public class Player : MonoBehaviour {
 
         moveControl();
         jumpControl();
-
 
     }
 
@@ -179,4 +181,11 @@ public class Player : MonoBehaviour {
         yield return 0;
     }
 
+    public void Spawn()
+    {
+        for(int i = 0; i < powerUpSpawns.Length; i++)
+        {
+            Instantiate(powerUp, powerUpSpawns[i].position, Quaternion.identity);
+        }
+    }
 }
