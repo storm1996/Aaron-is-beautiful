@@ -2,13 +2,15 @@
 using System.Collections;
 
 public class Powerup : MonoBehaviour {
-
+    
     private Player player;
+    private PowerUpSpawn power;
+    private int position;
 
 	void Start () {
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-             
+        power = GameObject.FindGameObjectWithTag("Ground").GetComponent<PowerUpSpawn>();
 	}
 
     public void OnTriggerEnter2D(Collider2D col)
@@ -18,6 +20,14 @@ public class Powerup : MonoBehaviour {
             //destroys current gameObject during collision with player
             Destroy(gameObject);
             player.healthPowerUp(100);
+
+            //sets array element in PowerUpSpawn to be false
+            power.makeFalse(position);
         }
+    }
+
+    public void setPosition(int x)
+    {
+        this.position = x;
     }
 }
