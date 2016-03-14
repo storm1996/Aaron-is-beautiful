@@ -5,7 +5,7 @@ public class PowerUpSpawn : MonoBehaviour {
 
     //spawn points in array specified in inspector with spawn child objects in testing ground object children
     //need to code it in
-    public Transform[] spawnPoints;
+    public GameObject[] spawnPoints;
 
     //finds positions where power ups are currently
     private bool[] exists = new bool[5];
@@ -19,27 +19,15 @@ public class PowerUpSpawn : MonoBehaviour {
         //takes prefab from resources folder of powerup. isntantiates it later
         powerUp = Resources.Load("Powerup") as GameObject;
 
-        spawnPoints = new Transform[5];
-/*
-        foreach ( t in Transform)
-        {
+        //spawnPoints = new GameObject[];
 
-        }
-*/
-        //sets all spawn points
-        spawnPoints[0] = transform.Find("spawn1");
-        spawnPoints[1] = transform.Find("spawn2");
-        spawnPoints[2] = transform.Find("spawn3");
-        spawnPoints[3] = transform.Find("spawn4");
-        spawnPoints[4] = transform.Find("spawn5");
-
+        //loads all spawn points using tag
+        spawnPoints = GameObject.FindGameObjectsWithTag("Spawn Point");
 
         for (int i = 0; i < exists.Length; i++)
         {
             makeFalse(i);
         }
-
-     
 
 	}
 	
@@ -63,7 +51,7 @@ public class PowerUpSpawn : MonoBehaviour {
             if(choice > 0)
             {
                 //instantiates the power up at position i.
-                GameObject newObject = (GameObject)Instantiate(powerUp, spawnPoints[i].position, Quaternion.identity);
+                GameObject newObject = (GameObject)Instantiate(powerUp, spawnPoints[i].transform.position, Quaternion.identity);
                 Powerup pow = newObject.GetComponent<Powerup>();
 
                 pow.setPosition(i);
