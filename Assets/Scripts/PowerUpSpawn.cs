@@ -12,7 +12,8 @@ public class PowerUpSpawn : MonoBehaviour {
 
     //specified with powerup prefab
     public GameObject powerUp;
- 
+
+
 	// Use this for initialization
 	void Start () {
 
@@ -29,17 +30,26 @@ public class PowerUpSpawn : MonoBehaviour {
             makeFalse(i);
         }
 
+
 	}
 	
 	void Update () {
 
         //only spawn when there are no more powerups
-        if(checkNoPowers() == 0)
+        if(checkNoPowers() < 2)
         {
             spawn();
         }
 
+        
+
 	}
+
+    void spawnOnce()
+    {
+
+    }
+
 
     private void spawn()
     {
@@ -50,12 +60,16 @@ public class PowerUpSpawn : MonoBehaviour {
 
             if(choice > 0)
             {
-                //instantiates the power up at position i.
-                GameObject newObject = (GameObject)Instantiate(powerUp, spawnPoints[i].transform.position, Quaternion.identity);
-                Powerup pow = newObject.GetComponent<Powerup>();
+                if(exists[i].Equals(false))
+                {
+                    //instantiates the power up at position i.
+                    GameObject newObject = (GameObject)Instantiate(powerUp, spawnPoints[i].transform.position, Quaternion.identity);
+                    Powerup pow = newObject.GetComponent<Powerup>();
 
-                pow.setPosition(i);
-                makeTrue(i);            
+                    pow.setPosition(i);
+                    makeTrue(i);
+                }
+                         
                             
             }
         }

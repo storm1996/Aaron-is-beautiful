@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Player : MonoBehaviour {
@@ -17,9 +18,6 @@ public class Player : MonoBehaviour {
 
         Powerups regenerate after time period or destroys itself after a while.
 
-
-
-
         Alannah: menu system. Later then a pause system?
         Oleg: boundaries and teleportation
         Eamon: Player health
@@ -27,8 +25,9 @@ public class Player : MonoBehaviour {
     public float speed = 50f;
     public float maxSpeed = 300f;
     public float jumpForce = 300f;
-    public int health = 100;
 
+    public int health = 100;
+    public int score; //maybe put this in own game control script
 
     public bool grounded;
     public bool canDoubleJump;
@@ -63,9 +62,9 @@ public class Player : MonoBehaviour {
     {
         anim.SetBool("Grounded", grounded);
         anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
-    }
-
     
+    }  
+
     // Update is called once per frame
     void FixedUpdate () {
         /*
@@ -79,7 +78,6 @@ public class Player : MonoBehaviour {
                 {
                     rb2d.velocity = easeVelocity;
                 }
-
         */
 
         moveControl();
@@ -180,5 +178,6 @@ public class Player : MonoBehaviour {
         yield return 0;
     }
 
+    //sets health to be updated
     
 }
