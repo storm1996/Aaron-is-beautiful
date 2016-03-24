@@ -145,6 +145,12 @@ public class Player : MonoBehaviour {
         health += value;
     }
 
+    //health powerup
+    public void scorePowerUp(int value)
+    {
+        score += value;
+    }
+
     //I don't know what IEnumerator does. 
     //Has a knock back effect when it hits the spike
     public IEnumerator Knockback(float knockDur, float knockBackPwr, Vector3 knockBackDir)

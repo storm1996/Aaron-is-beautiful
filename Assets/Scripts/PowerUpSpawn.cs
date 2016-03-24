@@ -11,14 +11,16 @@ public class PowerUpSpawn : MonoBehaviour {
     private bool[] exists = new bool[5];
 
     //specified with powerup prefab
-    public GameObject powerUp;
+    public GameObject healthPowerUp;
+    public GameObject scorePowerUp;
 
 
 	// Use this for initialization
 	void Start () {
 
         //takes prefab from resources folder of powerup. isntantiates it later
-        powerUp = Resources.Load("Powerup") as GameObject;
+        healthPowerUp = Resources.Load("Powerup") as GameObject;
+        scorePowerUp = Resources.Load("ScorePower") as GameObject;
 
         //spawnPoints = new GameObject[];
 
@@ -41,15 +43,9 @@ public class PowerUpSpawn : MonoBehaviour {
             spawn();
         }
 
-        
-
 	}
 
-    void spawnOnce()
-    {
-
-    }
-
+    
 
     private void spawn()
     {
@@ -62,17 +58,41 @@ public class PowerUpSpawn : MonoBehaviour {
             {
                 if(exists[i].Equals(false))
                 {
-                    //instantiates the power up at position i.
-                    GameObject newObject = (GameObject)Instantiate(powerUp, spawnPoints[i].transform.position, Quaternion.identity);
-                    Powerup pow = newObject.GetComponent<Powerup>();
+                    int goChoice = Random.Range(0, 2);
 
-                    pow.setPosition(i);
-                    makeTrue(i);
-                }
-                         
-                            
+                    if (goChoice > 0)
+                    {
+                        //instantiates the power up at position i.
+                        generateSpawn("Score", i);
+                    }
+                    else
+                    {
+
+                        generateSpawn("Health", i);
+                    }
+                    
+                }                                               
             }
         }
+    }
+
+    private void generateSpawn(string input, int position)
+    {
+        if (input.Equals("Score"))
+        {
+            GameObject newObject = (GameObject)Instantiate(scorePowerUp, spawnPoints[position].transform.position, Quaternion.identity);
+            ScorePowerup pow = newObject.GetComponent<ScorePowerup>();
+            pow.setPosition(position); // change
+            makeTrue(position);
+        }
+        else if (input.Equals("Health"))
+        {
+            GameObject newObject = (GameObject)Instantiate(healthPowerUp, spawnPoints[position].transform.position, Quaternion.identity);
+            Powerup pow = newObject.GetComponent<Powerup>();
+            pow.setPosition(position);
+            makeTrue(position);
+        }
+        
     }
 
     //checks number of power ups on game
