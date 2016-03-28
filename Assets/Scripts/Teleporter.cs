@@ -15,7 +15,7 @@ public class Teleporter : MonoBehaviour {
         teleporterRB2D = gameObject.AddComponent<Rigidbody2D>();
 
         GetComponent<Renderer>().material.color = new Color(155, 0, 155, 0);
-        teleporterRB2D.isKinematic = false;
+        teleporterRB2D.isKinematic = true;
         teleporterBC2D.isTrigger = true;
         
     }
