@@ -179,7 +179,6 @@ public class Player : MonoBehaviour {
 
     public IEnumerator teleport()
     {
-        //need to add teleporting stuff here, depending on which teleporter is touched
 
         yield return 0;
     }
