@@ -12,18 +12,15 @@ public class DisplayManager : MonoBehaviour {
     public Text showScore;
     public Player player;
 
-    // Use this for initialization
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         showHealth = (Text)GameObject.FindGameObjectWithTag("Health").GetComponent<Text>();
         showScore = (Text)GameObject.FindGameObjectWithTag("Score").GetComponent<Text>();
     }
 	
-	// Update is called once per frame
 	void Update () {
         setHealthText();
         setScoreText();
-
     }
 
     //sets the health and score

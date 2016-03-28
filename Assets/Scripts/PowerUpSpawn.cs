@@ -22,7 +22,6 @@ public class PowerUpSpawn : MonoBehaviour {
         healthPowerUp = Resources.Load("Powerup") as GameObject;
         scorePowerUp = Resources.Load("ScorePower") as GameObject;
 
-        //spawnPoints = new GameObject[];
 
         //loads all spawn points using tag
         spawnPoints = GameObject.FindGameObjectsWithTag("Spawn Point");
@@ -66,8 +65,7 @@ public class PowerUpSpawn : MonoBehaviour {
                         generateSpawn("Score", i);
                     }
                     else
-                    {
-
+                    { 
                         generateSpawn("Health", i);
                     }
                     
@@ -81,18 +79,23 @@ public class PowerUpSpawn : MonoBehaviour {
         if (input.Equals("Score"))
         {
             GameObject newObject = (GameObject)Instantiate(scorePowerUp, spawnPoints[position].transform.position, Quaternion.identity);
-            ScorePowerup pow = newObject.GetComponent<ScorePowerup>();
-            pow.setPosition(position); // change
-            makeTrue(position);
+            //polymorphism
+            Powerup pow = newObject.GetComponent<ScorePowerup>();
+            setPosMakeTrue(pow, position);
         }
         else if (input.Equals("Health"))
         {
             GameObject newObject = (GameObject)Instantiate(healthPowerUp, spawnPoints[position].transform.position, Quaternion.identity);
-            Powerup pow = newObject.GetComponent<Powerup>();
-            pow.setPosition(position);
-            makeTrue(position);
+            Powerup pow = newObject.GetComponent<HealthPowerup>();
+            setPosMakeTrue(pow, position);
         }
         
+    }
+
+    public void setPosMakeTrue(Powerup pow, int p)
+    {
+        pow.setPosition(p);
+        makeTrue(p);
     }
 
     //checks number of power ups on game

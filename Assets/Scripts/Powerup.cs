@@ -1,33 +1,30 @@
-﻿using UnityEngine;
+﻿/*
+Abstract class for HealthPowerup and ScorePowerup
+*/
+
+using UnityEngine;
 using System.Collections;
 
-public class Powerup : MonoBehaviour {
-    
-    private Player player;
-    private PowerUpSpawn power;
-    private int position;
+public abstract class Powerup : MonoBehaviour {
 
-	void Start () {
+    public Player player;
+    public PowerUpSpawn power;
+    public int position;
+
+    //virtual used so it can be called from child
+    public virtual void Start()
+    {
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         power = GameObject.FindGameObjectWithTag("Ground").GetComponent<PowerUpSpawn>();
-	}
-
-    public void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.CompareTag("Player"))
-        { 
-            //destroys current gameObject during collision with player
-            Destroy(gameObject);
-            player.healthPowerUp(100);
-
-            //sets array element in PowerUpSpawn to be false
-            power.makeFalse(position);
-        }
     }
 
+    public abstract void OnTriggerEnter2D(Collider2D col);
+
+    //hold position relative to powerUpSpawns
     public void setPosition(int x)
     {
         this.position = x;
     }
+ 
 }
