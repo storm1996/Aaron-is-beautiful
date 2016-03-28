@@ -32,11 +32,13 @@ public class Teleporter : MonoBehaviour {
         {
             if(gameObject.tag == "TPRight")
             {
-                player.transform.position = new Vector2(-40.5f, -12.9825f);
+                teleporterRB2D = GameObject.FindGameObjectWithTag("TPLeft").GetComponent<Rigidbody2D>();
+                player.transform.position = new Vector2(teleporterRB2D.transform.position.x + 1.5f, player.transform.position.y);
             }
             if (gameObject.tag == "TPLeft")
             {
-                player.transform.position = new Vector2(39f, -12.9825f);
+                teleporterRB2D = GameObject.FindGameObjectWithTag("TPRight").GetComponent<Rigidbody2D>();
+                player.transform.position = new Vector2(teleporterRB2D.transform.position.x - 1.5f, player.transform.position.y);
             }
         }
     }

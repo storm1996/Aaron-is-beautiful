@@ -177,12 +177,4 @@ public class Player : MonoBehaviour {
         yield return 0;
     }
 
-    public IEnumerator teleport()
-    {
-
-        yield return 0;
-    }
-
-    //sets health to be updated
-    
 }
