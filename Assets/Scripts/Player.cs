@@ -37,6 +37,9 @@ public class Player : MonoBehaviour {
     private Rigidbody2D playerRBody;
     private Animator anim;
     private BoxCollider2D playerCollider;
+    private Transform newPosition;
+
+    public GameObject arrow;
 
     void Start () {
         anim = gameObject.GetComponent<Animator>();
@@ -56,14 +59,54 @@ public class Player : MonoBehaviour {
 
         GetComponent<Renderer>().material.color = new Color(255, 255, 0, 0);
 
+        arrow = Resources.Load("Arrow") as GameObject;
+
     }
 
     void Update()
     {
+        
+
         anim.SetBool("Grounded", grounded);
         anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
-    
-    }  
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            if(Input.GetAxis("Horizontal") > 0.1f)
+            {
+                //optimise this
+                Vector3 newPosition = new Vector3(transform.position.x + 1f, transform.position.y);
+                //change this
+                GameObject newArrow = (GameObject)Instantiate(arrow, newPosition, Quaternion.identity);
+                Rigidbody2D arrowRB2D = newArrow.GetComponent<Rigidbody2D>();
+                arrowRB2D.AddForce(Vector2.right * 500);
+                arrowRB2D.AddForce(Vector2.up * 500);
+            }
+            else if(Input.GetAxis("Horizontal") < -0.1f)
+            {
+                //optimise this
+                Vector3 newPosition = new Vector3(transform.position.x - 1f, transform.position.y);
+                GameObject newArrow = (GameObject)Instantiate(arrow, newPosition, Quaternion.identity);
+                Rigidbody2D arrowRB2D = newArrow.GetComponent<Rigidbody2D>();
+                arrowRB2D.AddForce(Vector2.left * 500);
+                arrowRB2D.AddForce(Vector2.up * 500);
+            }
+            else if (Input.GetAxis("Horizontal") == 0)
+            {
+                //optimise this
+                Vector3 newPosition = new Vector3(transform.position.x - 1f, transform.position.y);
+                GameObject newArrow = (GameObject)Instantiate(arrow, newPosition, Quaternion.identity);
+                Rigidbody2D arrowRB2D = newArrow.GetComponent<Rigidbody2D>();
+                arrowRB2D.AddForce(Vector2.left * 500);
+                arrowRB2D.AddForce(Vector2.up * 500);
+            }
+
+
+        }
+
+
+    }
+
 
     // Update is called once per frame
     void FixedUpdate () {

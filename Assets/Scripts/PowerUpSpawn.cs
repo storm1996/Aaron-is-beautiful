@@ -39,14 +39,15 @@ public class PowerUpSpawn : MonoBehaviour {
         //only spawn when there are no more powerups
         if(checkNoPowers() < 2)
         {
-            spawn();
+            //calls it two seconds after condition true
+            Invoke("spawn", 2);
         }
 
 	}
 
     
 
-    private void spawn()
+    public void spawn()
     {
         //goes through each transform and flips coin to see if it will be instantiated or not
         for(int i = 0; i < spawnPoints.Length; i++)
@@ -67,29 +68,33 @@ public class PowerUpSpawn : MonoBehaviour {
                     else
                     { 
                         generateSpawn("Health", i);
-                    }
-                    
+                    }               
                 }                                               
             }
         }
+
+        //stops spawn fcn from constantly repeating
+        CancelInvoke("spawn");
     }
 
     private void generateSpawn(string input, int position)
     {
+        Powerup pow = null;
+
         if (input.Equals("Score"))
         {
             GameObject newObject = (GameObject)Instantiate(scorePowerUp, spawnPoints[position].transform.position, Quaternion.identity);
             //polymorphism
-            Powerup pow = newObject.GetComponent<ScorePowerup>();
-            setPosMakeTrue(pow, position);
+            pow = newObject.GetComponent<ScorePowerup>();
         }
         else if (input.Equals("Health"))
         {
             GameObject newObject = (GameObject)Instantiate(healthPowerUp, spawnPoints[position].transform.position, Quaternion.identity);
-            Powerup pow = newObject.GetComponent<HealthPowerup>();
-            setPosMakeTrue(pow, position);
+            pow = newObject.GetComponent<HealthPowerup>();
+            
         }
-        
+
+        setPosMakeTrue(pow, position);
     }
 
     public void setPosMakeTrue(Powerup pow, int p)
