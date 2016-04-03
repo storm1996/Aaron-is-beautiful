@@ -11,17 +11,19 @@ public class BouncePlatform : MonoBehaviour {
    
 	// Use this for initialization
 	void Start () {
-        
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
         float b = 500f;
 
-        //calling method inside class. Probably better from OOP principles
-        player.bounce(b);
+        if (col.CompareTag("Player"))
+        {
+            //calling method inside class. Probably better from OOP principles
+            player.bounce(b);
+        }
+
 
     }
 

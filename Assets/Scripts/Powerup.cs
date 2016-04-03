@@ -14,9 +14,18 @@ public abstract class Powerup : MonoBehaviour {
     //virtual used so it can be called from child
     public virtual void Start()
     {
-
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        playerMake();
         power = GameObject.FindGameObjectWithTag("Ground").GetComponent<PowerUpSpawn>();
+    }
+
+
+    private int variable;
+
+  public int getVariable() { return variable; }
+
+    private void playerMake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     public abstract void OnTriggerEnter2D(Collider2D col);
