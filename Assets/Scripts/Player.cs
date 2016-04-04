@@ -93,11 +93,13 @@ public class Player : MonoBehaviour {
             }
             else if (Input.GetAxis("Horizontal") == 0)
             {
+                //if facing left or right
+
                 //optimise this
-                Vector3 newPosition = new Vector3(transform.position.x - 1f, transform.position.y);
+                Vector3 newPosition = new Vector3(transform.position.x + 1f, transform.position.y);
                 GameObject newArrow = (GameObject)Instantiate(arrow, newPosition, Quaternion.identity);
                 Rigidbody2D arrowRB2D = newArrow.GetComponent<Rigidbody2D>();
-                arrowRB2D.AddForce(Vector2.left * 500);
+                arrowRB2D.AddForce(Vector2.right * 500);
                 arrowRB2D.AddForce(Vector2.up * 500);
             }
 
