@@ -40,6 +40,7 @@ public class Player : MonoBehaviour {
     private Transform newPosition;
 
     public GameObject arrow;
+    public GameObject fireballPrefab;
 
     void Start () {
         anim = gameObject.GetComponent<Animator>();
@@ -60,15 +61,16 @@ public class Player : MonoBehaviour {
         GetComponent<Renderer>().material.color = new Color(255, 255, 0, 0);
 
         arrow = Resources.Load("Arrow") as GameObject;
+        fireballPrefab = Resources.Load("Fireball") as GameObject;
 
     }
 
     void Update()
     {
-        
-
         anim.SetBool("Grounded", grounded);
         anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
+
+
 
         if (Input.GetButtonDown("Fire1"))
         {
@@ -81,6 +83,9 @@ public class Player : MonoBehaviour {
                 Rigidbody2D arrowRB2D = newArrow.GetComponent<Rigidbody2D>();
                 arrowRB2D.AddForce(Vector2.right * 500);
                 arrowRB2D.AddForce(Vector2.up * 500);
+
+                createFireball("Right");
+
             }
             else if(Input.GetAxis("Horizontal") < -0.1f)
             {
@@ -90,10 +95,11 @@ public class Player : MonoBehaviour {
                 Rigidbody2D arrowRB2D = newArrow.GetComponent<Rigidbody2D>();
                 arrowRB2D.AddForce(Vector2.left * 500);
                 arrowRB2D.AddForce(Vector2.up * 500);
+                createFireball("Left");
             }
             else if (Input.GetAxis("Horizontal") == 0)
             {
-                //if facing left or right
+ 
 
                 //optimise this
                 Vector3 newPosition = new Vector3(transform.position.x + 1f, transform.position.y);
@@ -101,14 +107,39 @@ public class Player : MonoBehaviour {
                 Rigidbody2D arrowRB2D = newArrow.GetComponent<Rigidbody2D>();
                 arrowRB2D.AddForce(Vector2.right * 500);
                 arrowRB2D.AddForce(Vector2.up * 500);
+
+
+                createFireball("Left");
             }
 
 
         }
 
-
     }
 
+    public void createFireball(string direction)
+    {
+        float offset = 1f;
+        Vector3 newPosition;
+        GameObject newFireball;
+        Fireball fireballScript;
+
+        if (direction.Equals("Right"))
+        {
+            newPosition = new Vector3(transform.position.x + offset, transform.position.y);
+            newFireball = (GameObject)Instantiate(fireballPrefab, newPosition, Quaternion.identity);
+            fireballScript = newFireball.GetComponent<Fireball>();
+            fireballScript.fire(direction);
+        }
+        else if (direction.Equals("Left"))
+        {
+            newPosition = new Vector3(transform.position.x - offset, transform.position.y);
+            newFireball = (GameObject)Instantiate(fireballPrefab, newPosition, Quaternion.identity);
+            fireballScript = newFireball.GetComponent<Fireball>();
+            fireballScript.fire(direction);
+        }
+
+    }
 
     // Update is called once per frame
     void FixedUpdate () {
