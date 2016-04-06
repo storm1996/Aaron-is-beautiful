@@ -19,7 +19,7 @@ public class PowerUpSpawn : MonoBehaviour {
 	void Start () {
 
         //takes prefab from resources folder of powerup. isntantiates it later
-        healthPowerUp = Resources.Load("Powerup") as GameObject;
+        healthPowerUp = Resources.Load("HealthPower") as GameObject;
         scorePowerUp = Resources.Load("ScorePower") as GameObject;
 
 

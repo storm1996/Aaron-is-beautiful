@@ -18,10 +18,11 @@ public abstract class Powerup : MonoBehaviour {
         power = GameObject.FindGameObjectWithTag("Ground").GetComponent<PowerUpSpawn>();
     }
 
+    public virtual void Update()
+    {
+        transform.RotateAround(transform.position, transform.up, Time.deltaTime * 250f);
+    }
 
-    private int variable;
-
-  public int getVariable() { return variable; }
 
     private void playerMake()
     {
@@ -34,6 +35,12 @@ public abstract class Powerup : MonoBehaviour {
     public void setPosition(int x)
     {
         this.position = x;
+    }
+
+    public void destroyAndMakeFalse()
+    {
+        Destroy(gameObject);
+        power.makeFalse(position);
     }
  
 }

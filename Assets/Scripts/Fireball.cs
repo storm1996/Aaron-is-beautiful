@@ -26,5 +26,13 @@ public class Fireball : MonoBehaviour {
             rb2d.AddForce(Vector2.right * speed);
         }
     }
+
+    public void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.CompareTag("Border") && col.CompareTag("Ground"))
+        {
+            Destroy(gameObject);
+        }
+    }
     
 }
