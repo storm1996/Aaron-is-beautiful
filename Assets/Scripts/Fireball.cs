@@ -20,6 +20,7 @@ public class Fireball : MonoBehaviour {
         if (direction.Equals("Left"))
         {
             rb2d.AddForce(Vector2.left * speed);
+            rb2d.transform.localScale = new Vector2(-1, 1);
         }
         else if (direction.Equals("Right"))
         {
