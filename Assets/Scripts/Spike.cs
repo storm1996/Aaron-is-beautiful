@@ -31,7 +31,7 @@ public class Spike : MonoBehaviour {
     }
 
     //used for testing
-    private void check(Collider2D col)
+    private void Check(Collider2D col)
     {
         if (col.CompareTag("Player"))
         {

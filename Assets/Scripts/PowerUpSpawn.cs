@@ -28,7 +28,7 @@ public class PowerUpSpawn : MonoBehaviour {
 
         for (int i = 0; i < exists.Length; i++)
         {
-            makeFalse(i);
+            SetStateAtPos(i, false);
         }
 
 
@@ -37,17 +37,17 @@ public class PowerUpSpawn : MonoBehaviour {
 	void Update () {
 
         //only spawn when there are no more powerups
-        if(checkNoPowers() < 2)
+        if(CheckNoPowers() < 2)
         {
             //calls it two seconds after condition true
-            Invoke("spawn", 2);
+            Invoke("Spawn", 2);
         }
 
 	}
 
     
 
-    public void spawn()
+    public void Spawn()
     {
         //goes through each transform and flips coin to see if it will be instantiated or not
         for(int i = 0; i < spawnPoints.Length; i++)
@@ -63,21 +63,21 @@ public class PowerUpSpawn : MonoBehaviour {
                     if (goChoice > 0)
                     {
                         //instantiates the power up at position i.
-                        generateSpawn("Score", i);
+                        GenerateSpawn("Score", i);
                     }
                     else
                     { 
-                        generateSpawn("Health", i);
+                        GenerateSpawn("Health", i);
                     }               
                 }                                               
             }
         }
 
         //stops spawn fcn from constantly repeating
-        CancelInvoke("spawn");
+        CancelInvoke("Spawn");
     }
 
-    private void generateSpawn(string input, int position)
+    private void GenerateSpawn(string input, int position)
     {
         Powerup pow = null;
 
@@ -94,17 +94,17 @@ public class PowerUpSpawn : MonoBehaviour {
             
         }
 
-        setPosMakeTrue(pow, position);
+        SetPosMakeTrue(pow, position);
     }
 
-    public void setPosMakeTrue(Powerup pow, int p)
+    public void SetPosMakeTrue(Powerup pow, int p)
     {
-        pow.setPosition(p);
-        makeTrue(p);
+        pow.SetPosition(p);
+        SetStateAtPos(p, true);
     }
 
     //checks number of power ups on game
-    public int checkNoPowers()
+    public int CheckNoPowers()
     {
         int count = 0;
 
@@ -119,13 +119,9 @@ public class PowerUpSpawn : MonoBehaviour {
         return count;
     }
 
-    public void makeTrue(int x)
-    {
-        exists[x] = true;
-    }
 
-    public void makeFalse(int x)
+    public void SetStateAtPos(int x, bool value)
     {
-        exists[x] = false;
+        exists[x] = value;
     }
 }

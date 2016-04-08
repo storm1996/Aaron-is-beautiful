@@ -15,7 +15,7 @@ public class Fireball : MonoBehaviour {
       
     }
 
-    public void fire(string direction)
+    public void Fire(string direction)
     {
         if (direction.Equals("Left"))
         {
@@ -30,7 +30,7 @@ public class Fireball : MonoBehaviour {
 
     public void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.CompareTag("Border") && col.CompareTag("Ground"))
+        if (col.CompareTag("Border") || col.CompareTag("Ground"))
         {
             Destroy(gameObject);
         }

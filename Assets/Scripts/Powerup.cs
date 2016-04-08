@@ -14,7 +14,7 @@ public abstract class Powerup : MonoBehaviour {
     //virtual used so it can be called from child
     public virtual void Start()
     {
-        playerMake();
+        PlayerMake();
         power = GameObject.FindGameObjectWithTag("Ground").GetComponent<PowerUpSpawn>();
     }
 
@@ -24,7 +24,7 @@ public abstract class Powerup : MonoBehaviour {
     }
 
 
-    private void playerMake()
+    private void PlayerMake()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
@@ -32,15 +32,15 @@ public abstract class Powerup : MonoBehaviour {
     public abstract void OnTriggerEnter2D(Collider2D col);
 
     //hold position relative to powerUpSpawns
-    public void setPosition(int x)
+    public void SetPosition(int x)
     {
         this.position = x;
     }
 
-    public void destroyAndMakeFalse()
+    public void DestroyAndMakeFalse()
     {
         Destroy(gameObject);
-        power.makeFalse(position);
+        power.SetStateAtPos(position, false);
     }
  
 }

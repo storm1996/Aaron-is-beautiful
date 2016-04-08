@@ -8,9 +8,9 @@ public class HealthPowerup : Powerup {
         if (col.CompareTag("Player"))
         { 
             //in abstract class
-            destroyAndMakeFalse();
+            DestroyAndMakeFalse();
 
-            player.healthPowerUp(100);
+            player.HealthPowerUp(100);
         }
     }
 

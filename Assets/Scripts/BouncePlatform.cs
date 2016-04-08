@@ -21,7 +21,7 @@ public class BouncePlatform : MonoBehaviour {
         if (col.CompareTag("Player"))
         {
             //calling method inside class. Probably better from OOP principles
-            player.bounce(b);
+            player.Bounce(b);
         }
 
 

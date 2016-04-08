@@ -10,10 +10,10 @@ public class Arrow : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Invoke("die", 2);
+        Invoke("Die", 2);
     }
 
-    public void die()
+    public void Die()
     {
         Destroy(gameObject);
     }

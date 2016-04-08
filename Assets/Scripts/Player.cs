@@ -6,6 +6,8 @@ public class Player : MonoBehaviour {
     /*
     Shit to do:
         create collider and new script to check if grounded to change animator
+
+        create function to get/set components
     
     Shit to fix:
         Sign off with name at the end
@@ -42,6 +44,8 @@ public class Player : MonoBehaviour {
     public GameObject arrow;
     public GameObject fireballPrefab;
 
+    private bool facingRight;
+
     void Start () {
         anim = gameObject.GetComponent<Animator>();
 
@@ -70,11 +74,9 @@ public class Player : MonoBehaviour {
         anim.SetBool("Grounded", grounded);
         anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
 
-
-
         if (Input.GetButtonDown("Fire1"))
         {
-            if(Input.GetAxis("Horizontal") > 0.1f)
+            if(facingRight)
             {
                 //optimise this
                 Vector3 newPosition = new Vector3(transform.position.x + 1f, transform.position.y);
@@ -84,10 +86,10 @@ public class Player : MonoBehaviour {
                 arrowRB2D.AddForce(Vector2.right * 500);
                 arrowRB2D.AddForce(Vector2.up * 500);
 
-                createFireball("Right");
+                CreateFireball("Right");
 
             }
-            else if(Input.GetAxis("Horizontal") < -0.1f)
+            else if(!facingRight)
             {
                 //optimise this
                 Vector3 newPosition = new Vector3(transform.position.x - 1f, transform.position.y);
@@ -95,29 +97,15 @@ public class Player : MonoBehaviour {
                 Rigidbody2D arrowRB2D = newArrow.GetComponent<Rigidbody2D>();
                 arrowRB2D.AddForce(Vector2.left * 500);
                 arrowRB2D.AddForce(Vector2.up * 500);
-                createFireball("Left");
+
+                CreateFireball("Left");
             }
-            else if (Input.GetAxis("Horizontal") == 0)
-            {
- 
-
-                //optimise this
-                Vector3 newPosition = new Vector3(transform.position.x + 1f, transform.position.y);
-                GameObject newArrow = (GameObject)Instantiate(arrow, newPosition, Quaternion.identity);
-                Rigidbody2D arrowRB2D = newArrow.GetComponent<Rigidbody2D>();
-                arrowRB2D.AddForce(Vector2.right * 500);
-                arrowRB2D.AddForce(Vector2.up * 500);
-
-
-                createFireball("Left");
-            }
-
 
         }
 
     }
 
-    public void createFireball(string direction)
+    public void CreateFireball(string direction)
     {
         float offset = 1f;
         Vector3 newPosition;
@@ -129,14 +117,14 @@ public class Player : MonoBehaviour {
             newPosition = new Vector3(transform.position.x + offset, transform.position.y);
             newFireball = (GameObject)Instantiate(fireballPrefab, newPosition, Quaternion.identity);
             fireballScript = newFireball.GetComponent<Fireball>();
-            fireballScript.fire(direction);
+            fireballScript.Fire(direction);
         }
         else if (direction.Equals("Left"))
         {
             newPosition = new Vector3(transform.position.x - offset, transform.position.y);
             newFireball = (GameObject)Instantiate(fireballPrefab, newPosition, Quaternion.identity);
             fireballScript = newFireball.GetComponent<Fireball>();
-            fireballScript.fire(direction);
+            fireballScript.Fire(direction);
         }
 
     }
@@ -156,9 +144,31 @@ public class Player : MonoBehaviour {
                 }
         */
 
-        moveControl();
-        jumpControl();
+        float h = Input.GetAxis("Horizontal");
 
+        MoveControl();
+        JumpControl();
+
+        if (h > 0 && !facingRight)
+        {
+            Flip();
+        }
+            
+        else if (h < 0 && facingRight)
+        {
+            Flip();
+        }
+            
+
+    }
+
+    
+    void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
     }
 
     //takes away health from player
@@ -168,7 +178,7 @@ public class Player : MonoBehaviour {
     }
 
     
-    private void jumpControl()
+    private void JumpControl()
     {
         if (Input.GetButtonDown("Jump"))
         {
@@ -190,7 +200,7 @@ public class Player : MonoBehaviour {
         }
     }
 
-    private void moveControl()
+    private void MoveControl()
     {
         //x axis. 
         float h = Input.GetAxis("Horizontal");
@@ -210,19 +220,19 @@ public class Player : MonoBehaviour {
     }
 
     //could put in interface e.g. Mario fireball
-    public void bounce(float value)
+    public void Bounce(float value)
     {
         rb2d.AddForce(Vector2.up * value);
     }
 
     //health powerup
-    public void healthPowerUp(int value)
+    public void HealthPowerUp(int value)
     {
         health += value;
     }
 
     //health powerup
-    public void scorePowerUp(int value)
+    public void ScorePowerUp(int value)
     {
         score += value;
     }
