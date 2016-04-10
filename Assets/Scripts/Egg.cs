@@ -5,15 +5,16 @@ public class Egg : MonoBehaviour
 {
 
     // Use this for initialization
-    private BoxCollider2D eggCollider;
+    private BoxCollider eggCollider;
     private Rigidbody2D eggProperties;
+    private BoxCollider player;//collider for player
 
     public int eggHealth = 5;// 5 hits to kill egg
 
     // Use this for initialisation
     void Start()
     {
-        eggCollider = gameObject.AddComponent<BoxCollider2D>();
+        eggCollider = gameObject.AddComponent<BoxCollider>();
         eggCollider.size = new Vector2(1, 1);
 
         eggProperties = gameObject.AddComponent<Rigidbody2D>();
@@ -21,6 +22,10 @@ public class Egg : MonoBehaviour
         eggProperties.isKinematic = true;
 
         GetComponent<Renderer>().material.color = new Color(255, 255, 255, 0);
+
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<BoxCollider>();
+
+        Physics.IgnoreCollision(eggCollider,player);// ****** ignores collisions with player, need to move egg to lower layer, or player to higher layer
 
         /* something useful to do for game look / gameplay
          * have egg be on a layer lower than player, so that the egg can still be physical(touchable), 
@@ -46,7 +51,7 @@ public class Egg : MonoBehaviour
         //if player touches egg,ignore them
         if (col.CompareTag("Player"))
         {
-        
+            // can make use of ignorecollison function in unity for this
         }
 
         //if enemy tocuhes egg, take damage, 1 per second or half second
