@@ -74,8 +74,9 @@ public class Player : MonoBehaviour {
         anim.SetBool("Grounded", grounded);
         anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
 
+        //shoots fireball depending where player is facing
         if (Input.GetButtonDown("Fire1"))
-        {
+        { 
             if(facingRight)
             {
                 //optimise this
@@ -102,7 +103,6 @@ public class Player : MonoBehaviour {
             }
 
         }
-
     }
 
     public void CreateFireball(string direction)
@@ -111,7 +111,7 @@ public class Player : MonoBehaviour {
         Vector3 newPosition;
         GameObject newFireball;
         Fireball fireballScript;
-
+        
         if (direction.Equals("Right"))
         {
             newPosition = new Vector3(transform.position.x + offset, transform.position.y);
@@ -131,38 +131,25 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void FixedUpdate () {
-        /*
-        needs fixing
-                //adding friction to player so it it doesn't slide
-                Vector3 easeVelocity = rb2d.velocity;
-                easeVelocity.y = rb2d.velocity.y;
-                easeVelocity.x *= 0.75f;
-
-                if (grounded)
-                {
-                    rb2d.velocity = easeVelocity;
-                }
-        */
 
         float h = Input.GetAxis("Horizontal");
 
+        //controls player movement and jumping
         MoveControl();
         JumpControl();
 
+        //checks where player is facing
         if (h > 0 && !facingRight)
         {
             Flip();
-        }
-            
+        }           
         else if (h < 0 && facingRight)
         {
             Flip();
         }
-            
-
     }
 
-    
+    //flips player sprite depending on where it's facing
     void Flip()
     {
         facingRight = !facingRight;

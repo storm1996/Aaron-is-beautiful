@@ -3,13 +3,8 @@ using System.Collections;
 
 public class Arrow : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-        //Invoke("die", 2);
-	}
-	
-	// Update is called once per frame
 	void Update () {
+        //destroys after two seconds
         Invoke("Die", 2);
     }
 

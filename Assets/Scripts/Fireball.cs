@@ -11,10 +11,11 @@ public class Fireball : MonoBehaviour {
 	void Start () {
 
         rb2d = gameObject.GetComponent<Rigidbody2D>();
-        rb2d.gravityScale = 0;
-      
+        rb2d.gravityScale = 0;    
     }
 
+    //CHANGE DIRECTION THINGY
+    //fires
     public void Fire(string direction)
     {
         if (direction.Equals("Left"))

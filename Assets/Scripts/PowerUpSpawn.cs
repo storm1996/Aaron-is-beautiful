@@ -14,6 +14,8 @@ public class PowerUpSpawn : MonoBehaviour {
     public GameObject healthPowerUp;
     public GameObject scorePowerUp;
 
+    private bool isCoroutineExecuting = false;
+
 
 	// Use this for initialization
 	void Start () {
@@ -26,33 +28,30 @@ public class PowerUpSpawn : MonoBehaviour {
         //loads all spawn points using tag
         spawnPoints = GameObject.FindGameObjectsWithTag("Spawn Point");
 
+        //initialises all positions to false
         for (int i = 0; i < exists.Length; i++)
         {
             SetStateAtPos(i, false);
         }
-
-
-	}
+    }
 	
-	void Update () {
+	void Update () { 
 
-        //only spawn when there are no more powerups
-        if(CheckNoPowers() < 2)
-        {
-            //calls it two seconds after condition true
+        //spawns two seconds after condition true
+        if (CheckNoPowers() < 2)
+        {      
             Invoke("Spawn", 2);
         }
-
 	}
 
-    
-
     public void Spawn()
-    {
+    { 
         //goes through each transform and flips coin to see if it will be instantiated or not
         for(int i = 0; i < spawnPoints.Length; i++)
         {
             int choice = Random.Range(0, 2);
+            float spawnTimer = Random.Range(0f, 5f);
+
 
             if(choice > 0)
             {
@@ -60,15 +59,7 @@ public class PowerUpSpawn : MonoBehaviour {
                 {
                     int goChoice = Random.Range(0, 2);
 
-                    if (goChoice > 0)
-                    {
-                        //instantiates the power up at position i.
-                        GenerateSpawn("Score", i);
-                    }
-                    else
-                    { 
-                        GenerateSpawn("Health", i);
-                    }               
+                    StartCoroutine(WaitAndSpawn(spawnTimer, goChoice, i));              
                 }                                               
             }
         }
@@ -77,8 +68,36 @@ public class PowerUpSpawn : MonoBehaviour {
         CancelInvoke("Spawn");
     }
 
-    private void GenerateSpawn(string input, int position)
+    IEnumerator WaitAndSpawn(float time, int choice, int position)
     {
+        if (isCoroutineExecuting)
+        {
+            yield break;
+        }
+
+        isCoroutineExecuting = true;
+        
+        //waits for time to execute after this 
+        yield return new WaitForSeconds(time);
+
+        if (choice > 0)
+        {
+            //instantiates the power up at position i.
+            GenerateSpawn("Score", position);
+            Debug.Log("SPAWNED. POS : " + position);
+        }
+        else
+        { 
+            GenerateSpawn("Health", position);
+            Debug.Log("SPAWNED. POS : " + position);
+        }
+
+        isCoroutineExecuting = false;
+    }
+
+    //
+    private void GenerateSpawn(string input, int position)
+    {   
         Powerup pow = null;
 
         if (input.Equals("Score"))
@@ -90,15 +109,16 @@ public class PowerUpSpawn : MonoBehaviour {
         else if (input.Equals("Health"))
         {
             GameObject newObject = (GameObject)Instantiate(healthPowerUp, spawnPoints[position].transform.position, Quaternion.identity);
-            pow = newObject.GetComponent<HealthPowerup>();
-            
+            pow = newObject.GetComponent<HealthPowerup>();          
         }
 
+        //makes position true at position
         SetPosMakeTrue(pow, position);
     }
+    
 
     public void SetPosMakeTrue(Powerup pow, int p)
-    {
+    { 
         pow.SetPosition(p);
         SetStateAtPos(p, true);
     }
@@ -119,7 +139,7 @@ public class PowerUpSpawn : MonoBehaviour {
         return count;
     }
 
-
+    //sets flag at position
     public void SetStateAtPos(int x, bool value)
     {
         exists[x] = value;
