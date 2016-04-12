@@ -46,18 +46,18 @@ public class Player : MonoBehaviour {
 
         //player properties
         playerRBody = gameObject.AddComponent<Rigidbody2D>();
-        playerRBody.gravityScale = 2f;// strength of gravity
+        playerRBody.gravityScale = 5f;// strength of gravity
         playerRBody.freezeRotation = true; // rotation of player, turned off
-        playerRBody.drag = 1f;// friction between air, water, ground, etc
-        playerRBody.mass = 1.1f; // player mass
+        playerRBody.drag = 0.5f;// friction between air, water, ground, etc
+        playerRBody.mass = 1f; // player mass
 
         //player collisions
-        playerCollider = gameObject.AddComponent<BoxCollider2D>();
-        playerCollider.size = new Vector2(1, 1);
+        //playerCollider = gameObject.AddComponent<BoxCollider2D>();
+        //playerCollider.size = new Vector2(2, 4);
 
         rb2d = gameObject.GetComponent<Rigidbody2D>();
 
-        GetComponent<Renderer>().material.color = new Color(255, 255, 0, 0);
+        //GetComponent<Renderer>().material.color = new Color(255, 255, 0, 0);
 
         arrow = Resources.Load("Arrow") as GameObject;
 
@@ -106,6 +106,14 @@ public class Player : MonoBehaviour {
 
         }
 
+		// Just flips the way he's facing depending on what way he's moving (Alannah) 
+		if (GetComponent<Rigidbody2D> ().velocity.x > 0) {
+
+			transform.localScale = new Vector3 (1f, 1f, 1f);
+		} else if(GetComponent<Rigidbody2D> ().velocity.x < 0)
+		{
+			transform.localScale = new Vector3 (-1f, 1f, 1f);
+		}
 
     }
 

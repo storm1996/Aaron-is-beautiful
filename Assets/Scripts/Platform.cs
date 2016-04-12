@@ -10,6 +10,7 @@ public class Platform : MonoBehaviour {
     void Start () {
        platformCollider = gameObject.AddComponent<BoxCollider2D>();
         platformCollider.size = new Vector2(1, 1);
+		//platformCollider.isTrigger = true; 
 
         platformProperties = gameObject.AddComponent<Rigidbody2D>();
         platformProperties.drag = 1f;

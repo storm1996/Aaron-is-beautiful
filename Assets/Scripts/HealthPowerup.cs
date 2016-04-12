@@ -3,6 +3,7 @@ using System.Collections;
 
 public class HealthPowerup : Powerup {
 
+
     //calls Start() in parent to define outside scripts
     new void Start()
     {
@@ -11,6 +12,7 @@ public class HealthPowerup : Powerup {
 
     public override void OnTriggerEnter2D(Collider2D col)
     {
+		
         if (col.CompareTag("Player"))
         {
             //destroys current gameObject during collision with player
