@@ -10,17 +10,16 @@ public class HealthPowerup : Powerup {
         base.Start();
     }
 
+
     public override void OnTriggerEnter2D(Collider2D col)
     {
 		
         if (col.CompareTag("Player"))
-        {
-            //destroys current gameObject during collision with player
-            Destroy(gameObject);
-            player.healthPowerUp(100);
+        { 
+            //in abstract class
+            DestroyAndMakeFalse();
 
-            //sets array element in PowerUpSpawn to be false
-            power.makeFalse(position);
+            player.HealthPowerUp(100);
         }
     }
 

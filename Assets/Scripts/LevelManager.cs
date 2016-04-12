@@ -38,7 +38,7 @@ public class LevelManager : MonoBehaviour {
 		player.GetComponent<Renderer> ().enabled = false;
 		player.GetComponent<Rigidbody2D> ().gravityScale = 0f;
 		player.GetComponent<Rigidbody2D> ().velocity = Vector2.zero; 
-		player.scorePowerUp (-pointPenaltyOnDeath);
+		player.ScorePowerUp (-pointPenaltyOnDeath);
 		Debug.Log ("Player Respawn");
 		yield return new WaitForSeconds (respawnDelay);
 		player.GetComponent<Rigidbody2D> ().gravityScale = gravityStore;

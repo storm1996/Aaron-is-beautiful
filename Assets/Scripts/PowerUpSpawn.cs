@@ -14,45 +14,44 @@ public class PowerUpSpawn : MonoBehaviour {
     public GameObject healthPowerUp;
     public GameObject scorePowerUp;
 
+    private bool isCoroutineExecuting = false;
+
 
 	// Use this for initialization
 	void Start () {
 
         //takes prefab from resources folder of powerup. isntantiates it later
-        healthPowerUp = Resources.Load("Powerup") as GameObject;
+        healthPowerUp = Resources.Load("HealthPower") as GameObject;
         scorePowerUp = Resources.Load("ScorePower") as GameObject;
 
 
         //loads all spawn points using tag
         spawnPoints = GameObject.FindGameObjectsWithTag("Spawn Point");
 
+        //initialises all positions to false
         for (int i = 0; i < exists.Length; i++)
         {
-            makeFalse(i);
+            SetStateAtPos(i, false);
         }
-
-
-	}
+    }
 	
-	void Update () {
+	void Update () { 
 
-        //only spawn when there are no more powerups
-        if(checkNoPowers() < 2)
-        {
-            //calls it two seconds after condition true
-            Invoke("spawn", 2);
+        //spawns two seconds after condition true
+        if (CheckNoPowers() < 2)
+        {      
+            Invoke("Spawn", 2);
         }
-
 	}
 
-    
-
-    public void spawn()
-    {
+    public void Spawn()
+    { 
         //goes through each transform and flips coin to see if it will be instantiated or not
         for(int i = 0; i < spawnPoints.Length; i++)
         {
             int choice = Random.Range(0, 2);
+            float spawnTimer = Random.Range(0f, 5f);
+
 
             if(choice > 0)
             {
@@ -60,25 +59,45 @@ public class PowerUpSpawn : MonoBehaviour {
                 {
                     int goChoice = Random.Range(0, 2);
 
-                    if (goChoice > 0)
-                    {
-                        //instantiates the power up at position i.
-                        generateSpawn("Score", i);
-                    }
-                    else
-                    { 
-                        generateSpawn("Health", i);
-                    }               
+                    StartCoroutine(WaitAndSpawn(spawnTimer, goChoice, i));              
                 }                                               
             }
         }
 
         //stops spawn fcn from constantly repeating
-        CancelInvoke("spawn");
+        CancelInvoke("Spawn");
     }
 
-    private void generateSpawn(string input, int position)
+    IEnumerator WaitAndSpawn(float time, int choice, int position)
     {
+        if (isCoroutineExecuting)
+        {
+            yield break;
+        }
+
+        isCoroutineExecuting = true;
+        
+        //waits for time to execute after this 
+        yield return new WaitForSeconds(time);
+
+        if (choice > 0)
+        {
+            //instantiates the power up at position i.
+            GenerateSpawn("Score", position);
+            Debug.Log("SPAWNED. POS : " + position);
+        }
+        else
+        { 
+            GenerateSpawn("Health", position);
+            Debug.Log("SPAWNED. POS : " + position);
+        }
+
+        isCoroutineExecuting = false;
+    }
+
+    //
+    private void GenerateSpawn(string input, int position)
+    {   
         Powerup pow = null;
 
         if (input.Equals("Score"))
@@ -90,21 +109,22 @@ public class PowerUpSpawn : MonoBehaviour {
         else if (input.Equals("Health"))
         {
             GameObject newObject = (GameObject)Instantiate(healthPowerUp, spawnPoints[position].transform.position, Quaternion.identity);
-            pow = newObject.GetComponent<HealthPowerup>();
-            
+            pow = newObject.GetComponent<HealthPowerup>();          
         }
 
-        setPosMakeTrue(pow, position);
+        //makes position true at position
+        SetPosMakeTrue(pow, position);
     }
+    
 
-    public void setPosMakeTrue(Powerup pow, int p)
-    {
-        pow.setPosition(p);
-        makeTrue(p);
+    public void SetPosMakeTrue(Powerup pow, int p)
+    { 
+        pow.SetPosition(p);
+        SetStateAtPos(p, true);
     }
 
     //checks number of power ups on game
-    public int checkNoPowers()
+    public int CheckNoPowers()
     {
         int count = 0;
 
@@ -119,13 +139,9 @@ public class PowerUpSpawn : MonoBehaviour {
         return count;
     }
 
-    public void makeTrue(int x)
+    //sets flag at position
+    public void SetStateAtPos(int x, bool value)
     {
-        exists[x] = true;
-    }
-
-    public void makeFalse(int x)
-    {
-        exists[x] = false;
+        exists[x] = value;
     }
 }
