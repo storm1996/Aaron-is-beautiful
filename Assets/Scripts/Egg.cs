@@ -5,16 +5,17 @@ public class Egg : MonoBehaviour
 {
 
     // Use this for initialization
-    private BoxCollider eggCollider;
+    private BoxCollider2D eggCollider;
     private Rigidbody2D eggProperties;
-    private BoxCollider player;//collider for player
+    private BoxCollider2D player;//collider for player
 
-    public int eggHealth = 5;// 5 hits to kill egg
+    private int eggHealth = 5;// 5 hits to kill egg
+    private bool hit = true;
 
     // Use this for initialisation
     void Start()
     {
-        eggCollider = gameObject.AddComponent<BoxCollider>();
+        eggCollider = gameObject.AddComponent<BoxCollider2D>();
         eggCollider.size = new Vector2(1, 1);
 
         eggProperties = gameObject.AddComponent<Rigidbody2D>();
@@ -23,9 +24,9 @@ public class Egg : MonoBehaviour
 
         GetComponent<Renderer>().material.color = new Color(255, 255, 255, 0);
 
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<BoxCollider>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<BoxCollider2D>();
 
-        Physics.IgnoreCollision(eggCollider,player);// ****** ignores collisions with player, need to move egg to lower layer, or player to higher layer
+        Physics2D.IgnoreCollision(eggCollider,player);// ****** ignores collisions with player, need to move egg to lower layer, or player to higher layer
 
         /* something useful to do for game look / gameplay
          * have egg be on a layer lower than player, so that the egg can still be physical(touchable), 
@@ -42,9 +43,19 @@ public class Egg : MonoBehaviour
 
         //can do health decrease / reset health after powerup is picked up and brought to egg to repair, or after a certian amount of tiem has passed
 
+
+        /*will run a loop of some sort that will check that egg is not dead,
+         *if egg is dead (eggHealth = 0), then the bool GameOver will be true, and you will be kicked to the main menu/game over screen
+         *which has options to restart or go to main menu, or to exit the game altogether
+        */
+        /*while(eggHealth > 0)
+        {
+            GameOver = false;
+        }*/
+
     }//end update
 
-    void OnTriggerEnter2D(Collider2D col)
+    void OnTriggerEnter(Collider col)
     {
         /*
 
@@ -53,20 +64,29 @@ public class Egg : MonoBehaviour
         {
             // can make use of ignorecollison function in unity for this
         }
+        */
 
-        //if enemy tocuhes egg, take damage, 1 per second or half second
-        if(col.CompareTag("Enemy"))
+        //if enemy touches egg and hit is true, take damage, 1 per second
+        if(col.CompareTag("Enemy") && hit)
         {
-            //e.g eggHealth--;
+            hit = false;
+            eggHealth--;
+            Invoke("EggHittable",1);
         }
 
-        //if hit by arrow take one damage
-        if(col.CompareTag("Arrow"))
+        //if hit by arrow and hit is true, take one damage per 1 second delay
+        if(col.CompareTag("Arrow") && hit)
         {
-            
+            hit = false;
+            eggHealth--;
+            Invoke("EggHittable",1);
         }
-
-    */
     }//end onentercollision
+
+    //let's enemies deal damage to egg
+    void EggHittable()
+    {
+        hit = true;
+    }
 
 }//end of script
