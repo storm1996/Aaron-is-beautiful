@@ -1,0 +1,115 @@
+fileFormatVersion: 2
+guid: b0852a982606e074fabebafdde6b8695
+timeCreated: 1460473443
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: grass
+    21300002: flower
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 272
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: grass
+      rect:
+        serializedVersion: 2
+        x: 1104
+        y: 78
+        width: 527
+        height: 446
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 38.748047, y: 110.936005}
+        - {x: -9.251953, y: 110.936005}
+        - {x: -19.251953, y: 104.936005}
+        - {x: -47.251953, y: 47.936005}
+        - {x: -120.25195, y: 0.93600464}
+        - {x: -123.25195, y: -9.063995}
+        - {x: -123.25195, y: -61.063995}
+        - {x: -115.25195, y: -80.063995}
+        - {x: -67.25195, y: -114.063995}
+        - {x: 76.74805, y: -114.063995}
+        - {x: 124.74805, y: -87.063995}
+        - {x: 124.74805, y: 1.9360046}
+        - {x: 64.74805, y: 88.936005}
+      - - {x: -88.25195, y: -67.063995}
+        - {x: -92.25195, y: -68.063995}
+        - {x: -92.25195, y: -72.063995}
+        - {x: -89.25195, y: -75.063995}
+        - {x: -86.25195, y: -75.063995}
+        - {x: -84.25195, y: -73.063995}
+        - {x: -84.25195, y: -69.063995}
+        - {x: -85.25195, y: -67.063995}
+    - name: flower
+      rect:
+        serializedVersion: 2
+        x: 2323
+        y: 78
+        width: 363
+        height: 538
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 52.8761, y: 37.436005}
+        - {x: 60.8761, y: 61.436005}
+        - {x: 50.8761, y: 134.436}
+        - {x: 39.8761, y: 139.436}
+        - {x: -61.1239, y: 139.436}
+        - {x: -84.1239, y: 114.436005}
+        - {x: -84.1239, y: -51.563995}
+        - {x: -51.1239, y: -131.564}
+        - {x: -39.1239, y: -137.564}
+        - {x: 73.8761, y: -137.564}
+        - {x: 79.8761, y: -113.563995}
+        - {x: 79.8761, y: 38.436005}
+        - {x: 28.876099, y: 19.436005}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
