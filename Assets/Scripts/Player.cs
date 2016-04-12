@@ -38,7 +38,7 @@ public class Player : MonoBehaviour {
     private Rigidbody2D rb2d;
     private Rigidbody2D playerRBody;
     private Animator anim;
-    private BoxCollider2D playerCollider;
+    public static BoxCollider2D playerCollider;
     private Transform newPosition;
 
     public GameObject arrow;

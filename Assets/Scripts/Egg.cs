@@ -5,16 +5,18 @@ public class Egg : MonoBehaviour
 {
 
     // Use this for initialization
-    private BoxCollider2D eggCollider;
-    private Rigidbody2D eggProperties;
-    private BoxCollider2D player;//collider for player
+    public BoxCollider2D eggCollider;
+    public Rigidbody2D eggProperties;
+    public BoxCollider2D player;//collider for player
 
-    private int eggHealth = 5;// 5 hits to kill egg
-    private bool hit = true;
+    public int eggHealth;// 5 hits to kill egg
+    public bool hit;
 
     // Use this for initialisation
     void Start()
     {
+        hit = true;
+        eggHealth = 5;
         eggCollider = gameObject.AddComponent<BoxCollider2D>();
         eggCollider.size = new Vector2(1, 1);
 
@@ -26,7 +28,11 @@ public class Egg : MonoBehaviour
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<BoxCollider2D>();
 
-        Physics2D.IgnoreCollision(eggCollider,player);// ****** ignores collisions with player, need to move egg to lower layer, or player to higher layer
+        Physics2D.IgnoreLayerCollision(8,9,true); //ignores player and egg layer collisions
+        //Physics2D.IgnoreCollision(player,eggCollider, true);
+        //Debug.Log(Physics2D.GetIgnoreCollision(player,eggCollider));
+
+        // ****** ignores collisions with player, need to move egg to lower layer, or player to higher layer
 
         /* something useful to do for game look / gameplay
          * have egg be on a layer lower than player, so that the egg can still be physical(touchable), 
@@ -38,7 +44,7 @@ public class Egg : MonoBehaviour
     }//end start
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
 
         //can do health decrease / reset health after powerup is picked up and brought to egg to repair, or after a certian amount of tiem has passed
@@ -55,36 +61,45 @@ public class Egg : MonoBehaviour
 
     }//end update
 
-    void OnTriggerEnter(Collider col)
+
+    public void OnCollisionEnter2D(Collision2D col)
     {
-        /*
+        Debug.Log("hit something");
 
         //if player touches egg,ignore them
-        if (col.CompareTag("Player"))
+
+        /*Found bug, player doesn't get instantiated for some reason, where its tag "Player" or its boxcollider is not properly added 
+         *into the code / variables 
+         */
+
+
+        if (col.gameObject.tag == "Enemy" && hit)
         {
-            // can make use of ignorecollison function in unity for this
+            Debug.Log("hit egg");
+            hit = false;
+            eggHealth--;
+            Invoke("EggHittable", 1);
         }
-        */
 
         //if enemy touches egg and hit is true, take damage, 1 per second
-        if(col.CompareTag("Enemy") && hit)
+        /*else if(col.CompareTag("Enemy") && hit)
         {
             hit = false;
             eggHealth--;
             Invoke("EggHittable",1);
-        }
+        }*/
 
         //if hit by arrow and hit is true, take one damage per 1 second delay
-        if(col.CompareTag("Arrow") && hit)
+        /*else if(col.CompareTag("Arrow") && hit)
         {
             hit = false;
             eggHealth--;
             Invoke("EggHittable",1);
-        }
+        }*/
     }//end onentercollision
 
     //let's enemies deal damage to egg
-    void EggHittable()
+    public void EggHittable()
     {
         hit = true;
     }
