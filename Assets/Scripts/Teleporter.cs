@@ -7,6 +7,7 @@ public class Teleporter : MonoBehaviour {
     private EnemyPatrol enemy;
     private BoxCollider2D teleporterBC2D;
     private Rigidbody2D teleporterRB2D;
+    private float offset = 3f;
 
     // Use this for initialization
     public virtual void Start () {
@@ -33,19 +34,19 @@ public class Teleporter : MonoBehaviour {
         if (col.CompareTag("Player"))
         {
             //if touching the right teleporter
-            if(gameObject.tag == "TPRight")
+            if(gameObject.tag.Equals("TPRight"))
             {
                 //brings the player to the left teleporter, gives new position
                 teleporterRB2D = GameObject.FindGameObjectWithTag("TPLeft").GetComponent<Rigidbody2D>();
-                player.transform.position = new Vector2(teleporterRB2D.transform.position.x + 3f, player.transform.position.y);
+                player.transform.position = new Vector2(teleporterRB2D.transform.position.x + offset, player.transform.position.y);
             }
 
             //if touching left teleporter
-            if (gameObject.tag == "TPLeft")
+            if (gameObject.tag.Equals("TPLeft"))
             {
                 //brings player to the right teleporter, gives new position
                 teleporterRB2D = GameObject.FindGameObjectWithTag("TPRight").GetComponent<Rigidbody2D>();
-                player.transform.position = new Vector2(teleporterRB2D.transform.position.x - 3f, player.transform.position.y);
+                player.transform.position = new Vector2(teleporterRB2D.transform.position.x - offset, player.transform.position.y);
             }
         }
 
