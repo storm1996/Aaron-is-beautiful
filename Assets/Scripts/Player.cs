@@ -142,6 +142,7 @@ public class Player : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space) && !doubleJumped && !grounded) {
 			//GetComponent<Rigidbody2D> ().velocity = new Vector2(GetComponent<Rigidbody2D> ().velocity.x, jumpForce); 
 			Jump ();
+            AudioSource.PlayClipAtPoint(sounds[0], Vector3.zero);
             doubleJumped = true;
 		}
 
