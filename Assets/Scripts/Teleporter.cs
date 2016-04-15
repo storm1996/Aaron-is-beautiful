@@ -51,7 +51,7 @@ public class Teleporter : MonoBehaviour {
         }
 
         //checks if enemy enters the portals
-        if (col.CompareTag("Enemy"))
+        else if (col.CompareTag("Enemy"))
         {
             //if touching the right teleporter
             if (gameObject.tag == "TPRight")
