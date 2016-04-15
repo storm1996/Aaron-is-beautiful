@@ -25,3 +25,6 @@ ExportedObj/
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
 Assets/TestScene.unity
+Assets/Scripts/Teleporter.cs
+Assets/TestScene.unity
+ProjectSettings/TagManager.asset

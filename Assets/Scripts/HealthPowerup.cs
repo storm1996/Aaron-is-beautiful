@@ -19,7 +19,7 @@ public class HealthPowerup : Powerup {
             //in abstract class
             DestroyAndMakeFalse();
 
-            player.HealthPowerUp(100);
+            //player.HealthPowerUp(100);
         }
     }
 
