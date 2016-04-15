@@ -12,9 +12,9 @@ public class Egg : MonoBehaviour
     public int eggHealth;// 5 hits to kill egg
     public bool hit;
 
-    //audio
-    public AudioSource sound;// use sound source for the object
-    public AudioClip jump;
+    //audio **************
+    //public AudioSource sound;// use sound source for the object
+    //public AudioClip jump;
     
 
     // Use this for initialisation
@@ -26,7 +26,7 @@ public class Egg : MonoBehaviour
          * have it add in all sounds at start of game(?)
          */
         //loads in jump sound that is attached to egg
-        sound = GetComponent<AudioSource>();
+        //sound = GetComponent<AudioSource>();
 
         hit = true;
         eggHealth = 5;
@@ -83,7 +83,7 @@ public class Egg : MonoBehaviour
         if (col.gameObject.tag == "Enemy" && hit)
         {
             Debug.Log("enemy hit egg");
-            sound.PlayOneShot(jump);
+            //sound.PlayOneShot(jump);
             hit = false;
             eggHealth--;
             Invoke("EggHittable", 1);
@@ -101,7 +101,7 @@ public class Egg : MonoBehaviour
         else if(col.gameObject.tag == "Arrow" && hit)
         {
             Debug.Log("arrow hit egg");
-            sound.PlayOneShot(jump);
+            //sound.PlayOneShot(jump);
             hit = false;
             eggHealth--;
             Invoke("EggHittable",1);

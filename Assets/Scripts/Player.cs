@@ -26,7 +26,7 @@ public class Player : MonoBehaviour {
     */
     public float speed = 50f;
     public float maxSpeed = 300f;
-    public float jumpForce = 15f;
+    public float jumpForce = 30f;
 
     public int health = 100;
     public int score; //maybe put this in own game control script
@@ -50,11 +50,14 @@ public class Player : MonoBehaviour {
     public GameObject arrow;
     public GameObject fireballPrefab;
 
+    public AudioClip[] sounds;//holds sounds used by player
+
     public bool facingRight;
 
     void Start () {
         anim = gameObject.GetComponent<Animator>();
 		//anim2 = gameObject.GetComponent<Animator>();
+
         //player properties
         playerRBody = gameObject.AddComponent<Rigidbody2D>();
         playerRBody.gravityScale = 5f;// strength of gravity
@@ -66,10 +69,17 @@ public class Player : MonoBehaviour {
         arrow = Resources.Load("Arrow") as GameObject;
         fireballPrefab = Resources.Load("Fireball") as GameObject;
 
+        sounds = new AudioClip[]
+        {
+            Resources.Load("Sound_Jump") as AudioClip,
+            Resources.Load("Sound_Fireball") as AudioClip
+        };
+
     }
 
     void Update()
     {
+        //Debug.Log(facingRight);
         //anim.SetBool("Grounded", grounded);
         anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
 
@@ -125,14 +135,14 @@ public class Player : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space) && grounded) {
 			//GetComponent<Rigidbody2D> ().velocity = new Vector2(GetComponent<Rigidbody2D> ().velocity.x, jumpForce); 
 			Jump ();
-
-		}
+            AudioSource.PlayClipAtPoint(sounds[0], Vector3.zero);
+        }
 
 
 		if (Input.GetKeyDown (KeyCode.Space) && !doubleJumped && !grounded) {
 			//GetComponent<Rigidbody2D> ().velocity = new Vector2(GetComponent<Rigidbody2D> ().velocity.x, jumpForce); 
 			Jump ();
-			doubleJumped = true;
+            doubleJumped = true;
 		}
 
 		if (!grounded) 
@@ -153,6 +163,7 @@ public class Player : MonoBehaviour {
             newFireball = (GameObject)Instantiate(fireballPrefab, newPosition, Quaternion.identity);
             fireballScript = newFireball.GetComponent<Fireball>();
             fireballScript.Fire(direction);
+            AudioSource.PlayClipAtPoint(sounds[1], Vector3.zero);
         }
         else if (direction.Equals("Left"))
         {
@@ -160,6 +171,7 @@ public class Player : MonoBehaviour {
             newFireball = (GameObject)Instantiate(fireballPrefab, newPosition, Quaternion.identity);
             fireballScript = newFireball.GetComponent<Fireball>();
             fireballScript.Fire(direction);
+            AudioSource.PlayClipAtPoint(sounds[1], Vector3.zero);
         }
 
 
@@ -292,6 +304,6 @@ public class Player : MonoBehaviour {
 
 	public void Jump()
 	{
-		GetComponent<Rigidbody2D> ().velocity = new Vector2(GetComponent<Rigidbody2D> ().velocity.x, jumpForce); 
+        GetComponent<Rigidbody2D> ().velocity = new Vector2(GetComponent<Rigidbody2D> ().velocity.x, jumpForce);
 	}
 }

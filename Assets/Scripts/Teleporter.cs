@@ -50,12 +50,13 @@ public class Teleporter : MonoBehaviour {
             }
         }
 
-        //checks if enemy enters the portals
-        if (col.CompareTag("Enemy"))
+        ///checks if enemy enters the portals
+        else if (col.CompareTag("Enemy"))
         {
             //if touching the right teleporter
             if (gameObject.tag == "TPRight")
             {
+                Debug.Log("touched right");
                 //brings the player to the left teleporter, gives new position
                 teleporterRB2D = GameObject.FindGameObjectWithTag("TPLeft").GetComponent<Rigidbody2D>();
                 enemy.transform.position = new Vector2(teleporterRB2D.transform.position.x + 3f, enemy.transform.position.y);
@@ -64,6 +65,7 @@ public class Teleporter : MonoBehaviour {
             //if touching left teleporter
             if (gameObject.tag == "TPLeft")
             {
+                Debug.Log("touched left");
                 //brings player to the right teleporter, gives new position
                 teleporterRB2D = GameObject.FindGameObjectWithTag("TPRight").GetComponent<Rigidbody2D>();
                 enemy.transform.position = new Vector2(teleporterRB2D.transform.position.x - 3f, enemy.transform.position.y);
