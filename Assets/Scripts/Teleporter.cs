@@ -59,7 +59,7 @@ public class Teleporter : MonoBehaviour {
                 Debug.Log("touched right");
                 //brings the player to the left teleporter, gives new position
                 teleporterRB2D = GameObject.FindGameObjectWithTag("TPLeft").GetComponent<Rigidbody2D>();
-                enemy.transform.position = new Vector2(teleporterRB2D.transform.position.x + 3f, enemy.transform.position.y);
+                enemy.transform.position = new Vector2(teleporterRB2D.transform.position.x + 4f, enemy.transform.position.y);
             }
 
             //if touching left teleporter
@@ -68,7 +68,7 @@ public class Teleporter : MonoBehaviour {
                 Debug.Log("touched left");
                 //brings player to the right teleporter, gives new position
                 teleporterRB2D = GameObject.FindGameObjectWithTag("TPRight").GetComponent<Rigidbody2D>();
-                enemy.transform.position = new Vector2(teleporterRB2D.transform.position.x - 3f, enemy.transform.position.y);
+                enemy.transform.position = new Vector2(teleporterRB2D.transform.position.x - 4f, enemy.transform.position.y);
             }
         }
 	}
