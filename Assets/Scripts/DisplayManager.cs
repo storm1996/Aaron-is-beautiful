@@ -26,6 +26,7 @@ public class DisplayManager : MonoBehaviour {
     //sets the health and score
     private void setHealthText()
     {
+        
         showHealth.text = "Health: " + player.health.ToString();
     }
 

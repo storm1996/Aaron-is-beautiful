@@ -7,14 +7,27 @@ public class Egg : MonoBehaviour
     // Use this for initialization
     public BoxCollider2D eggCollider;
     public Rigidbody2D eggProperties;
-    public BoxCollider2D player;//collider for player
+    //public CircleCollider2D player;//collider for player
 
     public int eggHealth;// 5 hits to kill egg
     public bool hit;
 
+    //audio
+    public AudioSource sound;// use sound source for the object
+    public AudioClip jump;
+    
+
     // Use this for initialisation
     void Start()
     {
+        
+        /* ****** just for testing sound 
+         * can make code better - multiple sounds
+         * have it add in all sounds at start of game(?)
+         */
+        //loads in jump sound that is attached to egg
+        sound = GetComponent<AudioSource>();
+
         hit = true;
         eggHealth = 5;
         eggCollider = gameObject.AddComponent<BoxCollider2D>();
@@ -26,9 +39,10 @@ public class Egg : MonoBehaviour
 
         //GetComponent<Renderer>().material.color = new Color(255, 255, 255, 0);
 
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<BoxCollider2D>();
+        //player = GameObject.FindGameObjectWithTag("Player").GetComponent<CircleCollider2D>();
 
-        Physics2D.IgnoreLayerCollision(8,9,true); //ignores player and egg layer collisions
+        Physics2D.IgnoreLayerCollision(8,9,true); //ignores player and egg layer collisions - layer 8 and 9
+        
         //Physics2D.IgnoreCollision(player,eggCollider, true);
         //Debug.Log(Physics2D.GetIgnoreCollision(player,eggCollider));
 
@@ -66,16 +80,10 @@ public class Egg : MonoBehaviour
     {
         Debug.Log("hit something");
 
-        //if player touches egg,ignore them
-
-        /*Found bug, player doesn't get instantiated for some reason, where its tag "Player" or its boxcollider is not properly added 
-         *into the code / variables 
-         */
-
-
         if (col.gameObject.tag == "Enemy" && hit)
         {
-            Debug.Log("hit egg");
+            Debug.Log("enemy hit egg");
+            sound.PlayOneShot(jump);
             hit = false;
             eggHealth--;
             Invoke("EggHittable", 1);
@@ -90,12 +98,14 @@ public class Egg : MonoBehaviour
         }*/
 
         //if hit by arrow and hit is true, take one damage per 1 second delay
-        /*else if(col.CompareTag("Arrow") && hit)
+        else if(col.gameObject.tag == "Arrow" && hit)
         {
+            Debug.Log("arrow hit egg");
+            sound.PlayOneShot(jump);
             hit = false;
             eggHealth--;
             Invoke("EggHittable",1);
-        }*/
+        }
     }//end onentercollision
 
     //let's enemies deal damage to egg

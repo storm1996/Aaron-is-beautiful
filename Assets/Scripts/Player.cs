@@ -50,7 +50,7 @@ public class Player : MonoBehaviour {
     public GameObject arrow;
     public GameObject fireballPrefab;
 
-    private bool facingRight;
+    public bool facingRight;
 
     void Start () {
         anim = gameObject.GetComponent<Animator>();
@@ -61,10 +61,6 @@ public class Player : MonoBehaviour {
         playerRBody.freezeRotation = true; // rotation of player, turned off
         playerRBody.drag = 0.5f;// friction between air, water, ground, etc
         playerRBody.mass = 1f; // player mass
-
-        //player collisions
-        //playerCollider = gameObject.AddComponent<BoxCollider2D>();
-        //playerCollider.size = new Vector2(2, 4);
 
         rb2d = gameObject.GetComponent<Rigidbody2D>();
         arrow = Resources.Load("Arrow") as GameObject;
