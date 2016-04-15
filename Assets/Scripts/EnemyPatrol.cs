@@ -25,6 +25,7 @@ public class EnemyPatrol : MonoBehaviour {
 
 		if (hittingWall)/* || !notatEdge*/ 
 		{
+            Debug.Log("hit wall");
 			moveRight = !moveRight;
 		}
 
