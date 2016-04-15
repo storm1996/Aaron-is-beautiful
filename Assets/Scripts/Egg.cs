@@ -24,7 +24,7 @@ public class Egg : MonoBehaviour
         eggProperties.drag = 1f;
         eggProperties.isKinematic = true;
 
-        GetComponent<Renderer>().material.color = new Color(255, 255, 255, 0);
+        //GetComponent<Renderer>().material.color = new Color(255, 255, 255, 0);
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<BoxCollider2D>();
 

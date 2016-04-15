@@ -10,7 +10,7 @@ public class ScorePowerup : Powerup {
         {
             //destroys current gameObject during collision with player
             DestroyAndMakeFalse();
-            player.ScorePowerUp(100);
+            //player.ScorePowerUp(100);
           
         }
     }

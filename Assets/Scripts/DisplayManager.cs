@@ -19,8 +19,8 @@ public class DisplayManager : MonoBehaviour {
     }
 	
 	void Update () {
-        setHealthText();
-        setScoreText();
+        //setHealthText();
+        //setScoreText();
     }
 
     //sets the health and score

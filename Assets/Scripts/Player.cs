@@ -26,18 +26,24 @@ public class Player : MonoBehaviour {
     */
     public float speed = 50f;
     public float maxSpeed = 300f;
-    public float jumpForce = 300f;
+    public float jumpForce = 15f;
 
     public int health = 100;
     public int score; //maybe put this in own game control script
 
-    public bool grounded;
-    public bool canDoubleJump;
+	public Transform groundCheck;
+	public float groundCheckRadius; 
+	public LayerMask whatIsGround; 
+	public bool grounded; 
+	public bool shooting; 
+
+	public bool doubleJumped;
 
     //accessible from other scripts
     private Rigidbody2D rb2d;
     private Rigidbody2D playerRBody;
     private Animator anim;
+	//private Animator anim2;
     public static BoxCollider2D playerCollider;
     private Transform newPosition;
 
@@ -48,7 +54,7 @@ public class Player : MonoBehaviour {
 
     void Start () {
         anim = gameObject.GetComponent<Animator>();
-
+		//anim2 = gameObject.GetComponent<Animator>();
         //player properties
         playerRBody = gameObject.AddComponent<Rigidbody2D>();
         playerRBody.gravityScale = 5f;// strength of gravity
@@ -61,9 +67,6 @@ public class Player : MonoBehaviour {
         //playerCollider.size = new Vector2(2, 4);
 
         rb2d = gameObject.GetComponent<Rigidbody2D>();
-
-        //GetComponent<Renderer>().material.color = new Color(255, 255, 0, 0);
-
         arrow = Resources.Load("Arrow") as GameObject;
         fireballPrefab = Resources.Load("Fireball") as GameObject;
 
@@ -71,14 +74,17 @@ public class Player : MonoBehaviour {
 
     void Update()
     {
-        anim.SetBool("Grounded", grounded);
+        //anim.SetBool("Grounded", grounded);
         anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
+
 
         //shoots fireball depending where player is facing
         if (Input.GetButtonDown("Fire1"))
         { 
+			anim.SetTrigger("shooting");
             if(facingRight)
             {
+				
                 //optimise this
                 Vector3 newPosition = new Vector3(transform.position.x + 1f, transform.position.y);
                 //change this
@@ -92,6 +98,7 @@ public class Player : MonoBehaviour {
             }
             else if(!facingRight)
             {
+				
                 //optimise this
                 Vector3 newPosition = new Vector3(transform.position.x - 1f, transform.position.y);
                 GameObject newArrow = (GameObject)Instantiate(arrow, newPosition, Quaternion.identity);
@@ -102,10 +109,9 @@ public class Player : MonoBehaviour {
                 CreateFireball("Left");
             }
 
-        }
-    
 
-		
+        }
+		anim.ResetTrigger("shooting");
 		// Just flips the way he's facing depending on what way he's moving (Alannah) 
 		if(GetComponent<Rigidbody2D> ().velocity.x > 0) {
 
@@ -113,6 +119,29 @@ public class Player : MonoBehaviour {
 		} else if(GetComponent<Rigidbody2D> ().velocity.x < 0)
 		{
 			transform.localScale = new Vector3 (-1f, 1f, 1f);
+		}
+
+		if (grounded) {
+			doubleJumped = false;
+			anim.SetBool ("Grounded", grounded);
+		}
+
+		if (Input.GetKeyDown (KeyCode.Space) && grounded) {
+			//GetComponent<Rigidbody2D> ().velocity = new Vector2(GetComponent<Rigidbody2D> ().velocity.x, jumpForce); 
+			Jump ();
+
+		}
+
+
+		if (Input.GetKeyDown (KeyCode.Space) && !doubleJumped && !grounded) {
+			//GetComponent<Rigidbody2D> ().velocity = new Vector2(GetComponent<Rigidbody2D> ().velocity.x, jumpForce); 
+			Jump ();
+			doubleJumped = true;
+		}
+
+		if (!grounded) 
+		{
+			anim.SetBool ("Grounded", !grounded);
 		}
 	}
     public void CreateFireball(string direction)
@@ -143,11 +172,12 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate () {
 
+		grounded = Physics2D.OverlapCircle (groundCheck.position, groundCheckRadius, whatIsGround);
         float h = Input.GetAxis("Horizontal");
 
         //controls player movement and jumping
         MoveControl();
-        JumpControl();
+        //JumpControl();
 
         //checks where player is facing
         if (h > 0 && !facingRight)
@@ -169,6 +199,8 @@ public class Player : MonoBehaviour {
         transform.localScale = theScale;
     }
 
+
+		
     //takes away health from player
     public void Damage(int damage)
     {
@@ -176,7 +208,7 @@ public class Player : MonoBehaviour {
     }
 
     
-    private void JumpControl()
+    /*private void JumpControl()
     {
         if (Input.GetButtonDown("Jump"))
         {
@@ -196,7 +228,7 @@ public class Player : MonoBehaviour {
                 
             }
         }
-    }
+    }*/
 
     private void MoveControl()
     {
@@ -261,4 +293,9 @@ public class Player : MonoBehaviour {
         yield return 0;
     }
 
+
+	public void Jump()
+	{
+		GetComponent<Rigidbody2D> ().velocity = new Vector2(GetComponent<Rigidbody2D> ().velocity.x, jumpForce); 
+	}
 }

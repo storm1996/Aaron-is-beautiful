@@ -28,8 +28,8 @@ public class Teleporter : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.CompareTag("Player"))
-        {
+		if (col.CompareTag("Player"))
+			{
             //if touching the right teleporter
             if(gameObject.tag == "TPRight")
             {
@@ -46,5 +46,5 @@ public class Teleporter : MonoBehaviour {
                 player.transform.position = new Vector2(teleporterRB2D.transform.position.x - 3f, player.transform.position.y);
             }
         }
-    }
+	}
 }
