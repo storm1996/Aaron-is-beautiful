@@ -4,7 +4,7 @@ using System.Collections;
 public class Teleporter : MonoBehaviour {
 
     private Player player;
-    private EnemyPatrol enemy;
+    
     private BoxCollider2D teleporterBC2D;
     private Rigidbody2D teleporterRB2D;
     private float offset = 3f;
@@ -13,7 +13,7 @@ public class Teleporter : MonoBehaviour {
     // Use this for initialization
     public virtual void Start () {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyPatrol>();
+        
 
         teleporterBC2D = gameObject.AddComponent<BoxCollider2D>();
         teleporterRB2D = gameObject.AddComponent<Rigidbody2D>();
@@ -26,6 +26,8 @@ public class Teleporter : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+
+        //collisions checking for all enemies on screen
 	    foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             if (teleporterBC2D.IsTouching(obj.GetComponent<BoxCollider2D>()))

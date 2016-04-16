@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         rb2d = gameObject.AddComponent<Rigidbody2D>();
+        rb2d.freezeRotation = true;
         playerBox = GameObject.FindGameObjectWithTag("Player").GetComponent<CircleCollider2D>();
         thisBox = gameObject.GetComponent<BoxCollider2D>();
     }
