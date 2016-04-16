@@ -8,6 +8,7 @@ public class Teleporter : MonoBehaviour {
     private BoxCollider2D teleporterBC2D;
     private Rigidbody2D teleporterRB2D;
     private float offset = 3f;
+    GameObject[] enemies;
 
     // Use this for initialization
     public virtual void Start () {
@@ -25,7 +26,28 @@ public class Teleporter : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-	
+	    foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            if (teleporterBC2D.IsTouching(obj.GetComponent<BoxCollider2D>()))
+            {
+                if (gameObject.tag == "TPRight")
+                {
+                    Debug.Log("touched right");
+                    //brings the player to the left teleporter, gives new position
+                    teleporterRB2D = GameObject.FindGameObjectWithTag("TPLeft").GetComponent<Rigidbody2D>();
+                    obj.transform.position = new Vector2(teleporterRB2D.transform.position.x + 4f, obj.transform.position.y);
+                }
+
+                //if touching left teleporter
+                if (gameObject.tag == "TPLeft")
+                {
+                    Debug.Log("touched left");
+                    //brings player to the right teleporter, gives new position
+                    teleporterRB2D = GameObject.FindGameObjectWithTag("TPRight").GetComponent<Rigidbody2D>();
+                    obj.transform.position = new Vector2(teleporterRB2D.transform.position.x - 4f, obj.transform.position.y);
+                }
+            }
+        }
 	}
 
 
@@ -51,25 +73,6 @@ public class Teleporter : MonoBehaviour {
         }
 
 
-        else if (col.CompareTag("Enemy"))
-        {
-            //if touching the right teleporter
-            if (gameObject.tag == "TPRight")
-            {
-                Debug.Log("touched right");
-                //brings the player to the left teleporter, gives new position
-                teleporterRB2D = GameObject.FindGameObjectWithTag("TPLeft").GetComponent<Rigidbody2D>();
-                enemy.transform.position = new Vector2(teleporterRB2D.transform.position.x + 4f, enemy.transform.position.y);
-            }
-
-            //if touching left teleporter
-            if (gameObject.tag == "TPLeft")
-            {
-                Debug.Log("touched left");
-                //brings player to the right teleporter, gives new position
-                teleporterRB2D = GameObject.FindGameObjectWithTag("TPRight").GetComponent<Rigidbody2D>();
-                enemy.transform.position = new Vector2(teleporterRB2D.transform.position.x - 4f, enemy.transform.position.y);
-            }
-        }
+        
 	}
 }
