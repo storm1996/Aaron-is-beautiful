@@ -12,8 +12,8 @@ public class Knockback : MonoBehaviour {
     {
         float vector = col.transform.position.x;//current position of enemy
         facingRight = Enemy.GetDirection();//checks for direction enemy is facing
-
-        //facingRight = true ? (vector = col.transform.position.x + KB_Power) : (vector = col.transform.position.x - KB_Power);
+        
+        //facingRight= true ? (KB_Val = KB_Power) : (KB_Val = -KB_Power);
 
         if (facingRight)
         {
@@ -21,13 +21,13 @@ public class Knockback : MonoBehaviour {
             vector = col.transform.position.x + KB_Power;
         }
 
-        else if(!facingRight)
+        else
         {
             //if facing left, get knocked back to the right
             vector = col.transform.position.x - KB_Power;
         }
 
-        return vector;
+        return vector ;
     }
 
 }

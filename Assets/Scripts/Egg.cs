@@ -19,18 +19,24 @@ public class Egg : MonoBehaviour
     //audio **************
     //public AudioSource sound;// use sound source for the object
     //public AudioClip jump;
-    
+    public AudioClip[] sounds;
 
     // Use this for initialisation
     void Start()
     {
-        
+
         /* ****** just for testing sound 
          * can make code better - multiple sounds
          * have it add in all sounds at start of game(?)
          */
         //loads in jump sound that is attached to egg
         //sound = GetComponent<AudioSource>();
+
+        sounds = new AudioClip[]
+        {
+            Resources.Load("cracking") as AudioClip
+        };
+
 
         hit = false;
         eggHealth = 5;
@@ -46,7 +52,7 @@ public class Egg : MonoBehaviour
         //player = GameObject.FindGameObjectWithTag("Player").GetComponent<CircleCollider2D>();
 
         Physics2D.IgnoreLayerCollision(8,9,true); //ignores player and egg layer collisions - layer 8 and 9
-        
+
         //Physics2D.IgnoreCollision(player,eggCollider, true);
         //Debug.Log(Physics2D.GetIgnoreCollision(player,eggCollider));
 
@@ -58,8 +64,7 @@ public class Egg : MonoBehaviour
          * or just have physics for only platform below the egg and for enemies, but not player, to enable movement over egg
          * will look into the layers / if/ while statements
          */
-
-    }//end start
+}//end start
 
     // Update is called once per frame
     public void Update()
@@ -117,10 +122,11 @@ public class Egg : MonoBehaviour
     //let's enemies deal damage to egg
     public void EggHittable()
     {
+        AudioSource.PlayClipAtPoint(sounds[0],Vector3.zero);
         //hit = true;
         eggHealth--;
         hit = false;
-        eggHitterVC2 = Knockback.back(eggHitter, -1);
+        eggHitterVC2 = Knockback.back(eggHitter, -2);
         eggHitterRB.transform.position = new Vector2(eggHitterVC2, eggHitterRB.transform.position.y);
     }
 
