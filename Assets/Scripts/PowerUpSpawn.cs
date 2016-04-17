@@ -64,7 +64,7 @@ public class PowerUpSpawn : MonoBehaviour {
             }
         }
 
-        //stops spawn fcn from constantly repeating
+        //stops spawn function from constantly repeating
         CancelInvoke("Spawn");
     }
 
@@ -95,7 +95,7 @@ public class PowerUpSpawn : MonoBehaviour {
         isCoroutineExecuting = false;
     }
 
-    //
+  
     private void GenerateSpawn(string input, int position)
     {   
         Powerup pow = null;

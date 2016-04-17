@@ -7,22 +7,32 @@ public class EnemyPatrol : MonoBehaviour {
     public GameObject[] enemies;
     public GameObject leftSpawn;
     public GameObject rightSpawn;
-    private bool isCoroutineExecuting;
+    private bool isCoroutineExecuting = false;
     private float time;
-    //private int choice;
+    private int enemyQuant;
+
+    private bool isExecuting = false;
 
 	void Start()
 	{
+        enemyQuant = 5;
         enemy = Resources.Load("Enemy") as GameObject;
         rightSpawn = GameObject.FindGameObjectWithTag("Right Enemy Spawn");
         leftSpawn = GameObject.FindGameObjectWithTag("Left Enemy Spawn");
 
-        for(int i = 0; i < 1; i++)
+        
+    }
+
+    public void Spawn(int level)
+    {
+        enemyQuant = 5 * (level - 1);
+
+        for (int i = 0; i < enemyQuant; i++)
         {
             time = i;
             int choice = Random.Range(0, 2);
 
-            if(choice > 0)
+            if (choice > 0)
             {
                 StartCoroutine(WaitAndSpawn(time, "Left"));
             }
@@ -30,15 +40,8 @@ public class EnemyPatrol : MonoBehaviour {
             {
                 StartCoroutine(WaitAndSpawn(time, "Right"));
             }
-            
-            
         }
     }
-
-	void Update()
-	{
-		
-	}
 
     IEnumerator WaitAndSpawn(float time, string direction)
     {
@@ -46,6 +49,8 @@ public class EnemyPatrol : MonoBehaviour {
         {
             yield break;
         }
+
+        isCoroutineExecuting = true;
 
         yield return new WaitForSeconds(time);
 
@@ -64,4 +69,11 @@ public class EnemyPatrol : MonoBehaviour {
         isCoroutineExecuting = false;
 
     }
+
+    public int NoOfEnemies()
+    {
+        return enemies.Length;
+    }
+
+    
 }
