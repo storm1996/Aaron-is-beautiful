@@ -9,6 +9,7 @@ public class EnemyPatrol : MonoBehaviour {
     public GameObject rightSpawn;
     private bool isCoroutineExecuting;
     private float time;
+    //private int choice;
 
 	void Start()
 	{
@@ -19,7 +20,18 @@ public class EnemyPatrol : MonoBehaviour {
         for(int i = 0; i < 5; i++)
         {
             time = i;
-            StartCoroutine(WaitAndSpawn(time));
+            int choice = Random.Range(0, 2);
+
+            if(choice > 0)
+            {
+                StartCoroutine(WaitAndSpawn(time, "Left"));
+            }
+            else
+            {
+                StartCoroutine(WaitAndSpawn(time, "Right"));
+            }
+            
+            
         }
     }
 
@@ -28,7 +40,7 @@ public class EnemyPatrol : MonoBehaviour {
 		
 	}
 
-    IEnumerator WaitAndSpawn(float time)
+    IEnumerator WaitAndSpawn(float time, string direction)
     {
         if (isCoroutineExecuting)
         {
@@ -37,8 +49,18 @@ public class EnemyPatrol : MonoBehaviour {
 
         yield return new WaitForSeconds(time);
 
-        GameObject newObject = (GameObject)Instantiate(enemy, leftSpawn.transform.position, Quaternion.identity);
+        if (direction.Equals("Left"))
+        {
+            GameObject newObject = (GameObject)Instantiate(enemy, leftSpawn.transform.position, Quaternion.identity);
+            newObject.GetComponent<Enemy>().SetDirection(true);
+        }
+        else if (direction.Equals("Right"))
+        {
+            GameObject newObject = (GameObject)Instantiate(enemy, rightSpawn.transform.position, Quaternion.identity);
+            newObject.GetComponent<Enemy>().SetDirection(false);
+        }
 
+  
         isCoroutineExecuting = false;
 
     }
