@@ -34,7 +34,8 @@ public class Egg : MonoBehaviour
 
         sounds = new AudioClip[]
         {
-            Resources.Load("cracking") as AudioClip
+            Resources.Load("cracking") as AudioClip,
+            Resources.Load("Hit") as AudioClip
         };
 
 
@@ -122,12 +123,20 @@ public class Egg : MonoBehaviour
     //let's enemies deal damage to egg
     public void EggHittable()
     {
-        AudioSource.PlayClipAtPoint(sounds[0],Vector3.zero);
+        StartCoroutine(Wait());
+        
         //hit = true;
         eggHealth--;
         hit = false;
         eggHitterVC2 = Knockback.back(eggHitter, -2);
         eggHitterRB.transform.position = new Vector2(eggHitterVC2, eggHitterRB.transform.position.y);
+    }
+
+    IEnumerator Wait()
+    {
+        AudioSource.PlayClipAtPoint(sounds[1], Vector3.zero);
+        yield return new WaitForSeconds(0.3f);
+        AudioSource.PlayClipAtPoint(sounds[0], Vector3.zero);
     }
 
 }//end of script
