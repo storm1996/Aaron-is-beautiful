@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
     private BoxCollider2D thisBox;
     private CircleCollider2D playerBox;
 
+    private bool executeOnce = true;
+
     private float moveSpeed = 6f;
 
     // Use this for initialization
@@ -49,11 +51,16 @@ public class Enemy : MonoBehaviour
 
     void Flip()
     {
-        facingRight = !facingRight;
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1f;
-        //theScale.y = 0.3f;
-        transform.localScale = theScale;
+        //facingRight = !facingRight;
+        
+        if (executeOnce)
+        {
+            Vector3 theScale = transform.localScale;
+            theScale.x *= -1f;
+            //theScale.y = 0.3f;
+            transform.localScale = theScale;
+            executeOnce = false;
+        }
     }
 
 }
