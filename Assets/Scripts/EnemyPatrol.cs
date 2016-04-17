@@ -17,7 +17,7 @@ public class EnemyPatrol : MonoBehaviour {
         rightSpawn = GameObject.FindGameObjectWithTag("Right Enemy Spawn");
         leftSpawn = GameObject.FindGameObjectWithTag("Left Enemy Spawn");
 
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < 1; i++)
         {
             time = i;
             int choice = Random.Range(0, 2);

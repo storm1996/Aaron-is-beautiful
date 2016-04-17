@@ -83,9 +83,18 @@ public class Egg : MonoBehaviour
             GameOver = false;
         }*/
 
+        foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            if (eggCollider.IsTouching(obj.GetComponent<BoxCollider2D>()))
+            {
+                Enemy enemy = obj.GetComponent<Enemy>();
+                StartCoroutine(enemy.KnockBack(0.02f, 500f, obj.transform.position));
+            }
+        }
+
     }//end update
 
-
+/*
     public void OnCollisionEnter2D(Collision2D col)
     {
         Debug.Log("hit something");
@@ -107,7 +116,7 @@ public class Egg : MonoBehaviour
             hit = false;
             eggHealth--;
             Invoke("EggHittable",1);
-        }*/
+        }
 
         //if hit by arrow and hit is true, take one damage per 1 second delay
         else if(col.gameObject.tag == "Arrow" && !hit)
@@ -119,7 +128,7 @@ public class Egg : MonoBehaviour
             Invoke("EggHittable", 2);//provides immunity to damage for 2 seconds
         }
     }//end onentercollision
-
+*/
     //let's enemies deal damage to egg
     public void EggHittable()
     {

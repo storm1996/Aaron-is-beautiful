@@ -11,7 +11,7 @@ public class Knockback : MonoBehaviour {
     public static float back(BoxCollider2D col, int KB_Power)
     {
         float vector = col.transform.position.x;//current position of enemy
-        facingRight = Enemy.GetDirection();//checks for direction enemy is facing
+        //facingRight = Enemy.GetDirection();//checks for direction enemy is facing
         
         //facingRight= true ? (KB_Val = KB_Power) : (KB_Val = -KB_Power);
 

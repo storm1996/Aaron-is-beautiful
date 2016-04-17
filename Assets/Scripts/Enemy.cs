@@ -4,7 +4,7 @@ using System.Collections;
 public class Enemy : MonoBehaviour
 {
 
-    private static bool facingRight;
+    private bool facingRight;
     private Rigidbody2D rb2d;
 
     private BoxCollider2D thisBox;
@@ -45,9 +45,32 @@ public class Enemy : MonoBehaviour
             rb2d.velocity = new Vector2(-moveSpeed, rb2d.velocity.y);
             Flip();
         }
-
-
     }
+
+    public IEnumerator KnockBack(float knockDur, float knockBackPwr, Vector2 knockBackDir)
+    {
+        float timer = 0;
+        while( knockDur > timer)
+        {
+            timer += Time.deltaTime;
+
+            if (facingRight)
+            {
+                rb2d.AddForce(Vector2.left * 5000f);
+                //rb2d.AddForce(new Vector3(knockBackDir.x * -5000f, knockBackDir.y, transform.position.z));
+            }
+            else
+            {
+                //rb2d.AddForce(new Vector3(knockBackDir.x * 5000f, knockBackDir.y, transform.position.z));
+                rb2d.AddForce(Vector2.right * 5000f);
+            }
+        }
+
+        
+
+        yield return 0;
+    }
+
 
     void Flip()
     {
@@ -68,7 +91,7 @@ public class Enemy : MonoBehaviour
         facingRight = value;
     }
 
-    public static bool GetDirection()
+    public bool GetDirection()
     {
         return facingRight;
     }
