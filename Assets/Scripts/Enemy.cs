@@ -4,7 +4,7 @@ using System.Collections;
 public class Enemy : MonoBehaviour
 {
 
-    private bool facingRight;
+    private static bool facingRight;
     private Rigidbody2D rb2d;
 
     private BoxCollider2D thisBox;
@@ -68,7 +68,7 @@ public class Enemy : MonoBehaviour
         facingRight = value;
     }
 
-    public bool GetDirection()
+    public static bool GetDirection()
     {
         return facingRight;
     }
