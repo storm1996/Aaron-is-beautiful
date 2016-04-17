@@ -12,6 +12,10 @@ public class Egg : MonoBehaviour
     public int eggHealth;// 5 hits to kill egg
     public bool hit;
 
+    public BoxCollider2D eggHitter;
+    public Rigidbody2D eggHitterRB;
+    public float eggHitterVC2;
+
     //audio **************
     //public AudioSource sound;// use sound source for the object
     //public AudioClip jump;
@@ -28,7 +32,7 @@ public class Egg : MonoBehaviour
         //loads in jump sound that is attached to egg
         //sound = GetComponent<AudioSource>();
 
-        hit = true;
+        hit = false;
         eggHealth = 5;
         eggCollider = gameObject.AddComponent<BoxCollider2D>();
         eggCollider.size = new Vector2(1, 1);
@@ -80,13 +84,15 @@ public class Egg : MonoBehaviour
     {
         Debug.Log("hit something");
 
-        if (col.gameObject.tag == "Enemy" && hit)
+        if (col.gameObject.tag == "Enemy" && !hit)
         {
             Debug.Log("enemy hit egg");
-            //sound.PlayOneShot(jump);
-            hit = false;
-            eggHealth--;
-            Invoke("EggHittable", 1);
+
+            eggHitter = GameObject.FindGameObjectWithTag("Enemy").GetComponent<BoxCollider2D>();
+            eggHitterRB = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Rigidbody2D>();
+
+            hit = true;
+            Invoke("EggHittable", 2);//provides immunity to damage for 2 seconds
         }
 
         //if enemy touches egg and hit is true, take damage, 1 per second
@@ -98,20 +104,24 @@ public class Egg : MonoBehaviour
         }*/
 
         //if hit by arrow and hit is true, take one damage per 1 second delay
-        else if(col.gameObject.tag == "Arrow" && hit)
+        else if(col.gameObject.tag == "Arrow" && !hit)
         {
             Debug.Log("arrow hit egg");
-            //sound.PlayOneShot(jump);
-            hit = false;
-            eggHealth--;
-            Invoke("EggHittable",1);
+            //eggHitter = GameObject.FindGameObjectWithTag("Arrow").GetComponent<BoxCollider2D>();
+            //eggHitterRB = GameObject.FindGameObjectWithTag("Arrow").GetComponent<Rigidbody2D>();
+
+            Invoke("EggHittable", 2);//provides immunity to damage for 2 seconds
         }
     }//end onentercollision
 
     //let's enemies deal damage to egg
     public void EggHittable()
     {
-        hit = true;
+        //hit = true;
+        eggHealth--;
+        hit = false;
+        eggHitterVC2 = Knockback.back(eggHitter, -1);
+        eggHitterRB.transform.position = new Vector2(eggHitterVC2, eggHitterRB.transform.position.y);
     }
 
 }//end of script
