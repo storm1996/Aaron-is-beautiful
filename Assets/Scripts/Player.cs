@@ -50,7 +50,7 @@ public class Player : MonoBehaviour {
     public GameObject arrow;
     public GameObject fireballPrefab;
 
-    public AudioClip[] sounds;//holds sounds used by player
+    public static AudioClip[] sounds;//holds sounds used by player
 
     public bool facingRight;
 
@@ -72,10 +72,12 @@ public class Player : MonoBehaviour {
         sounds = new AudioClip[]
         {
             Resources.Load("Sound_Jump") as AudioClip,
-            Resources.Load("Sound_Fireball") as AudioClip
+            Resources.Load("Sound_Fireball") as AudioClip,
+            Resources.Load("Sound_Explosion") as AudioClip,
         };
-
     }
+
+    public static void explode() {AudioSource.PlayClipAtPoint(sounds[2], Vector2.zero);}// plays explosion sounds firebal hits an enemy
 
     void Update()
     {
@@ -135,14 +137,14 @@ public class Player : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space) && grounded) {
 			//GetComponent<Rigidbody2D> ().velocity = new Vector2(GetComponent<Rigidbody2D> ().velocity.x, jumpForce); 
 			Jump ();
-            AudioSource.PlayClipAtPoint(sounds[0], Vector3.zero);
+            AudioSource.PlayClipAtPoint(sounds[0], Vector2.zero);
         }
 
 
 		if (Input.GetKeyDown (KeyCode.Space) && !doubleJumped && !grounded) {
 			//GetComponent<Rigidbody2D> ().velocity = new Vector2(GetComponent<Rigidbody2D> ().velocity.x, jumpForce); 
 			Jump ();
-            AudioSource.PlayClipAtPoint(sounds[0], Vector3.zero);
+            AudioSource.PlayClipAtPoint(sounds[0], Vector2.zero);
             doubleJumped = true;
 		}
 

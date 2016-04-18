@@ -16,13 +16,15 @@ public class PowerUpSpawn : MonoBehaviour {
 
     private bool isCoroutineExecuting = false;
 
+    public static AudioClip[] sounds;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 
         //takes prefab from resources folder of powerup. isntantiates it later
         healthPowerUp = Resources.Load("HealthPower") as GameObject;
         scorePowerUp = Resources.Load("ScorePower") as GameObject;
+        sounds = new AudioClip[]{Resources.Load("Sound_Coin") as AudioClip};
 
 
         //loads all spawn points using tag
@@ -35,6 +37,8 @@ public class PowerUpSpawn : MonoBehaviour {
         }
     }
 	
+    public static void play(){ AudioSource.PlayClipAtPoint(sounds[0], Vector2.zero); }
+
 	void Update () { 
 
         //spawns two seconds after condition true

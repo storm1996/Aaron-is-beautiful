@@ -5,7 +5,7 @@ public class Fireball : MonoBehaviour {
 
     public Rigidbody2D rb2d;
     private BoxCollider2D boxCollider;
-    
+
     private float speed = 1000f;
 
 	// Use this for initialization
@@ -21,6 +21,7 @@ public class Fireball : MonoBehaviour {
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             if (boxCollider.IsTouching(obj.GetComponent<BoxCollider2D>())){
+                Player.explode();
                 Destroy(gameObject);
                 Destroy(obj);
             }

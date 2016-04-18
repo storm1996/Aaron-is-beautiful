@@ -8,7 +8,8 @@ public class ScorePowerup : Powerup {
     {
         if (col.CompareTag("Player"))
         {
-            //destroys current gameObject during collision with player
+            //destroys current gameObject during collision with playera
+            PowerUpSpawn.play();
             DestroyAndMakeFalse();
             //player.ScorePowerUp(100);
           

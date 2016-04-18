@@ -34,8 +34,8 @@ public class Egg : MonoBehaviour
 
         sounds = new AudioClip[]
         {
-            Resources.Load("cracking") as AudioClip,
-            Resources.Load("Hit") as AudioClip
+            Resources.Load("Sound_Cracking") as AudioClip,
+            Resources.Load("Sound_Hit") as AudioClip
         };
 
 
@@ -143,9 +143,9 @@ public class Egg : MonoBehaviour
 
     IEnumerator Wait()
     {
-        AudioSource.PlayClipAtPoint(sounds[1], Vector3.zero);
+        AudioSource.PlayClipAtPoint(sounds[1], Vector2.zero);
         yield return new WaitForSeconds(0.3f);
-        AudioSource.PlayClipAtPoint(sounds[0], Vector3.zero);
+        AudioSource.PlayClipAtPoint(sounds[0], Vector2.zero);
     }
 
 }//end of script
