@@ -134,6 +134,7 @@ public class Egg : MonoBehaviour
     public void EggHittable(Enemy en)
     {
         hit = true;
+        StartCoroutine(Wait());
         Invoke("falser", 2);
         en.KnockBack(0.1f, 500f, en.transform.position);
         //hit = true;
@@ -150,7 +151,6 @@ public class Egg : MonoBehaviour
 
     public void falser()
     {
-        StartCoroutine(Wait());
         eggHealth--;
         hit = false;
     }
