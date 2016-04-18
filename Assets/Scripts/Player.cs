@@ -26,7 +26,7 @@ public class Player : MonoBehaviour {
     */
     public float speed = 50f;
     public float maxSpeed = 300f;
-    public float jumpForce = 30f;
+    public float jumpForce;
 
     public int health = 100;
     public int score; //maybe put this in own game control script
@@ -56,8 +56,9 @@ public class Player : MonoBehaviour {
 
     void Start () {
         anim = gameObject.GetComponent<Animator>();
-		//anim2 = gameObject.GetComponent<Animator>();
+        //anim2 = gameObject.GetComponent<Animator>();
 
+        jumpForce = 22f;
         //player properties
         playerRBody = gameObject.AddComponent<Rigidbody2D>();
         playerRBody.gravityScale = 5f;// strength of gravity
@@ -307,6 +308,6 @@ public class Player : MonoBehaviour {
 
 	public void Jump()
 	{
-        GetComponent<Rigidbody2D> ().velocity = new Vector2(GetComponent<Rigidbody2D> ().velocity.x, jumpForce);
+        GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D> ().velocity.x, jumpForce);
 	}
 }

@@ -35,18 +35,38 @@ public class Teleporter : MonoBehaviour {
                 if (gameObject.tag == "TPRight")
                 {
                     Debug.Log("touched right");
-                    //brings the player to the left teleporter, gives new position
-                    teleporterRB2D = GameObject.FindGameObjectWithTag("TPLeft").GetComponent<Rigidbody2D>();
-                    obj.transform.position = new Vector2(teleporterRB2D.transform.position.x + 4f, obj.transform.position.y);
+                    if(gameObject.layer == 12)
+                    {
+                        //brings the player to the top left teleporter, gives new position
+                        teleporterRB2D = GameObject.FindGameObjectWithTag("TPLeft").GetComponent<Rigidbody2D>();
+                        obj.transform.position = new Vector2(teleporterRB2D.transform.position.x + 4f, obj.transform.position.y);
+                    }
+
+                    else if(gameObject.layer == 13)
+                    {
+                        //brings the player to the bottom left teleporter, gives new position
+                        teleporterRB2D = GameObject.FindGameObjectWithTag("TPLeft").GetComponent<Rigidbody2D>();
+                        obj.transform.position = new Vector2(teleporterRB2D.transform.position.x + 4f, obj.transform.position.y);
+                    } 
                 }
 
                 //if touching left teleporter
                 if (gameObject.tag == "TPLeft")
                 {
                     Debug.Log("touched left");
-                    //brings player to the right teleporter, gives new position
-                    teleporterRB2D = GameObject.FindGameObjectWithTag("TPRight").GetComponent<Rigidbody2D>();
-                    obj.transform.position = new Vector2(teleporterRB2D.transform.position.x - 4f, obj.transform.position.y);
+                    if (gameObject.layer == 12)
+                    {
+                        //brings player to the top right teleporter, gives new position
+                        teleporterRB2D = GameObject.FindGameObjectWithTag("TPRight").GetComponent<Rigidbody2D>();
+                        obj.transform.position = new Vector2(teleporterRB2D.transform.position.x - 4f, obj.transform.position.y);
+                    }
+
+                    else if (gameObject.layer == 13)
+                    {
+                        //brings player to the bottom right teleporter, gives new position
+                        teleporterRB2D = GameObject.FindGameObjectWithTag("TPRight").GetComponent<Rigidbody2D>();
+                        obj.transform.position = new Vector2(teleporterRB2D.transform.position.x - 4f, obj.transform.position.y);
+                    }
                 }
             }
         }
