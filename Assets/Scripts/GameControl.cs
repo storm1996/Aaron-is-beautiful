@@ -23,16 +23,16 @@ public class GameControl : MonoBehaviour {
         {
             //add level up here
             
-            Invoke("SpawnEnemies", 3);
+            //Invoke("SpawnEnemies", 3);
         }
 	}
 
     public void SpawnEnemies()
     {
-        spawningSytem.Spawn(level);
-        level++;
+        //spawningSytem.Spawn(level);
+       // level++;
         
-        CancelInvoke("SpawnEnemies");
+       // CancelInvoke("SpawnEnemies");
     }
 
     public int GetNoEnemies()

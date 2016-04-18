@@ -43,7 +43,8 @@ public class PowerUpSpawn : MonoBehaviour {
 
         //spawns two seconds after condition true
         if (CheckNoPowers() < 2)
-        {      
+        {
+            //Debug.Log("EXECUTE");
             Invoke("Spawn", 2);
         }
 	}
