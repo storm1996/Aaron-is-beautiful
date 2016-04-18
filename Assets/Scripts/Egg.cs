@@ -85,10 +85,11 @@ public class Egg : MonoBehaviour
 
         foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Enemy"))
         {
-            if (eggCollider.IsTouching(obj.GetComponent<BoxCollider2D>()))
+            if (eggCollider.IsTouching(obj.GetComponent<BoxCollider2D>()) && !hit)
             {
                 Enemy enemy = obj.GetComponent<Enemy>();
-                StartCoroutine(enemy.KnockBack(0.02f, 500f, obj.transform.position));
+                //StartCoroutine(enemy.KnockBack(0.02f, 500f, obj.transform.position));
+                StartCoroutine("EggHittable", enemy);
             }
         }
 
@@ -130,15 +131,14 @@ public class Egg : MonoBehaviour
     }//end onentercollision
 */
     //let's enemies deal damage to egg
-    public void EggHittable()
+    public void EggHittable(Enemy en)
     {
-        StartCoroutine(Wait());
-        
+        hit = true;
+        Invoke("falser", 2);
+        en.KnockBack(0.1f, 500f, en.transform.position);
         //hit = true;
-        eggHealth--;
-        hit = false;
-        eggHitterVC2 = Knockback.back(eggHitter, -2);
-        eggHitterRB.transform.position = new Vector2(eggHitterVC2, eggHitterRB.transform.position.y);
+        //eggHitterVC2 = Knockback.back(eggHitter, -2);
+        //eggHitterRB.transform.position = new Vector2(eggHitterVC2, eggHitterRB.transform.position.y);
     }
 
     IEnumerator Wait()
@@ -146,6 +146,13 @@ public class Egg : MonoBehaviour
         AudioSource.PlayClipAtPoint(sounds[1], Vector2.zero);
         yield return new WaitForSeconds(0.3f);
         AudioSource.PlayClipAtPoint(sounds[0], Vector2.zero);
+    }
+
+    public void falser()
+    {
+        StartCoroutine(Wait());
+        eggHealth--;
+        hit = false;
     }
 
 }//end of script

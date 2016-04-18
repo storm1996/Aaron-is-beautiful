@@ -37,7 +37,7 @@ public class PowerUpSpawn : MonoBehaviour {
         }
     }
 	
-    public static void play(){ AudioSource.PlayClipAtPoint(sounds[0], Vector2.zero); }
+    public static void play(){ AudioSource.PlayClipAtPoint(sounds[0], Vector2.zero); }// plays coin sound when player touches the coin
 
 	void Update () { 
 

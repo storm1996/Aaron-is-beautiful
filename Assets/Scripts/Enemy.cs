@@ -56,13 +56,13 @@ public class Enemy : MonoBehaviour
 
             if (facingRight)
             {
-                rb2d.AddForce(Vector2.left * 5000f);
+                rb2d.AddForce(Vector2.left * knockBackPwr);
                 //rb2d.AddForce(new Vector3(knockBackDir.x * -5000f, knockBackDir.y, transform.position.z));
             }
             else
             {
                 //rb2d.AddForce(new Vector3(knockBackDir.x * 5000f, knockBackDir.y, transform.position.z));
-                rb2d.AddForce(Vector2.right * 5000f);
+                rb2d.AddForce(Vector2.right * knockBackPwr);
             }
         }
 
