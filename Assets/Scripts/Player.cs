@@ -33,6 +33,8 @@ public class Player : Character {
     public bool facingRight;
 
     void Start () {
+        Screen.SetResolution(1200, 675, false, 60);
+
         anim = gameObject.GetComponent<Animator>();
         //anim2 = gameObject.GetComponent<Animator>();
 

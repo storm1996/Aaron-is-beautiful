@@ -7,7 +7,9 @@ public class Platform : MonoBehaviour {
     private Rigidbody2D platformProperties;
 
     // Use this for initialisation
-    void Start () {
+    void Start(){ 
+        
+
         platformCollider = gameObject.AddComponent<BoxCollider2D>();
         platformCollider.size = new Vector2(1, 1);
 		//platformCollider.isTrigger = true; 
@@ -15,6 +17,7 @@ public class Platform : MonoBehaviour {
         platformProperties = gameObject.AddComponent<Rigidbody2D>();
         platformProperties.drag = 1f;
         platformProperties.isKinematic = true;
+
     }
 
 }
