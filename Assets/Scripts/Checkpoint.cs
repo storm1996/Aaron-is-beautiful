@@ -5,13 +5,10 @@ public class Checkpoint : MonoBehaviour {
 
 	public LevelManager levelManager;
 
-	// Use this for initialization
-	void Start ()
-	{
-		levelManager = FindObjectOfType<LevelManager> (); 
-	}
+    //find object with type levelmanager
+	void Start (){ levelManager = FindObjectOfType<LevelManager> ();}
 
-	void OnTriggerEnter2D(Collider2D other){
-		if (other.name == "Player") { levelManager.currentCheckpoint = gameObject;}
-	}
-}
+    //sets checkpoint to player position at collision
+	void OnTriggerEnter2D(Collider2D other){ if (other.name == "Player") { levelManager.currentCheckpoint = gameObject;}}
+
+}//end class

@@ -1,24 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GroundCheck : MonoBehaviour{ 
-
+public class GroundCheck : MonoBehaviour{
     private Player player;
 
-	void Start (){
-        player = gameObject.GetComponentInParent<Player>();
-	}
-	
-    //changes state of animator parameters
-    void OnTriggerEnter2D(Collider2D col){
-        player.grounded = true;
-    }
+    // finds player object for ground checking
+    void Start(){ player = gameObject.GetComponentInParent<Player>();}
 
-    void OnTriggerStay2D(Collider2D col){
-        player.grounded = true;
-    }
+    // if touching ground colliders, grounded = true, else it's false
+    void OnTriggerStay2D(Collider2D col){ player.grounded = true;}
+    void OnTriggerExit2D(Collider2D col){ player.grounded = false;}
 
-    void OnTriggerExit2D(Collider2D col){
-        player.grounded = false;
-    }
 }//end class

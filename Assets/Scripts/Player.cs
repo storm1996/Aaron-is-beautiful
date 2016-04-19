@@ -4,30 +4,23 @@ using System.Collections;
 
 public class Player : Character {
     
-    public float maxSpeed = 300f;
-    public float jumpForce;
+    public float maxSpeed = 300f;// max speed you can go left or right
+    public float jumpForce;// jump power in y direction
     public int score; //maybe put this in own game control script
 
 	public Transform groundCheck;
 	public float groundCheckRadius; 
 	public LayerMask whatIsGround; 
-	public bool grounded; 
-	public bool shooting; 
-
-	public bool doubleJumped;
-
-    //accessible from other scripts
+	public bool grounded;// player touching ground
+	public bool shooting;
+	public bool doubleJumped;// checks if player jumped twice
     private Rigidbody2D rb2d;
     private Rigidbody2D playerRBody;
     private Animator anim;
-	//private Animator anim2;
     public static BoxCollider2D playerCollider;
     private Transform newPosition;
-
-    public GameObject fireballPrefab;
-
     public static AudioClip[] sounds;//holds sounds used by player
-
+    public GameObject fireballPrefab;// fireball asset
     public bool facingRight;//direction player is facing
 
     void Start () {

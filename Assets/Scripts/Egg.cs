@@ -54,4 +54,5 @@ public class Egg : MonoBehaviour
 
     //lets enemies deal damage to egg
     public void falser(){ hit = false;}
+
 }//end class
