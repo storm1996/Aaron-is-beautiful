@@ -14,33 +14,31 @@ public class DisplayManager : MonoBehaviour {
     public Player player;
     public Egg egg;
 
-    void Start () {
+    void Start(){
+        Screen.SetResolution(1200, 675, true, 60);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         egg = GameObject.FindGameObjectWithTag("Egg").GetComponent<Egg>();
         showHealth = (Text)GameObject.FindGameObjectWithTag("Health").GetComponent<Text>();
         showScore = (Text)GameObject.FindGameObjectWithTag("Score").GetComponent<Text>();
         showEggHP = (Text)GameObject.FindGameObjectWithTag("EggHP").GetComponent<Text>();
     }
-	
-	void Update () {
+
+    void Update(){ 
         setHealthText();
         setScoreText();
         setEggText();
     }
 
-    private void setEggText()
-    {
+    private void setEggText(){
         showEggHP.text = "Egg HP: " + egg.eggHealth.ToString();
     }
 
     //sets the health and score
-    private void setHealthText()
-    {
+    private void setHealthText(){
         showHealth.text = "Health: " + player.health.ToString();
     }
 
-    private void setScoreText()
-    {
+    private void setScoreText(){
         showScore.text = "Score: " + player.score.ToString();
     }
-}
+}//end class

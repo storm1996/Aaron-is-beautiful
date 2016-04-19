@@ -25,15 +25,7 @@ public class EnemyPatrol : MonoBehaviour {
     }
 
     void Update()
-    {
-        if (Enemies() < 1)
-        {
-            //makes sure run once
-            if (isExecuting)
-            {
-                
-            }
-        }
+    { 
         if (Enemies() < 1)
         {
             //makes sure run once
@@ -91,8 +83,6 @@ public class EnemyPatrol : MonoBehaviour {
         {
             GameObject newObject = (GameObject)Instantiate(enemy, spawnPoint.transform.position, Quaternion.identity);
         }
-        
-
     }
 
     public void CheckExecute()
@@ -108,6 +98,4 @@ public class EnemyPatrol : MonoBehaviour {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         return enemies.Length;
     }
-    
-    
 }

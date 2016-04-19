@@ -18,8 +18,7 @@ public class GameControl : MonoBehaviour {
 	void Update () {
 
         
-        if (GetNoEnemies() <= 0)
-        {
+        if (GetNoEnemies() <= 0){
             //add level up here
             
             //Invoke("SpawnEnemies", 3);

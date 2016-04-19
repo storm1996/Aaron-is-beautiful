@@ -19,7 +19,7 @@ public class PowerUpSpawn : MonoBehaviour {
     public static AudioClip[] sounds;
 
     // Use this for initialization
-    void Start () {
+    void Start (){
 
         //takes prefab from resources folder of powerup. isntantiates it later
         healthPowerUp = Resources.Load("HealthPower") as GameObject;
@@ -31,52 +31,41 @@ public class PowerUpSpawn : MonoBehaviour {
         spawnPoints = GameObject.FindGameObjectsWithTag("Spawn Point");
 
         //initialises all positions to false
-        for (int i = 0; i < exists.Length; i++)
-        {
+        for (int i = 0; i < exists.Length; i++){
             SetStateAtPos(i, false);
         }
     }
 	
     public static void play(){ AudioSource.PlayClipAtPoint(sounds[0], Vector2.zero); }// plays coin sound when player touches the coin
 
-	void Update () { 
-
+	void Update (){ 
         //spawns two seconds after condition true
-        if (CheckNoPowers() < 2)
-        {
+        if (CheckNoPowers() < 2){
             //Debug.Log("EXECUTE");
             Invoke("Spawn", 2);
         }
 	}
 
-    public void Spawn()
-    { 
+    public void Spawn(){ 
         //goes through each transform and flips coin to see if it will be instantiated or not
-        for(int i = 0; i < spawnPoints.Length; i++)
-        {
+        for(int i = 0; i < spawnPoints.Length; i++){
             int choice = Random.Range(0, 2);
             float spawnTimer = Random.Range(0f, 5f);
 
 
-            if(choice > 0)
-            {
-                if(exists[i].Equals(false))
-                {
+            if(choice > 0){
+                if(exists[i].Equals(false)){
                     int goChoice = Random.Range(0, 2);
-
                     StartCoroutine(WaitAndSpawn(spawnTimer, goChoice, i));              
                 }                                               
             }
         }
-
         //stops spawn function from constantly repeating
         CancelInvoke("Spawn");
     }
 
-    IEnumerator WaitAndSpawn(float time, int choice, int position)
-    {
-        if (isCoroutineExecuting)
-        {
+    IEnumerator WaitAndSpawn(float time, int choice, int position){
+        if (isCoroutineExecuting){
             yield break;
         }
 
@@ -85,34 +74,29 @@ public class PowerUpSpawn : MonoBehaviour {
         //waits for time to execute after this 
         yield return new WaitForSeconds(time);
 
-        if (choice > 0)
-        {
+        if (choice > 0){
             //instantiates the power up at position i.
             GenerateSpawn("Score", position);
             Debug.Log("SPAWNED. POS : " + position);
         }
-        else
-        { 
+        else{ 
             GenerateSpawn("Health", position);
             Debug.Log("SPAWNED. POS : " + position);
         }
-
         isCoroutineExecuting = false;
     }
 
   
-    private void GenerateSpawn(string input, int position)
-    {   
+    private void GenerateSpawn(string input, int position){   
         Powerup pow = null;
 
-        if (input.Equals("Score"))
-        {
+        if (input.Equals("Score")){
             GameObject newObject = (GameObject)Instantiate(scorePowerUp, spawnPoints[position].transform.position, Quaternion.identity);
             //polymorphism
             pow = newObject.GetComponent<ScorePowerup>();
         }
-        else if (input.Equals("Health"))
-        {
+
+        else if (input.Equals("Health")){
             GameObject newObject = (GameObject)Instantiate(healthPowerUp, spawnPoints[position].transform.position, Quaternion.identity);
             pow = newObject.GetComponent<HealthPowerup>();          
         }
@@ -122,31 +106,25 @@ public class PowerUpSpawn : MonoBehaviour {
     }
     
 
-    public void SetPosMakeTrue(Powerup pow, int p)
-    { 
+    public void SetPosMakeTrue(Powerup pow, int p){ 
         pow.SetPosition(p);
         SetStateAtPos(p, true);
     }
 
     //checks number of power ups on game
-    public int CheckNoPowers()
-    {
+    public int CheckNoPowers(){
         int count = 0;
 
-        for(int i = 0; i < exists.Length; i++)
-        {
-            if (exists[i].Equals(true))
-            {
+        for(int i = 0; i < exists.Length; i++){
+            if (exists[i].Equals(true)){
                 count++;
             }
         }
-        
         return count;
     }
 
     //sets flag at position
-    public void SetStateAtPos(int x, bool value)
-    {
+    public void SetStateAtPos(int x, bool value){
         exists[x] = value;
     }
-}
+}//end class

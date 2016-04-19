@@ -11,24 +11,20 @@ public class Enemy : Character
     private BoxCollider2D thisBox;
     private CircleCollider2D playerBox;
 
-    void Start()
-    {
+    void Start(){
         rb2d = gameObject.AddComponent<Rigidbody2D>();
         rb2d.freezeRotation = true;
         playerBox = GameObject.FindGameObjectWithTag("Player").GetComponent<CircleCollider2D>();
         thisBox = gameObject.GetComponent<BoxCollider2D>();
-
         health = 100;
     }
 
     
 
-    void Update()
-    {
+    void Update(){
 
         //ignores collision between all enemies
-        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Enemy"))
-        {
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Enemy")){
             Physics2D.IgnoreCollision(thisBox, obj.GetComponent<BoxCollider2D>());
         }
 
@@ -39,43 +35,36 @@ public class Enemy : Character
         HealthCheck();
     }
 
-    public IEnumerator KnockBack(float knockDur, float knockBackPwr, Vector2 knockBackDir)
-    {
+    public IEnumerator KnockBack(float knockDur, float knockBackPwr, Vector2 knockBackDir){
         float timer = 0;
-        while( knockDur > timer)
-        {
+
+        while( knockDur > timer){
             timer += Time.deltaTime;
 
-            if (goingRight)
-            {
+            if (goingRight){
                 rb2d.AddForce(Vector2.left * 5000f);
             }
-            else
-            {
+
+            else{
                 rb2d.AddForce(Vector2.right * 5000f);
             }
         }
-
         yield return 0;
     }
 
-    public override void MoveControl()
-    {
-        if (goingRight)
-        {
+    public override void MoveControl(){
+        if (goingRight){
             rb2d.velocity = new Vector2(moveSpeed, rb2d.velocity.y);
         }
-        else
-        {
+
+        else{
             rb2d.velocity = new Vector2(-moveSpeed, rb2d.velocity.y);
             Flip();
         }
     }
 
-    public override void Flip()
-    {
-        if (executeOnce)
-        {
+    public override void Flip(){
+        if (executeOnce){
             Vector3 theScale = transform.localScale;
             theScale.x *= -1f;
             transform.localScale = theScale;
@@ -83,24 +72,15 @@ public class Enemy : Character
         }
     }
 
-    public void SetDirection(bool value)
-    {
+    public void SetDirection(bool value){
         goingRight = value;
     }
 
-    public bool GetDirection() { return goingRight; }
+    public bool GetDirection() { return goingRight; }//returns direction of enemies
 
-    void HealthCheck()
-    {
-        if(health <= 0)
-        {
+    void HealthCheck(){
+        if(health <= 0){
             Destroy(gameObject);
         }
     }
-/*
-    public void Damage(int value)
-    {
-        health -= value;
-    }
-*/
-}
+}//end class

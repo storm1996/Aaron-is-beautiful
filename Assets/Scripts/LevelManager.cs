@@ -16,23 +16,15 @@ public class LevelManager : MonoBehaviour {
 	private float gravityStore = 5f; 
 
 	// Use this for initialization
-	void Start () 
-	{
+	void Start (){
 		player = FindObjectOfType<Player> ();
 	}
 
-	// Update is called once per frame
-	void Update () {
-
-	}
-
-	public void RespawnPlayer()
-	{
+	public void RespawnPlayer(){
 		StartCoroutine ("RespawnPlayerCo");
 	}
 
-	public IEnumerator RespawnPlayerCo()
-	{
+	public IEnumerator RespawnPlayerCo(){
 		Instantiate (deathParticle, player.transform.position, player.transform.rotation);
 		player.enabled = false; 
 		player.GetComponent<Renderer> ().enabled = false;
@@ -47,4 +39,4 @@ public class LevelManager : MonoBehaviour {
 		player.GetComponent<Renderer> ().enabled = true;
 		Instantiate (respawnParticle, currentCheckpoint.transform.position, currentCheckpoint.transform.rotation);
 	}
-}
+}//end class
