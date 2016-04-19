@@ -31,21 +31,20 @@ public class EnemyPatrol : MonoBehaviour {
             //makes sure run once
             if (isExecuting)
             {
-                LevelUp();
+                
             }
         }
         if (Enemies() < 1)
         {
             //makes sure run once
             if (isExecuting)
-            {
+            { 
+                LevelUp();
                 Debug.Log("Execute");
                 Invoke("SpawnHere", 0);
             }
         }
-
         
-
         //sets isExecuting to true if no enemies left
         CheckExecute();
     }
@@ -56,7 +55,7 @@ public class EnemyPatrol : MonoBehaviour {
     }
     public void SpawnHere()
     {
-        int noEnemies = 3 + (2 * level);
+        int noEnemies = 3 + level;
 
         for(int i = 0; i < noEnemies; i++)
         {
@@ -80,7 +79,6 @@ public class EnemyPatrol : MonoBehaviour {
     //spawns enemy after set time
     IEnumerator WaitAndSpawn(float time, string direction)
     {
-
         yield return new WaitForSeconds(time);
 
         if (direction.Equals("Left"))

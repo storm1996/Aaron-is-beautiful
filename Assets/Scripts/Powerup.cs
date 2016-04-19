@@ -8,7 +8,7 @@ using System.Collections;
 public abstract class Powerup : MonoBehaviour {
 
     public Player player;
-    public PowerUpSpawn power;
+    public PowerUpSpawn powerScript;
     public int position;
     private float timer;
     private float setTime;
@@ -19,7 +19,7 @@ public abstract class Powerup : MonoBehaviour {
     public virtual void Start()
     { 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        power = GameObject.FindGameObjectWithTag("Ground").GetComponent<PowerUpSpawn>();
+        powerScript = GameObject.FindGameObjectWithTag("Powerup Spawn System").GetComponent<PowerUpSpawn>();
         timer = Random.Range(10f, 20f);
         Debug.Log("Pos: "+ position + "     Time: " + timer);
  
@@ -51,7 +51,8 @@ public abstract class Powerup : MonoBehaviour {
     {
         Debug.Log("DESTROYING. Pos: " + position);
         Destroy(gameObject);
-        power.SetStateAtPos(position, false);
+        powerScript.SetStateAtPos(position, false);
+
     }
  
 }
