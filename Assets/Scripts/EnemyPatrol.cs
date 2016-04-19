@@ -11,7 +11,7 @@ public class EnemyPatrol : MonoBehaviour {
     public GameObject[] enemies;
     public GameObject spawnPoint;
     private bool isCoroutineExecuting = false;
-    private int level;
+    private static int level;
     private float time;
     private int enemyQuant;
     private bool isExecuting = true;
@@ -35,6 +35,12 @@ public class EnemyPatrol : MonoBehaviour {
         
         // sets isExecuting to true if no enemies left
         CheckExecute();
+    }
+
+    //returns level for display
+    public static int lvlCheck(){
+        int lvl = level;
+        return lvl;
     }
 
     public void LevelUp(){ level++;}// level increase

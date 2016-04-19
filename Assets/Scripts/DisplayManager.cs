@@ -1,5 +1,5 @@
 ﻿/*
-CONTROL HEALTH AND SCORE DELAY
+Shows Level, Egg health, Playe Score
 */
 
 using UnityEngine;
@@ -11,8 +11,10 @@ public class DisplayManager : MonoBehaviour {
     public Text showHealth;
     public Text showScore;
     public Text showEggHP;
+    public Text showLevel;
     public Player player;
     public Egg egg;
+    public Enemy enLevel;
 
     void Start(){
         Screen.SetResolution(1200, 675, true, 60);
@@ -21,12 +23,18 @@ public class DisplayManager : MonoBehaviour {
         showHealth = (Text)GameObject.FindGameObjectWithTag("Health").GetComponent<Text>();
         showScore = (Text)GameObject.FindGameObjectWithTag("Score").GetComponent<Text>();
         showEggHP = (Text)GameObject.FindGameObjectWithTag("EggHP").GetComponent<Text>();
+        showLevel = (Text)GameObject.FindGameObjectWithTag("Level").GetComponent<Text>();
     }
 
     void Update(){ 
         setHealthText();
         setScoreText();
         setEggText();
+        setLevelText();
+    }
+
+    private void setLevelText(){
+        showLevel.text = "Level: " + EnemyPatrol.lvlCheck().ToString();
     }
 
     private void setEggText(){

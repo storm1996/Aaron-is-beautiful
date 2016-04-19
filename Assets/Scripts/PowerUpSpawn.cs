@@ -94,7 +94,7 @@ public class PowerUpSpawn : MonoBehaviour {
         SetStateAtPos(p, true);
     }
 
-    //checks number of power ups on game
+    //checks number of power ups in game
     public int CheckNoPowers(){
         int count = 0;
 
