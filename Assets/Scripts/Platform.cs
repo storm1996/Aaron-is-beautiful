@@ -3,12 +3,10 @@ using System.Collections;
 
 public class Platform : MonoBehaviour
 {
-
     private BoxCollider2D platformCollider;
     private Rigidbody2D platformProperties;
 
-    void Start()
-    {
+    void Start(){
         platformCollider = gameObject.AddComponent<BoxCollider2D>();
         platformCollider.size = new Vector2(1, 1);
 

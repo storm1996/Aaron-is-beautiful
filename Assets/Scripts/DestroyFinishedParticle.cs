@@ -4,25 +4,21 @@ using System.Collections;
 public class DestroyFinishedParticle : MonoBehaviour {
 
 	private ParticleSystem thisParticleSystem; 
-	// Use this for initialization
-	void Start () 
-	{
+	
+	void Start (){
 		thisParticleSystem = GetComponent<ParticleSystem> ();
 	}
 	
 	// Update is called once per frame
-	void Update ()
-	{
-		if (thisParticleSystem.isPlaying) 
-		{
+	void Update (){
+		if (thisParticleSystem.isPlaying){
 			return;
 		}
 
 		Destroy (gameObject);
 	}
 
-	void OnBecameInvisible()
-	{
+	void OnBecameInvisible(){
 		Destroy (gameObject);
 	}
-}
+}//end class

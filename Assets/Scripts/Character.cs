@@ -13,9 +13,7 @@ public abstract class Character : MonoBehaviour {
     public abstract void MoveControl();
     public abstract void Flip();
 
-    public void Damage(int value)
-    {
+    public void Damage(int value){
         health -= value;
     }
-
-}
+}//end class

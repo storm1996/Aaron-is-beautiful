@@ -16,18 +16,14 @@ public class EnemyPatrol : MonoBehaviour {
     private int enemyQuant;
     private bool isExecuting = true;
 
-	void Start()
-	{
+	void Start(){
         level = 0;
         enemy = Resources.Load("Enemy") as GameObject;
         spawnPoint = GameObject.FindGameObjectWithTag("Enemy Spawn");
-
     }
 
-    void Update()
-    { 
-        if (Enemies() < 1)
-        {
+    void Update(){ 
+        if (Enemies() < 1){
             //makes sure run once
             if (isExecuting)
             { 
@@ -41,24 +37,21 @@ public class EnemyPatrol : MonoBehaviour {
         CheckExecute();
     }
 
-    public void LevelUp()
-    {
+    public void LevelUp(){
         level++;
     }
-    public void SpawnHere()
-    {
+
+    public void SpawnHere(){
         int noEnemies = 3 + level;
 
-        for(int i = 0; i < noEnemies; i++)
-        {
+        for(int i = 0; i < noEnemies; i++){
             int choice = Random.Range(0, 2);
 
-            if(choice > 0)
-            {
+            if(choice > 0){
                 StartCoroutine(WaitAndSpawn(i, "Left"));
             }
-            else
-            {
+
+            else{
                 StartCoroutine(WaitAndSpawn(i, "Right"));
             }
         }
@@ -69,33 +62,28 @@ public class EnemyPatrol : MonoBehaviour {
     }
 
     //spawns enemy after set time
-    IEnumerator WaitAndSpawn(float time, string direction)
-    {
+    IEnumerator WaitAndSpawn(float time, string direction){
         yield return new WaitForSeconds(time);
 
-        if (direction.Equals("Left"))
-        {
+        if (direction.Equals("Left")){
             GameObject newObject = (GameObject)Instantiate(enemy, spawnPoint.transform.position, Quaternion.identity);
             //switches enemy direction
             newObject.GetComponent<Enemy>().SetDirection(true);
         }
-        else if (direction.Equals("Right"))
-        {
+
+        else if (direction.Equals("Right")){
             GameObject newObject = (GameObject)Instantiate(enemy, spawnPoint.transform.position, Quaternion.identity);
         }
     }
 
-    public void CheckExecute()
-    {
-        if (enemies.Length == 0)
-        {
+    public void CheckExecute(){
+        if (enemies.Length == 0){
             isExecuting = true;
         }
     }
 
-    public int Enemies()
-    {
+    public int Enemies(){
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         return enemies.Length;
     }
-}
+}//end class

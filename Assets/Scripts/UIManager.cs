@@ -3,18 +3,15 @@ using System.Collections;
 
 public class UIManager : MonoBehaviour {
 
-	public void GoPlay()
-	{
+	public void GoPlay(){
 		Application.LoadLevel(1);
 	}
 
-	public void GoOptions()
-	{
+	public void GoOptions(){
 		Application.LoadLevel(2);
 	}
 
-	public void ExitGame()
-	{
+	public void ExitGame(){
 		Application.Quit();
 	}
-}
+}//end class
