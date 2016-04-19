@@ -64,17 +64,16 @@ public class Player : Character {
 		if(GetComponent<Rigidbody2D> ().velocity.x > 0) { transform.localScale = new Vector3 (1f, 1f, 1f);}
         else if(GetComponent<Rigidbody2D> ().velocity.x < 0){ transform.localScale = new Vector3 (-1f, 1f, 1f);}
 
+        //checks if grounded for double jump
 		if (grounded){
 			doubleJumped = false;
 			anim.SetBool ("Grounded", grounded);
 		}
 
 		if (Input.GetKeyDown (KeyCode.Space) && grounded){
-
 			Jump();
             AudioSource.PlayClipAtPoint(sounds[0], Vector2.zero);// plays jumping sound
         }
-
 
 		if (Input.GetKeyDown (KeyCode.Space) && !doubleJumped && !grounded){
 			Jump ();
@@ -120,33 +119,23 @@ public class Player : Character {
         MoveControl();
         
         //checks where player is facing
-        if (h > 0 && !facingRight){
-            Flip();
-        }           
-        else if (h < 0 && facingRight){
-            Flip();
-        }
+        if (h > 0 && !facingRight){ Flip();}           
+        else if (h < 0 && facingRight){ Flip();}
         
         if (Input.GetButtonDown("Fire1") && Time.time >= timestamp)
         {
-
             anim.SetTrigger("shooting");
 
-            if (facingRight)
-            {
-                CreateFireball("Right");
-            }
-
-            else if (!facingRight)
-            {
-                CreateFireball("Left");
-            }
+            //creates fireball if facing right or left
+            if (facingRight){ CreateFireball("Right");}
+            else if (!facingRight){ CreateFireball("Left");}
 
             timestamp = Time.time + timeBetweenShots;
         }
         
 
-            anim.ResetTrigger("shooting");
+        anim.ResetTrigger("shooting");
+
         // checks where player is facing, flips their sprite to opposite direction
         if (h > 0 && !facingRight){ Flip();}
         else if (h < 0 && facingRight){ Flip();}
