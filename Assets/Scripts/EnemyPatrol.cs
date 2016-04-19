@@ -25,10 +25,8 @@ public class EnemyPatrol : MonoBehaviour {
     void Update(){ 
         if (Enemies() < 1){
             //makes sure run once
-            if (isExecuting)
-            { 
+            if (isExecuting){ 
                 LevelUp();
-                Debug.Log("Execute");
                 Invoke("SpawnHere", 0);
             }
         }
