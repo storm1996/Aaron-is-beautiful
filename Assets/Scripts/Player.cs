@@ -53,12 +53,7 @@ public class Player : Character {
             Resources.Load("Sound_Explosion") as AudioClip,
         };
     }
-    
-    void Update(){
-
-        
-	}
-
+ 
     void FixedUpdate()
     {
 
@@ -67,22 +62,8 @@ public class Player : Character {
 
         // controls player movement and jumping
         MoveControl();
-
-       
-
-        if (Input.GetButtonDown("Fire1") && Time.time >= timestamp)
-        {
-            anim.SetTrigger("shooting");
-
-            //creates fireball if facing right or left
-            if (facingRight) { CreateFireball("Right"); }
-            else if (!facingRight) { CreateFireball("Left"); }
-
-            timestamp = Time.time + timeBetweenShots;
-
-
-        }
-
+        FireControl();
+        JumpControl();
 
         anim.ResetTrigger("shooting");
 
@@ -91,13 +72,21 @@ public class Player : Character {
         else if (h < 0 && facingRight) { Flip(); }
 
         anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
+    }
 
-        JumpControl();
-        //checks if grounded for double jump
-        
+    // adds speed to player direction, moves player more or less
+    public override void MoveControl()
+    {
+        float h = Input.GetAxis("Horizontal");
+        rb2d.AddForce(Vector2.right * speed * h);
+
+        // limits speed of player according to maxSpeed in both directions, based on x-axis
+        if (rb2d.velocity.x > maxSpeed) { rb2d.velocity = new Vector2(maxSpeed, rb2d.velocity.y); }
+        if (rb2d.velocity.x < -maxSpeed) { rb2d.velocity = new Vector2(-maxSpeed, rb2d.velocity.y); }
     }
 
     void JumpControl(){
+        //checks if grounded for double jump
         if (grounded)
         {
             doubleJumped = false;
@@ -120,6 +109,19 @@ public class Player : Character {
         if (!grounded) { anim.SetBool("Grounded", !grounded); }// jumping animation
     }
 
+    void FireControl()
+    {
+        if (Input.GetButtonDown("Fire1") && Time.time >= timestamp)
+        {
+            anim.SetTrigger("shooting");
+
+            //creates fireball if facing right or left
+            if (facingRight) { CreateFireball("Right"); }
+            else if (!facingRight) { CreateFireball("Left"); }
+
+            timestamp = Time.time + timeBetweenShots;
+        }
+    }
 
     // creates new instance of fireball everytime player casts it (presses left mouse button)
     public void CreateFireball(string direction){
@@ -163,15 +165,6 @@ public class Player : Character {
         transform.localScale = theScale;
     }
 
-    // adds speed to player direction, moves player more or less
-    public override void MoveControl(){
-        float h = Input.GetAxis("Horizontal");
-        rb2d.AddForce(Vector2.right * speed * h);
-
-        // limits speed of player according to maxSpeed in both directions, based on x-axis
-        if (rb2d.velocity.x > maxSpeed){ rb2d.velocity = new Vector2(maxSpeed, rb2d.velocity.y);}
-        if (rb2d.velocity.x < -maxSpeed){ rb2d.velocity = new Vector2(-maxSpeed, rb2d.velocity.y);}
-    }
 
     // increases player health or score based on the powerup they touch
     public void PowerUp(string type, int value){
