@@ -3,8 +3,7 @@ using System.Collections;
 
 public class Enemy : Character
 {
-    private bool facingRight;
-    //private int health;
+    private bool goingRight;
     private bool executeOnce = true; //for Flip() to only execute once
     private float moveSpeed = 6f;
 
@@ -47,7 +46,7 @@ public class Enemy : Character
         {
             timer += Time.deltaTime;
 
-            if (facingRight)
+            if (goingRight)
             {
                 rb2d.AddForce(Vector2.left * 5000f);
             }
@@ -62,7 +61,7 @@ public class Enemy : Character
 
     public override void MoveControl()
     {
-        if (facingRight)
+        if (goingRight)
         {
             rb2d.velocity = new Vector2(moveSpeed, rb2d.velocity.y);
         }
@@ -73,13 +72,12 @@ public class Enemy : Character
         }
     }
 
-    void Flip()
+    public override void Flip()
     {
         if (executeOnce)
         {
             Vector3 theScale = transform.localScale;
             theScale.x *= -1f;
-            //theScale.y = 0.3f;
             transform.localScale = theScale;
             executeOnce = false;
         }
@@ -87,10 +85,10 @@ public class Enemy : Character
 
     public void SetDirection(bool value)
     {
-        facingRight = value;
+        goingRight = value;
     }
 
-    public bool GetDirection() { return facingRight; }
+    public bool GetDirection() { return goingRight; }
 
     void HealthCheck()
     {

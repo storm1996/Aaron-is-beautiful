@@ -2,13 +2,11 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Player : MonoBehaviour {
-
-    public float speed = 50f;
+public class Player : Character {
+    
     public float maxSpeed = 300f;
     public float jumpForce;
-
-    public int health = 100;
+    
     public int score; //maybe put this in own game control script
 
 	public Transform groundCheck;
@@ -49,6 +47,10 @@ public class Player : MonoBehaviour {
         rb2d = gameObject.GetComponent<Rigidbody2D>();
         arrow = Resources.Load("Arrow") as GameObject;
         fireballPrefab = Resources.Load("Fireball") as GameObject;
+
+        health = 100;
+        speed = 50f;
+        facingRight = true;
 
         sounds = new AudioClip[]
         {
@@ -166,20 +168,12 @@ public class Player : MonoBehaviour {
     }
 
     //flips player sprite depending on where it's facing
-    void Flip()
+    public override void Flip()
     {
         facingRight = !facingRight;
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
-    }
-
-
-		
-    //takes away health from player
-    public void Damage(int damage)
-    {
-        health -= damage;
     }
 
     
@@ -205,7 +199,7 @@ public class Player : MonoBehaviour {
         }
     }*/
 
-    private void MoveControl()
+    public override void MoveControl()
     {
         //x axis. 
         float h = Input.GetAxis("Horizontal");
