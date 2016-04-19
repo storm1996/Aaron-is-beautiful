@@ -32,10 +32,11 @@ public class Player : Character {
 
     public bool facingRight;
 
+    private float timeBetweenShots = 0.14f;
+    private float timestamp;
     void Start () {
 
         anim = gameObject.GetComponent<Animator>();
-
         
 
         //player properties
@@ -50,7 +51,7 @@ public class Player : Character {
         speed = 50f;
         jumpForce = 22f;//jump power
         facingRight = true;
-
+        
         fireballPrefab = Resources.Load("Fireball") as GameObject;
 
         sounds = new AudioClip[]{
@@ -62,26 +63,11 @@ public class Player : Character {
 
     public static void explode() {AudioSource.PlayClipAtPoint(sounds[2], Vector2.zero);}// plays explosion sounds firebal hits an enemy
 
+    
     void Update(){
-
         anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
 
-        //shoots fireball depending where player is facing
-        if (Input.GetButtonDown("Fire1")){
-             
-			anim.SetTrigger("shooting");
-
-            if(facingRight){
-                CreateFireball("Right");
-
-            }
-
-            else if(!facingRight){
-                CreateFireball("Left");
-            }
-        }
-
-		anim.ResetTrigger("shooting");
+        
 
 		// Just flips the way he's facing depending on what way he's moving
 		if(GetComponent<Rigidbody2D> ().velocity.x > 0) {
@@ -98,7 +84,6 @@ public class Player : Character {
 		}
 
 		if (Input.GetKeyDown (KeyCode.Space) && grounded){
-			//GetComponent<Rigidbody2D> ().velocity = new Vector2(GetComponent<Rigidbody2D> ().velocity.x, jumpForce); 
 			Jump ();
             AudioSource.PlayClipAtPoint(sounds[0], Vector2.zero);
         }
@@ -149,11 +134,31 @@ public class Player : Character {
         //checks where player is facing
         if (h > 0 && !facingRight){
             Flip();
-        }
-                   
+        }           
         else if (h < 0 && facingRight){
             Flip();
         }
+        
+        if (Input.GetButtonDown("Fire1") && Time.time >= timestamp)
+        {
+
+            anim.SetTrigger("shooting");
+
+            if (facingRight)
+            {
+                CreateFireball("Right");
+            }
+
+            else if (!facingRight)
+            {
+                CreateFireball("Left");
+            }
+
+            timestamp = Time.time + timeBetweenShots;
+        }
+        
+
+            anim.ResetTrigger("shooting");
     }
 
     //flips player sprite depending on where it's facing
