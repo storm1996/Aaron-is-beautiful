@@ -7,7 +7,6 @@ public class GameControl : MonoBehaviour {
     public int level;
     private EnemyPatrol spawningSytem;
     private bool executeOnce = false;
-    //private bool is
 
 	// Use this for initialization
 	void Start () {

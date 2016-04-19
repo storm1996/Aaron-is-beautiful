@@ -1,23 +1,24 @@
-﻿using UnityEngine;
+﻿/*
+CONTROLS ENEMY SPAWNING AND ENEMY COUNT CHECKING
+*/
+
+using UnityEngine;
 using System.Collections;
 
 public class EnemyPatrol : MonoBehaviour {
 
     private GameObject enemy;
     public GameObject[] enemies;
-    public GameObject leftSpawn;
-    public GameObject rightSpawn;
+    public GameObject spawnPoint;
     private bool isCoroutineExecuting = false;
     private float time;
     private int enemyQuant;
-    private bool noneLeft = false;
     private bool isExecuting = true;
 
 	void Start()
 	{
         enemy = Resources.Load("Enemy") as GameObject;
-        rightSpawn = GameObject.FindGameObjectWithTag("Right Enemy Spawn");
-        leftSpawn = GameObject.FindGameObjectWithTag("Left Enemy Spawn");
+        spawnPoint = GameObject.FindGameObjectWithTag("Enemy Spawn");
 
     }
 
@@ -25,16 +26,15 @@ public class EnemyPatrol : MonoBehaviour {
     {
         if (Enemies() < 1)
         {
-            
-            if (isExecuting == true)
+            //makes sure run once
+            if (isExecuting)
             {
                 Debug.Log("Execute");
                 Invoke("SpawnHere", 0);
             }
-            
-            //noneLeft = false;
         }
 
+        //sets isExecuting to true if no enemies left
         CheckExecute();
     }
 
@@ -56,50 +56,31 @@ public class EnemyPatrol : MonoBehaviour {
             }
         }
 
+        //cancels invoke from repeating and check in update only executed once
         isExecuting = false;
         CancelInvoke("SpawnHere");
     }
 
+    //spawns enemy after set time
     IEnumerator WaitAndSpawn(float time, string direction)
     {
-   /*     //GameObject newObject;
-        if (isCoroutineExecuting)
-        {
-            yield break;
-        }
-*/
-       // isCoroutineExecuting = true;
 
         yield return new WaitForSeconds(time);
 
         if (direction.Equals("Left"))
         {
-            GameObject newObject = (GameObject)Instantiate(enemy, leftSpawn.transform.position, Quaternion.identity);
+            GameObject newObject = (GameObject)Instantiate(enemy, spawnPoint.transform.position, Quaternion.identity);
+            //switches enemy direction
             newObject.GetComponent<Enemy>().SetDirection(true);
         }
         else if (direction.Equals("Right"))
         {
-            GameObject newObject = (GameObject)Instantiate(enemy, rightSpawn.transform.position, Quaternion.identity);
-
+            GameObject newObject = (GameObject)Instantiate(enemy, spawnPoint.transform.position, Quaternion.identity);
         }
-
-        //isCoroutineExecuting = false;
-
-    }
-
-
-    public bool NoEnemiesLeft()
-    {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-        if(enemies.Length == 0)
-        {
-            noneLeft = true;
-        }
-
-        return noneLeft;
         
+
     }
+
     public void CheckExecute()
     {
         if (enemies.Length == 0)
@@ -114,6 +95,5 @@ public class EnemyPatrol : MonoBehaviour {
         return enemies.Length;
     }
     
-
     
 }

@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿/*
+HOLDS FIREBALL MOVEMENT AND COLLISION CODE
+*/
+using UnityEngine;
 using System.Collections;
 
 public class Fireball : MonoBehaviour {
@@ -23,12 +26,12 @@ public class Fireball : MonoBehaviour {
             if (boxCollider.IsTouching(obj.GetComponent<BoxCollider2D>())){
                 Player.explode();
                 Destroy(gameObject);
-                Destroy(obj);
+                obj.GetComponent<Enemy>().Damage(50);
             }
         }
     }
 
-    //CHANGE DIRECTION THINGY
+    
     //fires
     public void Fire(string direction)
     {
@@ -51,4 +54,5 @@ public class Fireball : MonoBehaviour {
         }
     }
     
+   
 }

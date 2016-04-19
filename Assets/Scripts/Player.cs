@@ -2,33 +2,11 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Player : MonoBehaviour {
-    /*
-    Shit to do:
-        create collider and new script to check if grounded to change animator
-
-        create function to get/set components
+public class Player : Character {
     
-    Shit to fix:
-        Sign off with name at the end
-            e.g "fix powerups not hitting - E Money"
-
-        irregular bouncing when on bouncy platform - E Dog
-
-        Ideas:
-        throw whatever shit you want here
-
-        Powerups regenerate after time period or destroys itself after a while.
-
-        Alannah: menu system. Later then a pause system?
-        Oleg: boundaries and teleportation
-        Eamon: Player health
-    */
-    public float speed = 50f;
     public float maxSpeed = 300f;
     public float jumpForce;
-
-    public int health = 100;
+    
     public int score; //maybe put this in own game control script
 
 	public Transform groundCheck;
@@ -70,6 +48,10 @@ public class Player : MonoBehaviour {
         arrow = Resources.Load("Arrow") as GameObject;
         fireballPrefab = Resources.Load("Fireball") as GameObject;
 
+        health = 100;
+        speed = 50f;
+        facingRight = true;
+
         sounds = new AudioClip[]
         {
             Resources.Load("Sound_Jump") as AudioClip,
@@ -93,28 +75,11 @@ public class Player : MonoBehaviour {
 			anim.SetTrigger("shooting");
             if(facingRight)
             {
-				
-                //optimise this
-                //Vector3 newPosition = new Vector3(transform.position.x + 1f, transform.position.y);
-                //change this
-          /*      GameObject newArrow = (GameObject)Instantiate(arrow, newPosition, Quaternion.identity);
-                Rigidbody2D arrowRB2D = newArrow.GetComponent<Rigidbody2D>();
-                arrowRB2D.AddForce(Vector2.right * 500);
-                arrowRB2D.AddForce(Vector2.up * 500);
-                */
                 CreateFireball("Right");
 
             }
             else if(!facingRight)
             {
-				
-                //optimise this
-                //Vector3 newPosition = new Vector3(transform.position.x - 1f, transform.position.y);
-               /* GameObject newArrow = (GameObject)Instantiate(arrow, newPosition, Quaternion.identity);
-                Rigidbody2D arrowRB2D = newArrow.GetComponent<Rigidbody2D>();
-                arrowRB2D.AddForce(Vector2.left * 500);
-                arrowRB2D.AddForce(Vector2.up * 500);
-                */
                 CreateFireball("Left");
             }
 
@@ -203,20 +168,12 @@ public class Player : MonoBehaviour {
     }
 
     //flips player sprite depending on where it's facing
-    void Flip()
+    public override void Flip()
     {
         facingRight = !facingRight;
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
-    }
-
-
-		
-    //takes away health from player
-    public void Damage(int damage)
-    {
-        health -= damage;
     }
 
     
@@ -242,7 +199,7 @@ public class Player : MonoBehaviour {
         }
     }*/
 
-    private void MoveControl()
+    public override void MoveControl()
     {
         //x axis. 
         float h = Input.GetAxis("Horizontal");
@@ -265,6 +222,18 @@ public class Player : MonoBehaviour {
     public void Bounce(float value)
     {
         rb2d.AddForce(Vector2.up * value);
+    }
+
+    public void PowerUp(string type, int value)
+    {
+        if (type.Equals("Health"))
+        {
+            health += value;
+        }
+        else if (type.Equals("Score"))
+        {
+            health += score;
+        }
     }
 
     //health powerup

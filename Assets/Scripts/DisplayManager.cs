@@ -1,5 +1,5 @@
 ﻿/*
-Controls the display of health and score
+CONTROL HEALTH AND SCORE DELAY
 */
 
 using UnityEngine;
@@ -19,8 +19,8 @@ public class DisplayManager : MonoBehaviour {
     }
 	
 	void Update () {
-        //setHealthText();
-        //setScoreText();
+        setHealthText();
+        setScoreText();
     }
 
     //sets the health and score
