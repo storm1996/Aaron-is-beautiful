@@ -1,50 +1,43 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Character
 {
-
     private bool facingRight;
-    private Rigidbody2D rb2d;
+    //private int health;
+    private bool executeOnce = true; //for Flip() to only execute once
+    private float moveSpeed = 6f;
 
+    private Rigidbody2D rb2d;
     private BoxCollider2D thisBox;
     private CircleCollider2D playerBox;
 
-    private bool executeOnce = true;
-
-    private float moveSpeed = 6f;
-
-    // Use this for initialization
     void Start()
     {
         rb2d = gameObject.AddComponent<Rigidbody2D>();
         rb2d.freezeRotation = true;
         playerBox = GameObject.FindGameObjectWithTag("Player").GetComponent<CircleCollider2D>();
         thisBox = gameObject.GetComponent<BoxCollider2D>();
+
+        health = 100;
     }
 
-    // Update is called once per frame
+    
+
     void Update()
     {
 
-        //ignores collision between multiple enemies
+        //ignores collision between all enemies
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             Physics2D.IgnoreCollision(thisBox, obj.GetComponent<BoxCollider2D>());
         }
 
-        //ignores collision between player and enemies
+        //ignores collision between player and enemy
         Physics2D.IgnoreCollision(thisBox, playerBox, true);
-
-        if (facingRight)
-        {
-            rb2d.velocity = new Vector2(moveSpeed, rb2d.velocity.y);
-        }
-        else
-        {
-            rb2d.velocity = new Vector2(-moveSpeed, rb2d.velocity.y);
-            Flip();
-        }
+        
+        MoveControl();
+        HealthCheck();
     }
 
     public IEnumerator KnockBack(float knockDur, float knockBackPwr, Vector2 knockBackDir)
@@ -57,25 +50,31 @@ public class Enemy : MonoBehaviour
             if (facingRight)
             {
                 rb2d.AddForce(Vector2.left * 5000f);
-                //rb2d.AddForce(new Vector3(knockBackDir.x * -5000f, knockBackDir.y, transform.position.z));
             }
             else
             {
-                //rb2d.AddForce(new Vector3(knockBackDir.x * 5000f, knockBackDir.y, transform.position.z));
                 rb2d.AddForce(Vector2.right * 5000f);
             }
         }
 
-        
-
         yield return 0;
     }
 
+    public override void MoveControl()
+    {
+        if (facingRight)
+        {
+            rb2d.velocity = new Vector2(moveSpeed, rb2d.velocity.y);
+        }
+        else
+        {
+            rb2d.velocity = new Vector2(-moveSpeed, rb2d.velocity.y);
+            Flip();
+        }
+    }
 
     void Flip()
     {
-        //facingRight = !facingRight;
-        
         if (executeOnce)
         {
             Vector3 theScale = transform.localScale;
@@ -91,9 +90,19 @@ public class Enemy : MonoBehaviour
         facingRight = value;
     }
 
-    public bool GetDirection()
-    {
-        return facingRight;
-    }
+    public bool GetDirection() { return facingRight; }
 
+    void HealthCheck()
+    {
+        if(health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+/*
+    public void Damage(int value)
+    {
+        health -= value;
+    }
+*/
 }

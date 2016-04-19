@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿/*
+CHILD CLASS OF POWERUP
+HOLDS HEALTH
+*/
+using UnityEngine;
 using System.Collections;
 
 public class HealthPowerup : Powerup {
-
 
     //calls Start() in parent to define outside scripts
     new void Start()
@@ -19,7 +22,7 @@ public class HealthPowerup : Powerup {
             //in abstract class
             DestroyAndMakeFalse();
 
-            //player.HealthPowerUp(100);
+            player.PowerUp("Health", 10);
         }
     }
 

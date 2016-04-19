@@ -17,12 +17,12 @@ public abstract class Powerup : MonoBehaviour {
     //virtual used so it can be called from child
     //auto called by child classes 
     public virtual void Start()
-    {
-        PlayerMake();
+    { 
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         power = GameObject.FindGameObjectWithTag("Ground").GetComponent<PowerUpSpawn>();
         timer = Random.Range(10f, 20f);
         Debug.Log("Pos: "+ position + "     Time: " + timer);
-
+ 
         setTime = Time.time + timer;
     }
 
@@ -39,11 +39,6 @@ public abstract class Powerup : MonoBehaviour {
 
     //abstract method for collisions in inherited classes
     public abstract void OnTriggerEnter2D(Collider2D col);
-
-    private void PlayerMake()
-    {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-    }
 
     //hold position relative to powerUpSpawns
     public void SetPosition(int x)
