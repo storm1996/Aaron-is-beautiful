@@ -11,12 +11,14 @@ public class EnemyPatrol : MonoBehaviour {
     public GameObject[] enemies;
     public GameObject spawnPoint;
     private bool isCoroutineExecuting = false;
+    private int level;
     private float time;
     private int enemyQuant;
     private bool isExecuting = true;
 
 	void Start()
 	{
+        level = 0;
         enemy = Resources.Load("Enemy") as GameObject;
         spawnPoint = GameObject.FindGameObjectWithTag("Enemy Spawn");
 
@@ -29,18 +31,32 @@ public class EnemyPatrol : MonoBehaviour {
             //makes sure run once
             if (isExecuting)
             {
+                LevelUp();
+            }
+        }
+        if (Enemies() < 1)
+        {
+            //makes sure run once
+            if (isExecuting)
+            {
                 Debug.Log("Execute");
                 Invoke("SpawnHere", 0);
             }
         }
 
+        
+
         //sets isExecuting to true if no enemies left
         CheckExecute();
     }
 
+    public void LevelUp()
+    {
+        level++;
+    }
     public void SpawnHere()
     {
-        int noEnemies = 5;
+        int noEnemies = 3 + (2 * level);
 
         for(int i = 0; i < noEnemies; i++)
         {
