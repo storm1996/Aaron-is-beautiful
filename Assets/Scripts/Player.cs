@@ -28,10 +28,6 @@ public class Player : Character {
     void Start () {
 
         anim = gameObject.GetComponent<Animator>();
-<<<<<<< HEAD
-        
-=======
->>>>>>> origin/master
 
         //player properties
         playerRBody = gameObject.AddComponent<Rigidbody2D>();
@@ -42,17 +38,14 @@ public class Player : Character {
         rb2d = gameObject.GetComponent<Rigidbody2D>();
         health = 100;
         speed = 50f;
-<<<<<<< HEAD
         jumpForce = 22f;//jump power
         facingRight = true;
         
         fireballPrefab = Resources.Load("Fireball") as GameObject;
-=======
         jumpForce = 22f;// jump power
         facingRight = true;// direction of player
 
         fireballPrefab = Resources.Load("Fireball") as GameObject;// loads in fireball asset 
->>>>>>> origin/master
 
         sounds = new AudioClip[]{
             Resources.Load("Sound_Jump") as AudioClip,
@@ -66,22 +59,7 @@ public class Player : Character {
     
     void Update(){
         anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
-
-<<<<<<< HEAD
         
-=======
-        // shoots fireball depending where player is facing
-        if (Input.GetButtonDown("Fire1")){
-			anim.SetTrigger("shooting");// animation for shooting
-
-            // shoots fireball
-            if(facingRight){ CreateFireball("Right");}// shoots fireball right
-            else if(!facingRight){ CreateFireball("Left");}// shoots fireball left
-        }
-
-		anim.ResetTrigger("shooting");
->>>>>>> origin/master
-
 		// Just flips the way he's facing depending on what way he's moving
 		if(GetComponent<Rigidbody2D> ().velocity.x > 0) { transform.localScale = new Vector3 (1f, 1f, 1f);}
         else if(GetComponent<Rigidbody2D> ().velocity.x < 0){ transform.localScale = new Vector3 (-1f, 1f, 1f);}
@@ -92,13 +70,9 @@ public class Player : Character {
 		}
 
 		if (Input.GetKeyDown (KeyCode.Space) && grounded){
-<<<<<<< HEAD
-			Jump ();
-            AudioSource.PlayClipAtPoint(sounds[0], Vector2.zero);
-=======
+
 			Jump();
             AudioSource.PlayClipAtPoint(sounds[0], Vector2.zero);// plays jumping sound
->>>>>>> origin/master
         }
 
 
@@ -144,8 +118,7 @@ public class Player : Character {
 
         // controls player movement and jumping
         MoveControl();
-
-<<<<<<< HEAD
+        
         //checks where player is facing
         if (h > 0 && !facingRight){
             Flip();
@@ -174,11 +147,9 @@ public class Player : Character {
         
 
             anim.ResetTrigger("shooting");
-=======
         // checks where player is facing, flips their sprite to opposite direction
         if (h > 0 && !facingRight){ Flip();}
         else if (h < 0 && facingRight){ Flip();}
->>>>>>> origin/master
     }
 
     // flips player sprite depending on where it's facing
