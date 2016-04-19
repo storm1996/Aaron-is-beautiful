@@ -8,7 +8,6 @@ public class Egg : MonoBehaviour
     public AudioClip[] sounds;//holds sound files
     public int eggHealth;
     public bool hit;
-    
 
     void Start(){
         sounds = new AudioClip[]{
@@ -27,15 +26,17 @@ public class Egg : MonoBehaviour
     }//end start
 
     public void Update(){
+
+        //loop that cycles through enemies on screen to see if egg was hit
         foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Enemy")){
             if (eggCollider.IsTouching(obj.GetComponent<BoxCollider2D>()) && !hit){
-                Enemy enemy = obj.GetComponent<Enemy>();
-                StartCoroutine("EggHittable", enemy);
+                Enemy enemy = obj.GetComponent<Enemy>();//the enemy that hit the egg
+                StartCoroutine("EggHittable", enemy);//starts sequence of egg damage and sounds
             }
         }
     }//end update
 
-    //lets enemies deal damage to egg
+    //stops enemies from dealing damage to egg for 2 seconds, deals damage, plays cracking sound
     public void EggHittable(Enemy en){
         hit = true;
         eggHealth--;
@@ -44,13 +45,13 @@ public class Egg : MonoBehaviour
         Invoke("falser", 2);//two second delay for damage dealt to egg
     }
 
+    //thread that plays hit sound + cracking sound
     IEnumerator Wait(){
         AudioSource.PlayClipAtPoint(sounds[1], Vector2.zero);
         yield return new WaitForSeconds(0.3f);
         AudioSource.PlayClipAtPoint(sounds[0], Vector2.zero);
     }
 
-    public void falser(){ 
-        hit = false;
-    }
+    //lets enemies deal damage to egg
+    public void falser(){ hit = false;}
 }//end class
