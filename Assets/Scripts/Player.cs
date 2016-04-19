@@ -53,94 +53,108 @@ public class Player : Character {
             Resources.Load("Sound_Explosion") as AudioClip,
         };
     }
-
-    public static void explode() {AudioSource.PlayClipAtPoint(sounds[2], Vector2.zero);}// plays explosion sounds firebal hits an enemy
-
     
     void Update(){
-        anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
+
         
-		// Just flips the way he's facing depending on what way he's moving
-		if(GetComponent<Rigidbody2D> ().velocity.x > 0) { transform.localScale = new Vector3 (1f, 1f, 1f);}
-        else if(GetComponent<Rigidbody2D> ().velocity.x < 0){ transform.localScale = new Vector3 (-1f, 1f, 1f);}
+	}
 
+    void FixedUpdate()
+    {
+
+        grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+        float h = Input.GetAxis("Horizontal");
+
+        // controls player movement and jumping
+        MoveControl();
+
+       
+
+        if (Input.GetButtonDown("Fire1") && Time.time >= timestamp)
+        {
+            anim.SetTrigger("shooting");
+
+            //creates fireball if facing right or left
+            if (facingRight) { CreateFireball("Right"); }
+            else if (!facingRight) { CreateFireball("Left"); }
+
+            timestamp = Time.time + timeBetweenShots;
+
+
+        }
+
+
+        anim.ResetTrigger("shooting");
+
+        // checks where player is facing, flips their sprite to opposite direction
+        if (h > 0 && !facingRight) { Flip(); }
+        else if (h < 0 && facingRight) { Flip(); }
+
+        anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
+
+        JumpControl();
         //checks if grounded for double jump
-		if (grounded){
-			doubleJumped = false;
-			anim.SetBool ("Grounded", grounded);
-		}
+        
+    }
 
-		if (Input.GetKeyDown (KeyCode.Space) && grounded){
-			Jump();
+    void JumpControl(){
+        if (grounded)
+        {
+            doubleJumped = false;
+            anim.SetBool("Grounded", grounded);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && grounded)
+        {
+            Jump();
             AudioSource.PlayClipAtPoint(sounds[0], Vector2.zero);// plays jumping sound
         }
 
-		if (Input.GetKeyDown (KeyCode.Space) && !doubleJumped && !grounded){
-			Jump ();
+        if (Input.GetKeyDown(KeyCode.Space) && !doubleJumped && !grounded)
+        {
+            Jump();
             AudioSource.PlayClipAtPoint(sounds[0], Vector2.zero);// plays jumping sound
             doubleJumped = true;// player has jumped twice if true
-		}
+        }
 
-		if (!grounded) { anim.SetBool ("Grounded", !grounded); }// jumping animation
-	}
+        if (!grounded) { anim.SetBool("Grounded", !grounded); }// jumping animation
+    }
+
 
     // creates new instance of fireball everytime player casts it (presses left mouse button)
     public void CreateFireball(string direction){
         float offset = 1f;
-        Vector3 newPosition;
+        Vector2 newPosition;
         GameObject newFireball;
-        Fireball fireballScript;
         
         // creates a fireball going right
         if (direction.Equals("Right")){
             newPosition = new Vector3(transform.position.x + offset, transform.position.y);
             newFireball = (GameObject)Instantiate(fireballPrefab, newPosition, Quaternion.identity);
-            fireballScript = newFireball.GetComponent<Fireball>();
-            fireballScript.Fire(direction);
-            AudioSource.PlayClipAtPoint(sounds[1], Vector3.zero);// plays fireball cast sound
+
+            //shoots fireball in direction
+            ShootFireball(newFireball, newPosition, direction);
         }
 
         // creates a fireball going left
         else if (direction.Equals("Left")){
             newPosition = new Vector3(transform.position.x - offset, transform.position.y);
             newFireball = (GameObject)Instantiate(fireballPrefab, newPosition, Quaternion.identity);
-            fireballScript = newFireball.GetComponent<Fireball>();
-            fireballScript.Fire(direction);
-            AudioSource.PlayClipAtPoint(sounds[1], Vector3.zero);// plays fireball cast sound
+
+            ShootFireball(newFireball, newPosition, direction);
         }
     }
 
-    void FixedUpdate () {
+    //takes in parameters from instantiated fireball above and shoots it. Avoids code duplication
+    void ShootFireball(GameObject fireball, Vector2 position, string direction)
+    {
+        Fireball fireballScript;
 
-		grounded = Physics2D.OverlapCircle (groundCheck.position, groundCheckRadius, whatIsGround);
-        float h = Input.GetAxis("Horizontal");
-
-        // controls player movement and jumping
-        MoveControl();
-        
-        //checks where player is facing
-        if (h > 0 && !facingRight){ Flip();}           
-        else if (h < 0 && facingRight){ Flip();}
-        
-        if (Input.GetButtonDown("Fire1") && Time.time >= timestamp)
-        {
-            anim.SetTrigger("shooting");
-
-            //creates fireball if facing right or left
-            if (facingRight){ CreateFireball("Right");}
-            else if (!facingRight){ CreateFireball("Left");}
-
-            timestamp = Time.time + timeBetweenShots;
-        }
-        
-
-        anim.ResetTrigger("shooting");
-
-        // checks where player is facing, flips their sprite to opposite direction
-        if (h > 0 && !facingRight){ Flip();}
-        else if (h < 0 && facingRight){ Flip();}
+        fireballScript = fireball.GetComponent<Fireball>();
+        fireballScript.Fire(direction);
+        AudioSource.PlayClipAtPoint(sounds[1], Vector3.zero);// plays fireball cast sound
     }
-
+    
     // flips player sprite depending on where it's facing
     public override void Flip(){
         facingRight = !facingRight;
@@ -167,5 +181,8 @@ public class Player : Character {
 
     // player jumps with in y direction with jumpForce
 	public void Jump(){ GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpForce);}
+
+
+    public static void explode() { AudioSource.PlayClipAtPoint(sounds[2], Vector2.zero); }// plays explosion sounds firebal hits an enemy
 
 }//end class
