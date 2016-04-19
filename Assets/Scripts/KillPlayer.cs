@@ -6,7 +6,6 @@ public class KillPlayer : MonoBehaviour {
 	public LevelManager levelManager; 
 	private Player player;
 
-	// Use this for initialization
 	void Start (){
 		levelManager = FindObjectOfType<LevelManager> ();
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();

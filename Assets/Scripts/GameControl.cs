@@ -16,8 +16,6 @@ public class GameControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        
         if (GetNoEnemies() <= 0){
             //add level up here
             

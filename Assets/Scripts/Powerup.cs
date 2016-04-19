@@ -28,25 +28,21 @@ public abstract class Powerup : MonoBehaviour {
         //constantly spins powerup in both inherited classes
         transform.RotateAround(transform.position, transform.up, Time.deltaTime * spinSpeed);
 
-        if(Time.time >= setTime){
-            DestroyAndMakeFalse();
-        }
+        //destroys powerup after a certain time
+        if(Time.time >= setTime){ DestroyAndMakeFalse();}
     }
 
     //abstract method for collisions in inherited classes
     public abstract void OnTriggerEnter2D(Collider2D col);
 
     //hold position relative to powerUpSpawns
-    public void SetPosition(int x){
-        this.position = x;
-    }
+    public void SetPosition(int x){ this.position = x;}
 
     //destroys self and lets position to be used again
     public void DestroyAndMakeFalse(){
         Debug.Log("DESTROYING. Pos: " + position);
         Destroy(gameObject);
         powerScript.SetStateAtPos(position, false);
-
     }
  
-}
+}//end class
