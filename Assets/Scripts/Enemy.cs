@@ -10,11 +10,13 @@ public class Enemy : Character
     private Rigidbody2D rb2d;
     private BoxCollider2D thisBox;
     private CircleCollider2D playerBox;
+    private Player player; 
 
     void Start(){
         rb2d = gameObject.AddComponent<Rigidbody2D>();
         rb2d.freezeRotation = true;
         playerBox = GameObject.FindGameObjectWithTag("Player").GetComponent<CircleCollider2D>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         thisBox = gameObject.GetComponent<BoxCollider2D>();
         health = 100;
     }
@@ -86,6 +88,7 @@ public class Enemy : Character
 
     void HealthCheck(){
         if(health <= 0){
+            player.score += 10;
             Destroy(gameObject);
         }
     }

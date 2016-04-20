@@ -69,7 +69,6 @@ public class Player : Character {
         MoveControl();
         FireControl();
         JumpControl();
-        
 
         anim.ResetTrigger("shooting");
         
