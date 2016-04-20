@@ -6,7 +6,7 @@ public class Teleporter : MonoBehaviour {
     private Player player;
     private BoxCollider2D teleporterBC2D;
     private Rigidbody2D teleporterRB2D;
-    private float offset = 5f;
+    private float offset = 3f;
     GameObject[] enemies;//array of enemies on screen
 
     //finds player gameobject, creates rigidbody and collider for teleporter
@@ -29,7 +29,7 @@ public class Teleporter : MonoBehaviour {
                 //if touching right teleporter, move to left one
                 if (gameObject.tag == "TPRight"){
                     teleporterRB2D = GameObject.FindGameObjectWithTag("TPLeft").GetComponent<Rigidbody2D>();
-                    obj.transform.position = new Vector2(teleporterRB2D.transform.position.x + offset, obj.transform.position.y);
+                    obj.transform.position = new Vector2(teleporterRB2D.transform.position.x + offset + 1, obj.transform.position.y);
                 }
 
                 //if touching left teleporter, move to right one
