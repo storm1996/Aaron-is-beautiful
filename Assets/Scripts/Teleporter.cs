@@ -6,7 +6,7 @@ public class Teleporter : MonoBehaviour {
     private Player player;
     private BoxCollider2D teleporterBC2D;
     private Rigidbody2D teleporterRB2D;
-    private float offset = 3f;
+    private float offset = 5f;
     GameObject[] enemies;//array of enemies on screen
 
     //finds player gameobject, creates rigidbody and collider for teleporter
@@ -17,6 +17,7 @@ public class Teleporter : MonoBehaviour {
         //GetComponent<Renderer>().material.color = new Color(155, 0, 155, 0);
         teleporterRB2D.isKinematic = true;
         teleporterBC2D.isTrigger = true;
+		teleporterBC2D.size = new Vector2(3, 3);
     }
 
     void Update(){
