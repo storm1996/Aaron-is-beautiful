@@ -5,7 +5,7 @@ Contributors:
 	
 	-Oleg Petcov - C14399846 - https://github.com/c14399846
 
-	-github for project: https://github.com/storm1996/Snakeout
+	-github for project: https://github.com/storm1996/Dino-Defence
 
 	*******BEAST TO PLAY AT 1920/1080*******
 
