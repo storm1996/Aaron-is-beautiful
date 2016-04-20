@@ -1,7 +1,16 @@
+Contributors:
+	Alannah Mullins - C14449168 - https://github.com/storm1996
+	Eamon Tang - C14383761 - https://github.com/Fanner487
+	Oleg Petcov - C14399846 - https://github.com/c14399846
+
+	github for project: https://github.com/storm1996/Snakeout
+
+
 Goal of Game:
 	Defend egg from cavemen for as long as you can
 
-	Amount of enemies spawned is wave based, increasing by 1 enemy per wave
+	-Amount of enemies spawned is wave based, increasing by 1 enemy per wave
+	-Killing enemies and collecting powerups generates score and increases egg health up till 10
 
 
 Controls:
@@ -23,3 +32,4 @@ Powerups:
 Egg:
 	-Has 5 health
 	-Takes 1 damage per 2 seconds from Enemies(cavemen)
+	-Gains health if collect 100 score, or get powerup, up till egg health = 10
