@@ -5,6 +5,10 @@ Contributors:
 
 	github for project: https://github.com/storm1996/Snakeout
 
+	*******BEAST TO PLAY AT 1920/1080*******
+
+	exe download link for game: https://drive.google.com/a/mydit.ie/file/d/0B1CpA4kitmqtMUJEblI3b3FNTG8/view?usp=sharing
+
 
 Goal of Game:
 	Defend egg from cavemen for as long as you can
