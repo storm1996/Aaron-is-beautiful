@@ -34,6 +34,10 @@ public class Egg : MonoBehaviour
                 StartCoroutine("EggHittable", enemy);//starts sequence of egg damage and sounds
             }
         }
+
+		if (eggHealth == 0) {
+			Application.LoadLevel (3);
+		}
     }//end update
 
     //stops enemies from dealing damage to egg for 2 seconds, deals damage, plays cracking sound
