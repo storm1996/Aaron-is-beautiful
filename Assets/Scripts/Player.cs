@@ -25,6 +25,8 @@ public class Player : Character {
 
     private float timeBetweenShots;
     private float timestamp;
+    private Egg egg;
+
     void Start () {
 
         groundCheckRadius = 1;
@@ -58,6 +60,8 @@ public class Player : Character {
             Resources.Load("Sound_Fireball") as AudioClip,
             Resources.Load("Sound_Explosion") as AudioClip,
         };
+
+        egg = GameObject.FindGameObjectWithTag("Egg").GetComponent<Egg>();
     }
  
     void FixedUpdate()
@@ -179,7 +183,11 @@ public class Player : Character {
 
     // increases player health or score based on the powerup they touch
     public void PowerUp(string type, int value){
-        if (type.Equals("Health")){ health += value;}
+        if (type.Equals("Health")){
+            if (egg.eggHealth <= 9) {
+                egg.eggHealth += 1;
+            }
+        }
         else if (type.Equals("Score")){ score += value;}
     }
 
