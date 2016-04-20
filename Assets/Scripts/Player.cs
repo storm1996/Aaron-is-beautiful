@@ -23,7 +23,7 @@ public class Player : Character {
     public GameObject fireballPrefab;// fireball asset
     public bool facingRight;//direction player is facing
 
-    private float timeBetweenShots = 0.14f;
+    private float timeBetweenShots;
     private float timestamp;
     void Start () {
 
@@ -35,17 +35,22 @@ public class Player : Character {
         playerRBody.freezeRotation = true; // rotation of player, turned off
         playerRBody.drag = 0.5f;// friction between air, water, ground, etc
         playerRBody.mass = 1f; // player mass
+
         rb2d = gameObject.GetComponent<Rigidbody2D>();
+
         health = 100;
         speed = 50f;
+
         jumpForce = 22f;//jump power
         facingRight = true;
         
         fireballPrefab = Resources.Load("Fireball") as GameObject;
         jumpForce = 22f;// jump power
         facingRight = true;// direction of player
-
+        
         fireballPrefab = Resources.Load("Fireball") as GameObject;// loads in fireball asset 
+
+        timeBetweenShots = 0.14f; //allows only 7 fireballs to be shot per second
 
         sounds = new AudioClip[]{
             Resources.Load("Sound_Jump") as AudioClip,
@@ -56,7 +61,6 @@ public class Player : Character {
  
     void FixedUpdate()
     {
-
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
         float h = Input.GetAxis("Horizontal");
 
@@ -64,13 +68,10 @@ public class Player : Character {
         MoveControl();
         FireControl();
         JumpControl();
+        
 
         anim.ResetTrigger("shooting");
-
-        // checks where player is facing, flips their sprite to opposite direction
-        if (h > 0 && !facingRight) { Flip(); }
-        else if (h < 0 && facingRight) { Flip(); }
-
+        
         anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
     }
 
@@ -83,6 +84,10 @@ public class Player : Character {
         // limits speed of player according to maxSpeed in both directions, based on x-axis
         if (rb2d.velocity.x > maxSpeed) { rb2d.velocity = new Vector2(maxSpeed, rb2d.velocity.y); }
         if (rb2d.velocity.x < -maxSpeed) { rb2d.velocity = new Vector2(-maxSpeed, rb2d.velocity.y); }
+
+        // checks where player is facing, flips their sprite to opposite direction
+        if (h > 0 && !facingRight) { Flip(); }
+        else if (h < 0 && facingRight) { Flip(); }
     }
 
     void JumpControl(){
@@ -109,8 +114,10 @@ public class Player : Character {
         if (!grounded) { anim.SetBool("Grounded", !grounded); }// jumping animation
     }
 
+    //controls the firing mechanism of fireball
     void FireControl()
     {
+        //allows only 7 fireballs per second
         if (Input.GetButtonDown("Fire1") && Time.time >= timestamp)
         {
             anim.SetTrigger("shooting");

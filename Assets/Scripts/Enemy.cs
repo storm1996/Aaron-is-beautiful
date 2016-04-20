@@ -23,35 +23,23 @@ public class Enemy : Character
 
     void Update(){
 
+       
+        MoveControl();
+        HealthCheck();
+        IgnoreCollisions(); //ignores collisions between player and other enemies
+    }
+
+    void IgnoreCollisions(){
         //ignores collision between all enemies
-        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Enemy")){
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
             Physics2D.IgnoreCollision(thisBox, obj.GetComponent<BoxCollider2D>());
         }
 
         //ignores collision between player and enemy
         Physics2D.IgnoreCollision(thisBox, playerBox, true);
-        
-        MoveControl();
-        HealthCheck();
     }
-
-    public IEnumerator KnockBack(float knockDur, float knockBackPwr, Vector2 knockBackDir){
-        float timer = 0;
-
-        while( knockDur > timer){
-            timer += Time.deltaTime;
-
-            if (goingRight){
-                rb2d.AddForce(Vector2.left * 5000f);
-            }
-
-            else{
-                rb2d.AddForce(Vector2.right * 5000f);
-            }
-        }
-        yield return 0;
-    }
-
+    
     public override void MoveControl(){
         if (goingRight){
             rb2d.velocity = new Vector2(moveSpeed, rb2d.velocity.y);
@@ -70,6 +58,26 @@ public class Enemy : Character
             transform.localScale = theScale;
             executeOnce = false;
         }
+    }
+
+    public IEnumerator KnockBack(float knockDur, float knockBackPwr, Vector2 knockBackDir)
+    {
+        float timer = 0;
+
+        while (knockDur > timer)
+        {
+            timer += Time.deltaTime;
+
+            if (goingRight)
+            {
+                rb2d.AddForce(Vector2.left * 5000f);
+            }
+
+            else {
+                rb2d.AddForce(Vector2.right * 5000f);
+            }
+        }
+        yield return 0;
     }
 
     public void SetDirection(bool value){
