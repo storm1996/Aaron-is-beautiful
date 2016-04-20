@@ -18,9 +18,7 @@ public class Enemy : Character
         thisBox = gameObject.GetComponent<BoxCollider2D>();
         health = 100;
     }
-
     
-
     void Update(){
 
        

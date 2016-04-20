@@ -26,8 +26,7 @@ public class Fireball : MonoBehaviour
         lastPosition = transform.position;
         maxDistance = 500f;
     }
-
-    //cahngesdf
+    
     //checks if fireball is touching any enemies, destroys them if they are, and explodes
     void Update()
     {
