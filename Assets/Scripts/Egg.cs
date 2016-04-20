@@ -8,6 +8,7 @@ public class Egg : MonoBehaviour
     public AudioClip[] sounds;//holds sound files
     public int eggHealth;
     public bool hit;
+    private Player player;
 
     void Start(){
         sounds = new AudioClip[]{
@@ -21,6 +22,8 @@ public class Egg : MonoBehaviour
         eggCollider.size = new Vector2(1, 1);
         eggProperties.drag = 1f;
         eggProperties.isKinematic = true;
+
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
         Physics2D.IgnoreLayerCollision(8,9,true); //ignores player and egg layer collisions - layer 8 and 9
     }//end start
@@ -38,6 +41,14 @@ public class Egg : MonoBehaviour
 		if (eggHealth == 0) {
 			Application.LoadLevel (3);
 		}
+
+        //if egg health less than equal to 9, then increase health by 1, until egg health is 10 max
+        if (eggHealth <= 9){
+            if(player.score >= 100){
+                eggHealth += 1;
+                player.score -= 100;
+            }
+        }
     }//end update
 
     //stops enemies from dealing damage to egg for 2 seconds, deals damage, plays cracking sound
