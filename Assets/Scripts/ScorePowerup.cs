@@ -10,6 +10,7 @@ public class ScorePowerup : Powerup {
         if (col.CompareTag("Player")){            
             PowerUpSpawn.play();
             DestroyAndMakeFalse();
+            player.PowerUp("Score", 10);
         }
     }
 

@@ -177,7 +177,7 @@ public class Player : Character {
     // increases player health or score based on the powerup they touch
     public void PowerUp(string type, int value){
         if (type.Equals("Health")){ health += value;}
-        else if (type.Equals("Score")){ health += score;}
+        else if (type.Equals("Score")){ score += value;}
     }
 
     // player jumps with in y direction with jumpForce
