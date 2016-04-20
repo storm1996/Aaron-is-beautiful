@@ -14,7 +14,6 @@ public class Teleporter : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         teleporterBC2D = gameObject.AddComponent<BoxCollider2D>();
         teleporterRB2D = gameObject.AddComponent<Rigidbody2D>();
-        //GetComponent<Renderer>().material.color = new Color(155, 0, 155, 0);
         teleporterRB2D.isKinematic = true;
         teleporterBC2D.isTrigger = true;
 		teleporterBC2D.size = new Vector2(3, 3);

@@ -27,6 +27,7 @@ public class Player : Character {
     private float timestamp;
     void Start () {
 
+        groundCheckRadius = 1;
         anim = gameObject.GetComponent<Animator>();
 
         //player properties
