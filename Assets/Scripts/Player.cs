@@ -38,7 +38,7 @@ public class Player : Character {
 
         rb2d = gameObject.GetComponent<Rigidbody2D>();
 
-        health = 100;
+        health = 1;
         speed = 50f;
 
         jumpForce = 22f;//jump power
@@ -73,6 +73,10 @@ public class Player : Character {
         anim.ResetTrigger("shooting");
         
         anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
+
+		if (health == 0) {
+			Application.LoadLevel (3);
+		}
     }
 
     // adds speed to player direction, moves player more or less
