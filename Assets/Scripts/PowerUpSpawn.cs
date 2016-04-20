@@ -93,7 +93,7 @@ public class PowerUpSpawn : MonoBehaviour {
     }
     
     
-
+    //sets powerup spawn point to be true
     public void SetPosMakeTrue(Powerup pow, int p){ 
         pow.SetPosition(p);
         SetStateAtPos(p, true);
