@@ -23,8 +23,9 @@ public class EnemyPatrol : MonoBehaviour {
         spawnPoint = GameObject.FindGameObjectWithTag("Enemy Spawn");
     }
 
-    // if no enemies left, then increase level, restart spawning enemies
-    void Update(){ 
+    void FixedUpdate(){
+
+        // if no enemies left, then increase level, restart spawning enemies
         if (Enemies() < 1){
             // makes sure run once
             if (isExecuting){ 

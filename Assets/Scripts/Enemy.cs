@@ -5,11 +5,14 @@ public class Enemy : Character
 {
     private bool goingRight;
     private bool executeOnce = true; //for Flip() to only execute once
-    private float moveSpeed = 6f;
+    private float moveSpeed;
+    private float knockBackForce;
+    private int scoreValue;
 
     private Rigidbody2D rb2d;
     private BoxCollider2D thisBox;
     private CircleCollider2D playerBox;
+    private Player player;
 
     void Start(){
         rb2d = gameObject.AddComponent<Rigidbody2D>();
@@ -17,6 +20,13 @@ public class Enemy : Character
         playerBox = GameObject.FindGameObjectWithTag("Player").GetComponent<CircleCollider2D>();
         thisBox = gameObject.GetComponent<BoxCollider2D>();
         health = 100;
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+
+        executeOnce = true;
+        moveSpeed = 6f;
+        knockBackForce = 5000f;
+        scoreValue = 10;
+
     }
     
     void Update(){
@@ -68,11 +78,11 @@ public class Enemy : Character
 
             if (goingRight)
             {
-                rb2d.AddForce(Vector2.left * 5000f);
+                rb2d.AddForce(Vector2.left * knockBackForce);
             }
 
             else {
-                rb2d.AddForce(Vector2.right * 5000f);
+                rb2d.AddForce(Vector2.right * knockBackForce);
             }
         }
         yield return 0;
@@ -87,6 +97,7 @@ public class Enemy : Character
     void HealthCheck(){
         if(health <= 0){
             Destroy(gameObject);
+            player.PowerUp("Score", scoreValue);
         }
     }
 }//end class
