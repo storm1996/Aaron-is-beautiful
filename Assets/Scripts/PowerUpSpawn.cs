@@ -76,17 +76,22 @@ public class PowerUpSpawn : MonoBehaviour {
 
         if (input.Equals("Score")){
             GameObject newObject = (GameObject)Instantiate(scorePowerUp, spawnPoints[position].transform.position, Quaternion.identity);
+            
+            //use of polymorphism
             pow = newObject.GetComponent<ScorePowerup>();
         }
 
         else if (input.Equals("Health")){
             GameObject newObject = (GameObject)Instantiate(healthPowerUp, spawnPoints[position].transform.position, Quaternion.identity);
+
+            //use of polymorphism
             pow = newObject.GetComponent<HealthPowerup>();         
         }
 
-        //makes position true at position
+        //makes position true at spawn point
         SetPosMakeTrue(pow, position);
     }
+    
     
 
     public void SetPosMakeTrue(Powerup pow, int p){ 

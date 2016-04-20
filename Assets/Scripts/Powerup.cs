@@ -10,17 +10,25 @@ public abstract class Powerup : MonoBehaviour {
     public Player player;
     public PowerUpSpawn powerScript;
     public int position;
+
     private float timer;
     private float setTime;
     private float spinSpeed = 250f;
+    private float minTime; 
+    private float maxTime;
 
     //virtual used so it can be called from child
     //auto called by child classes 
     public virtual void Start(){ 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         powerScript = GameObject.FindGameObjectWithTag("Powerup Spawn System").GetComponent<PowerUpSpawn>();
-        timer = Random.Range(10f, 20f);
-        setTime = Time.time + timer;
+
+        //sets value between min and max seconds that powerup can exist for
+        minTime = 8f;
+        maxTime = 12f;
+        timer = Random.Range(minTime, maxTime);
+        setTime = Time.time + timer; 
+        
     }
 
     public virtual void Update(){
@@ -40,9 +48,8 @@ public abstract class Powerup : MonoBehaviour {
 
     //destroys self and lets position to be used again
     public void DestroyAndMakeFalse(){
-        Debug.Log("DESTROYING. Pos: " + position);
         Destroy(gameObject);
-        powerScript.SetStateAtPos(position, false);
+        powerScript.SetStateAtPos(position, false); //frees up spawn position to be used again
     }
  
 }//end class
